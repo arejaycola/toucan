@@ -21,3 +21,4 @@ yarn-error.log*
 
 #api keys
 .env
+.vscode/Toucan.code-workspace

@@ -1,0 +1,21 @@
+.button {
+	background: $blue;
+	border: 1px solid $blue;
+	border-radius: 3px;
+	color: white;
+	display: inline-block;
+	font-size: $font-size-large;
+	font-weight: 300;
+	line-height: 1;
+	padding: $s-size;
+	text-decoration: none;
+	cursor: pointer;
+
+	transition-property: background-color, border, color;
+	transition-duration: 0.3s;
+}
+
+.button:hover {
+	background: white;
+	color: $blue;
+}

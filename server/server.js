@@ -1,12 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const { searchForVerifiedUser } = require('./twitterHelper');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-require('dotenv').config();
-
-console.log(process.env);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -14,6 +13,12 @@ app.use(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
+});
+
+app.post('/twitter/search', async (req, res) => {
+	let searchString = req.body.searchString;
+	let results = await searchForVerifiedUser(searchString);
+	res.send(results);
 });
 
 app.get('/api/hello', (req, res) => {
