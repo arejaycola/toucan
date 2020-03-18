@@ -1,0 +1,22 @@
+.search-box-container {
+	/* background-color: rbga(255, 255, 255, 0.85); */
+	background: rgba(255, 255, 255, 0.85) !important;
+	border-radius: 5px;
+	padding: 1.4rem 1em;
+	text-align: center;
+	// width: 35rem;
+
+	.title {
+		// margin: 1rem 0;
+		margin: 0;
+	}
+
+	.sub-title{
+        padding: 0;
+        margin: 0;
+	}
+
+	.search-box{
+		height: 30px;
+	}
+}
