@@ -11,4 +11,13 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: $m-size;
 	line-height: 1.6;
+	// background: url("https://mdn.mozillademos.org/files/12057/starsolid.gif");
+	background: url('/toucan.jpg');
+	background-size: cover;
+	// display: flex;
+	// height: 100vh;
+	// justify-content: center;
+	// width: 100vw;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }

@@ -5,8 +5,6 @@
 	border-radius: 5px;
 	padding: $m-size $l-size;
 	text-align: center;
-	display: flex;
-	flex-direction: column;
 
 	.title {
 		margin: 0 0 $s-size 0;
@@ -17,6 +15,7 @@
 	}
 
 	input {
+		display: block;
 		margin: 0 0 $s-size 0;
 	}
 

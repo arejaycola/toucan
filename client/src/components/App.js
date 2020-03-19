@@ -17,10 +17,9 @@ const App = () => {
 
 	return (
 		<div className="App">
-			<div className={`centered-container ${classes ? classes : ''}`}>
-				<SearchBox populateSearchResults={populateSearchResults} animateSearchBox={animateSearchBox} />
-				<SearchResultList results={searchResults}/>
-			</div>
+			<SearchBox populateSearchResults={populateSearchResults} animateSearchBox={animateSearchBox} />
+
+			<SearchResultList results={searchResults} />
 		</div>
 	);
 };
