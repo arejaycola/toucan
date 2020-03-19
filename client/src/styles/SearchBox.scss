@@ -1,31 +1,26 @@
-@import "./base/vars";
+@import './base/vars';
 
 .search-box-container {
-	/* background-color: rbga(255, 255, 255, 0.85); */
 	background: rgba(255, 255, 255, 0.85) !important;
 	border-radius: 5px;
-	padding: 1.4rem 1em;
+	padding: $m-size $l-size;
 	text-align: center;
-	width: 35rem;
-
 	display: flex;
 	flex-direction: column;
 
 	.title {
-		margin: $m-size 0; 
-		padding: 0;
+		margin: 0 0 $s-size 0;
 	}
 
-	.sub-title{
-        padding: 0;
-        margin: 0;
+	.sub-title {
+		margin: 0;
 	}
 
-	input{
-		margin: $s-size 0;
+	input {
+		margin: 0 0 $s-size 0;
 	}
 
-	.button{
+	.button {
 		margin: 0 $xl-size;
 	}
 }
