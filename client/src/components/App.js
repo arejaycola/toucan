@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
+import HomePage from './HomePage';
 import SearchBox from './SearchBox';
 import SearchResultList from './SearchResultList';
+import Parent from './Parent';
+import SearchContext from '../context/search-context';
 
 const App = () => {
-	const [searchResults, setSearchResults] = useState([]);
-	const [classes, setClasses] = useState();
+	const [searchResults, setSearchResults] = useState();
+	// const [classes, setClasses] = useState();
 
-	const animateSearchBox = (p) => {
-		setClasses(p);
-	};
+	// const animateSearchBox = (p) => {
+	// 	setClasses(p);
+	// };
 
-	const populateSearchResults = (results) => {
-		setSearchResults(results);
-		console.log(results);
-	};
+	// const populateSearchResults = (results) => {
+	// 	setSearchResults(results);
+	// 	console.log(results);
+	// };
 
 	return (
 		<div className="App">
-			<SearchBox populateSearchResults={populateSearchResults} animateSearchBox={animateSearchBox} />
+			<SearchContext.Provider value={{ searchResults, setSearchResults }}>
+				<HomePage />
+			</SearchContext.Provider>
+			{/* <SearchBox populateSearchResults={populateSearchResults} animateSearchBox={animateSearchBox} /> */}
 
-			<SearchResultList results={searchResults} />
+			{/* <SearchResultList results={searchResults} /> */}
 		</div>
 	);
 };

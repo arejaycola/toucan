@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import SearchContext from '../context/search-context';
 
-const SearchBox = ({ animateSearchBox, populateSearchResults }) => {
+const SearchBox = () => {
+	const { setSearchResults } = useContext(SearchContext);
 	const [searchText, setSearchChange] = useState('');
 
-	// useEffect(async () => {
-	// 	const response = await axios.post(`http://localhost:5000/twitter/search`, { searchString: 'rob' });
-	// 	if (response) {
-	// 		animateSearchBox('top-container');
-	// 		populateSearchResults(response.data);
-	// 	}
-	// }, []);
-
-	const searchButtonClick = async () => {
+	const searchButtonClick = async (e) => {
 		try {
+			e.preventDefault();
 			const response = await axios.post(`http://localhost:5000/twitter/search`, { searchString: 'rob' });
+			// const response = await axios.post(`http://localhost:5000/twitter/search`, { searchString: searchChange});
 			if (response) {
+				setSearchResults(response.data);
 				// animateSearchBox('top-container');
-				populateSearchResults(response.data);
+				// populateSearchResults(response.data);
 			}
 		} catch (e) {
 			console.log(e);
@@ -25,14 +22,12 @@ const SearchBox = ({ animateSearchBox, populateSearchResults }) => {
 	};
 
 	return (
-		<div className="search-box-container ">
+		<form className="search-box-container " onSubmit={searchButtonClick}>
 			<h1 className="title">Toucan</h1>
 			<h4 className="sub-title">Enter a verified Twitter Account</h4>
 			<input onChange={(e) => setSearchChange(e.target.value)} className="text-input" type="text" />
-			<button className="button" onClick={searchButtonClick}>
-				Search
-			</button>
-		</div>
+			<button className="button">Search</button>
+		</form>
 	);
 };
 
