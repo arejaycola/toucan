@@ -4,13 +4,17 @@
 	"scripts": {
 		"client": "cd client && npm start",
 		"server": "nodemon server/server.js",
-		"dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+		"dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+		"start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
 	},
 	"dependencies": {
 		"axios": "^0.19.2",
 		"body-parser": "^1.18.3",
 		"dotenv": "^8.2.0",
 		"express": "^4.16.4",
+		"history": "^4.10.1",
+		"react-pose": "^4.0.10",
+		"react-router-dom": "^5.1.2",
 		"react-spring": "^8.0.27",
 		"twitter": "^1.7.1"
 	},

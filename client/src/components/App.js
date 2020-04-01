@@ -4,6 +4,7 @@ import SearchBox from './SearchBox';
 import SearchResultList from './SearchResultList';
 import Parent from './Parent';
 import SearchContext from '../context/search-context';
+import AppRouter from '../routers/AppRouter';
 
 const App = () => {
 	const [searchResults, setSearchResults] = useState();
@@ -19,14 +20,9 @@ const App = () => {
 	// };
 
 	return (
-		<div className="App">
-			<SearchContext.Provider value={{ searchResults, setSearchResults }}>
-				<HomePage />
-			</SearchContext.Provider>
-			{/* <SearchBox populateSearchResults={populateSearchResults} animateSearchBox={animateSearchBox} /> */}
-
-			{/* <SearchResultList results={searchResults} /> */}
-		</div>
+		<SearchContext.Provider value={{ searchResults, setSearchResults }}>
+			<AppRouter />
+		</SearchContext.Provider>
 	);
 };
 

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import SearchContext from '../context/search-context';
+import { SearchContext } from '../contexts/SearchContext';
 
 const SearchResults = () => {
-	const  { searchResults } = useContext(SearchContext);
+	const { searchResults } = useContext(SearchContext);
 
 	return searchResults ? (
 		<div className="search-list-results">
@@ -10,8 +10,10 @@ const SearchResults = () => {
 				{searchResults.map((result) => {
 					return (
 						<li key={result.id}>
-							<img src={`${result.profile_image_url_https.replace('normal', 'bigger')}`} /> {result.name} {result.screen_name}{' '}
-							{result.description} {result.location}
+							<a>
+								<img src={`${result.profile_image_url_https.replace('normal', 'bigger')}`} /> {result.name} {result.screen_name}{' '}
+								{result.description} {result.location}
+							</a>
 						</li>
 					);
 				})}

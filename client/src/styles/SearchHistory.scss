@@ -1,0 +1,15 @@
+.search-history-container {
+	background: rgba(255, 255, 255, 0.85) !important;
+	margin: $s-size $l-size;
+    padding: $s-size $l-size;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+
+    
+    // height: 300px;
+    overflow: y;
+    // .search-history-content{
+    //     flex: 1;
+    // }
+}
