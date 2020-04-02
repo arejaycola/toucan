@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
 import { SearchContext } from '../contexts/SearchContext';
+import { useHistory } from 'react-router-dom';
 
 const SearchResults = () => {
 	const { searchResults } = useContext(SearchContext);
+	const history = useHistory();
+
+	const onCardClick = (id) => {
+		history.push(`/user/${id}`);
+	};
 
 	return (
 		<div className="search-results">
 			{searchResults.length != 0
 				? searchResults.map((result) => {
 						return (
-							<div className="card hvr-bob" key={result.id}>
+							<div onClick={() => onCardClick(result.id)} className="card hvr-bob" key={result.id}>
 								<div className="card-top">
 									<div className="card-left-side">
 										<img src={`${result.profile_image_url_https.replace('_normal', '')}`} />
