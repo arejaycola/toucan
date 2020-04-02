@@ -9,7 +9,7 @@ const SearchResults = () => {
 			{searchResults.length != 0
 				? searchResults.map((result) => {
 						return (
-							<div className="card" key={result.id}>
+							<div className="card hvr-bob" key={result.id}>
 								<div className="card-top">
 									<div className="card-left-side">
 										<img src={`${result.profile_image_url_https.replace('_normal', '')}`} />
