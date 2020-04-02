@@ -9,7 +9,7 @@
 
 
     
-    height: 300px;
+    // height: 300px;
     overflow: y;
     // .search-history-content{
     //     flex: 1;
@@ -19,5 +19,12 @@
         text-align: center;
         border-bottom: 1px solid $grey;
         
+    }
+
+    .search-history-item{
+        // margin: $s-size $s-size;
+        padding: $s-size;
+        margin: 0;
+        border-bottom: 1px solid lightgray;
     }
 }
