@@ -22,6 +22,9 @@ const SearchResultsPage = () => {
 				<SearchHistory />
 			</div>
 			<div className="right-side">
+				<div className="instructions">
+					<p>Click on a user below to view their Twitter habits.</p>
+				</div>
 				<SearchResultsList />
 			</div>
 		</div>

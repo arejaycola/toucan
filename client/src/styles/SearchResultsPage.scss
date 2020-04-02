@@ -13,13 +13,28 @@
 		margin: $xl-size 0 0 0;
 		padding: 0 $xl-size;
 
+		.instructions {
+			// width: 1000px;
+			background-color: $background;
+			border-radius: 5px;
+			margin: 0 $m-size;
+			padding: $m-size $xl-size;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+
+			p {
+				font-size: 2.1rem;
+			}
+		}
+
 		.search-results {
+			margin-top: $l-size;
 			display: grid;
 			// grid-gap: 50px;
 			grid-template-columns: 1fr 1fr 1fr;
 			// grid-template-rows: 50px 50px;
 			// background-color: #2196f3;
-			padding: 0 10px 10px 10px;
 
 			.card {
 				height: 300px;
@@ -53,14 +68,13 @@
 							// margin: 0 $s-size $xs-size $s-size;
 							padding: 0;
 						}
-						a{
+						a {
 							text-decoration: none;
 						}
 					}
 				}
 				.card-bottom {
 					text-align: left;
-
 				}
 			}
 		}
