@@ -13,8 +13,9 @@ const SearchBox = () => {
 			e.preventDefault();
 			const response = await axios.post(`http://localhost:5000/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
 			if (response) {
+
 				addSearchHistory(searchText.length == 0 ? 'Rob' : searchText);
-				setSearchResults(response.data);
+				setSearchResults(response.data.sort((a, b) => a.follower_count - b.follower_count));
 				history.push('/search-results');
 			}
 		} catch (e) {
