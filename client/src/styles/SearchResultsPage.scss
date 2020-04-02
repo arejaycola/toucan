@@ -1,0 +1,48 @@
+.search-page-container {
+	display: flex;
+
+	.left-side {
+        margin-top: $xl-size;
+		.search-box {
+            width: 400px;
+			// margin: $xl-size 0;
+		}
+	}
+
+	.right-side {
+		margin: $xl-size 0 0 0;
+		padding: 0 $xl-size;
+
+		.search-results {
+
+            display: grid;
+			// grid-gap: 50px;
+			grid-template-columns: 1fr 1fr 1fr;
+			// grid-template-rows: 50px 50px;
+			// background-color: #2196f3;
+			padding: 0 10px 10px 10px;
+
+			.card {
+                height: 300px;
+                background-color: $background;
+                border-radius: 5px;
+				// border: 1px solid rgba(0, 0, 0, 0.8);
+                padding: 20px;
+                margin: 0 $m-size $m-size $m-size;
+				// font-size: 30px;
+                text-align: center;
+                
+                img{
+                    // margin-top: -50px;
+                    // margin-left: -50px;
+                    // border-radius: 50%;
+                    height: 150px;
+                }
+            }
+            
+            a{
+                // font-size: 1.3rem;
+            }
+		}
+	}
+}

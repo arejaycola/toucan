@@ -7,7 +7,12 @@ const SearchContextProvider = (props) => {
 	const [searchHistory, setSearchHistory] = useState([]);
 
 	const addSearchHistory = (newHistory) => {
-		setSearchHistory([...searchHistory, newHistory]);
+		let tempArray = [...searchHistory, newHistory];
+
+		console.log(searchHistory);
+		// setSearchHistory([...searchHistory, newHistory]);
+		setSearchHistory((items) => [...items, newHistory]);
+		console.log(searchHistory);
 	};
 
 	return (

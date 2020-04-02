@@ -16,7 +16,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
 async function searchForVerifiedUser(name) {
 	try {
-		const response = await client.get('https://api.twitter.com/1.1/users/search.json', { q: `${name}`, count: 5, page: 1, include_entities: false });
+		const response = await client.get('https://api.twitter.com/1.1/users/search.json', { q: `${name}`, count:20, page: 1, include_entities: false });
 		var verifiedUsers = getVerifiedUsers(response);
 
 		if (!verifiedUsers) {

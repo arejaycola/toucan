@@ -4,22 +4,18 @@ import { SearchContext } from '../contexts/SearchContext';
 const SearchResults = () => {
 	const { searchResults } = useContext(SearchContext);
 
-	return searchResults ? (
-		<div className="search-list-results">
-			<ul>
-				{searchResults.map((result) => {
-					return (
-						<li key={result.id}>
-							<a>
-								<img src={`${result.profile_image_url_https.replace('normal', 'bigger')}`} /> {result.name} {result.screen_name}{' '}
-								{result.description} {result.location}
-							</a>
-						</li>
-					);
-				})}
-			</ul>
+	return (
+		<div className="search-results">
+			{searchResults.map((result) => {
+				return (
+					<div className="card" key={result.id}>
+						<img src={`${result.profile_image_url_https.replace('_normal', '')}`} /> {result.name} {result.screen_name}{' '}
+						{result.description} {result.location}
+					</div>
+				);
+			})}
 		</div>
-	) : null;
+	);
 };
 
 export default SearchResults;
