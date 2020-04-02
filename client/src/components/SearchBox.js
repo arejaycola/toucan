@@ -15,7 +15,7 @@ const SearchBox = () => {
 			if (response) {
 
 				addSearchHistory(searchText.length == 0 ? 'Rob' : searchText);
-				setSearchResults(response.data.sort((a, b) => a.follower_count - b.follower_count));
+				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
 				history.push('/search-results');
 			}
 		} catch (e) {
