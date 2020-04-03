@@ -11,7 +11,7 @@ const SearchBox = () => {
 	const searchButtonClick = async (e) => {
 		try {
 			let serverLocation = process.env.SERVER_NAME || 'http://localhost:5000';
-			console.log(serverLocation);
+			console.log(process.env);
 			e.preventDefault();
 			const response = await axios.post(`${serverLocation}/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
 			if (response) {
