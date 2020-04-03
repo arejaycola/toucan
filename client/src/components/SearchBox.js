@@ -13,7 +13,7 @@ const SearchBox = () => {
 			let serverLocation = process.env.NODE_ENV === 'production' ? 'https://arejaycola-toucan.herokuapp.com' : 'http://localhost:5000';
 			console.log(process.env, serverLocation);
 			e.preventDefault();
-			const response = await axios.post(`/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
+			const response = await axios.post(`/api/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
 			if (response) {
 				addSearchHistory(searchText.length == 0 ? 'Rob' : searchText);
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));

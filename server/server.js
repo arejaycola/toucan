@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use('/', express.static(path.join(__dirname, '../client/build')));
 
-app.post('/twitter/search', async (req, res) => {
+app.post('/api/twitter/search', async (req, res) => {
 	let searchString = req.body.searchString;
 	let results = await searchForVerifiedUser(searchString);
 	res.send(results);
