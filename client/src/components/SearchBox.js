@@ -10,10 +10,11 @@ const SearchBox = () => {
 
 	const searchButtonClick = async (e) => {
 		try {
-			e.preventDefault();
-			const response = await axios.post(`http://localhost:5000/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
-			if (response) {
+			let serverLocation = process.env.SERVER_NAME || 'http://localhost:5000';
 
+			e.preventDefault();
+			const response = await axios.post(`${serverLocation}/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
+			if (response) {
 				addSearchHistory(searchText.length == 0 ? 'Rob' : searchText);
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
 				history.push('/search-results');
