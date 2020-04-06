@@ -17,7 +17,7 @@ const AppRouter = () => {
 				<Switch>
 					<SearchContextProvider>
 						<PublicRoute path="/" component={HomePage} exact={true} />
-						<PublicRoute path="/search-results" component={SearchResultsPage} exact={true} />
+						<PublicRoute path="/search/:text" component={SearchResultsPage} exact={true} />
 						<PublicRoute path="/user/" component={UserPage} exact={true} />
 						<PublicRoute path="/user/:id" component={UserPage} exact={true} />
 					</SearchContextProvider>

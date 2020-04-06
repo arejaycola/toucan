@@ -1,17 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Axios from 'axios';
 
 import SearchBox from './SearchBox';
 import SearchHistory from './SearchHistory';
 import SearchResultsList from './SearchResultList';
 import { SearchContext } from '../contexts/SearchContext';
 
-const SearchResultsPage = () => {
-	const { searchResults } = useContext(SearchContext);
+const SearchResultsPage = (props) => {
+	const searchString = props.match.params.text;
+	const { addSearchHistory, setSearchResults } = useContext(SearchContext);
+
 	const history = useHistory();
 
-	/* Redirect to index if there are no results. */
-	searchResults.length != 0 || history.push('/');
+	useEffect(() => {
+		const sendRequest = async () => {
+			const response = await Axios.get(`/api/twitter/search/${searchString}`);
+			if (response) {
+				addSearchHistory(searchString);
+				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
+			}
+		};
+		sendRequest();
+	}, [searchString]);
 
 	return (
 		<div className="search-page-container">

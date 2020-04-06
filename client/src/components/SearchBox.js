@@ -1,26 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { SearchContext } from '../contexts/SearchContext';
 import { useHistory } from 'react-router-dom';
 
 const SearchBox = () => {
 	const [searchText, setSearchText] = useState('');
-	const { addSearchHistory, setSearchResults } = useContext(SearchContext);
 	const history = useHistory();
 
 	const searchButtonClick = async (e) => {
-		try {
-			let serverLocation = process.env.NODE_ENV === 'production' ? 'https://arejaycola-toucan.herokuapp.com' : 'http://localhost:5000';
-			e.preventDefault();
-			const response = await axios.post(`/api/twitter/search`, { searchString: searchText.length == 0 ? 'Rob' : searchText });
-			if (response) {
-				addSearchHistory(searchText.length == 0 ? 'Rob' : searchText);
-				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
-				history.push('/search-results');
-			}
-		} catch (e) {
-			console.log(e);
-		}
+		e.preventDefault();
+		const text = { searchString: searchText.length == 0 ? 'Rob' : searchText };
+		history.push(`/search/${text.searchString}`);
 	};
 
 	return (
