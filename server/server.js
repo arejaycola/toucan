@@ -2,7 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { searchForVerifiedUser } = require('./twitterHelper');
+const Twitter = require('./twitterHelper');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,10 +12,15 @@ app.use(cors());
 
 app.use('/', express.static(path.join(__dirname, '../client/build')));
 
-app.post('/api/twitter/search', async (req, res) => {
-	console.log('here');
-	let searchString = req.body.searchString;
-	let results = await searchForVerifiedUser(searchString);
+app.get('/api/twitter/search/:text', async (req, res) => {
+	let searchString = req.params.text;
+	let results = await Twitter.searchForVerifiedUser(searchString);
+	res.send(results);
+});
+
+app.get('/api/twitter/user/:userid', async (req, res) => {
+	let id = req.params.userid;
+	let results = await Twitter.getUser(id);
 	res.send(results);
 });
 
