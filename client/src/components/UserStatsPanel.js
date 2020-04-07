@@ -15,21 +15,24 @@ const UserStatsPanel = (props) => {
 					@{props.user.screen_name}
 				</a>
 			</p>
-			<p>{props.user.description}</p>
-			<p>
+			<p>{props.user.description} </p>
+			<p style={{ textAlign: 'center' }}>
 				<FontAwesomeIcon style={{ marginRight: '5px' }} icon={faCalendar} />
 				Joined {moment(props.user.created_at).format('MMMM YYYY')}
 			</p>
 			<div className="location-url-container">
 				<div className="location-container">
 					<FontAwesomeIcon style={{ marginRight: '3px' }} icon={faLocationArrow} />
-					{/* <img style={{ height: '15px' }} src="/location.png" /> */}
+
 					{props.user.location}
+				</div>
+				<div>
+					<strong>|</strong>
 				</div>
 				<div className="url-container">
 					<a target="_blank" href={props.user.url}>
 						<FontAwesomeIcon style={{ marginRight: '3px' }} icon={faLink} />
-						{props.user.url}
+						Website
 					</a>
 				</div>
 			</div>
@@ -89,8 +92,6 @@ const UserStatsPanel = (props) => {
 					</div>
 				</div>
 			</div>
-			<p>{props.user.name}</p>
-			<p>{props.user.name}</p>
 		</div>
 	);
 };
