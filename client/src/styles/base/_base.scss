@@ -8,7 +8,7 @@ html {
 
 body {
 	color: $dark-grey;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
 	font-size: $m-size;
 	line-height: 1.6;
 	// background: url("https://mdn.mozillademos.org/files/12057/starsolid.gif");
@@ -20,4 +20,10 @@ body {
 	// width: 100vw;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+
+	.muted-small {
+		color: #6c757d !important;
+		font-size: $s-size;
+		line-height: 1.2rem;
+	}
 }
