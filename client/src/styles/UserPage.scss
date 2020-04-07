@@ -33,12 +33,11 @@
 		}
 
 		.profile-image-container {
-			position: relative;
-			margin-top: -150px;
-			margin-left: -100px;
-			// left: 22vw;
-			// top: 20vh;
+			position: absolute;
+			margin-top: -120px;
+			margin-left: 130px;
 			z-index: 1;
+
 			img {
 				height: 205px;
 				border-radius: 50%;
@@ -48,8 +47,10 @@
 
 		.right-panel {
 			// background-color: $background;
-			margin-left: $m-size;
-			background-color: blue;
+			// margin-left: $m-size;
+			z-index: 2;
+			padding-left: $xl-size;
+			// background-color: blue;
 		}
 	}
 }
