@@ -17,37 +17,41 @@ const UserPage = (props) => {
 	const [user, setUser] = useState({});
 	const [tweets, setTweets] = useState([]);
 	const [retweets, setRetweets] = useState([]);
-	const [quoted, setQuoted] = useState([]);
+	const [quotedTweets, setQuotedTweets] = useState([]);
 
 	useEffect(() => {
 		const sendUserRequest = async () => {
 			const response = await Axios.get(`/api/twitter/user/${userId}`);
 			setUser(response.data);
 		};
+
 		const sendUserTweetsRequest = async () => {
 			const response = await Axios.get(`/api/twitter/user/${userId}/tweets`);
 			// setTweets(response.data);
 			let tempRetweets = [];
 			let tempTweets = [];
-			let tempQuoted = [];
+			let tempQuotedTweets = [];
 
-			// console.log(response.data);
-			let a = response.data.map((status) => {
+			/* Compartmentalize the different types of tweets (statuses) */
+			response.data.map((status) => {
 				if (status.retweeted_status) {
 					/* Retweeted status->user->verified */
 					tempRetweets.push(status);
 				} else if (status.quoted_status) {
 					/* Quoted status->user->verified. */
-					tempQuoted.push(status);
+					tempQuotedTweets.push(status);
 				} else {
 					/* Entities ->user_mentions->go through list get id, perform a search for that id -> verified */
 					tempTweets.push(status);
 				}
-				// return status.retweeted_status
 			});
-			console.log(tempRetweets);
-			console.log(tempQuoted);
-			console.log(tempTweets);
+
+			setTweets(tempTweets);
+			setRetweets(tempRetweets);
+			setQuotedTweets(tempQuotedTweets);
+			console.log('Retweets: ', tempRetweets);
+			console.log('Quoted Tweets: ', tempQuotedTweets);
+			console.log('Tweets: ', tempTweets);
 		};
 
 		sendUserRequest();
@@ -67,9 +71,8 @@ const UserPage = (props) => {
 					<ProfileImage image={user.profile_image_url_https} />
 				</div>
 				<div className="right-panel">
-					<UserChartsPanel tweets={tweets} user={user} />
+					<UserChartsPanel tweets={tweets} retweets={retweets} quotedTweets={quotedTweets} user={user} />
 				</div>
-				<p>Test {props.match.params.id}</p>
 			</div>
 		</div>
 	);
