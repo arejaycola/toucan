@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RetweetChart = () => {
-	return <p>Tehe</p>;
+	return <p>Rewtweet Chart</p>;
 };
 
 export default RetweetChart;

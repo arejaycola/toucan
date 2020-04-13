@@ -1,13 +1,7 @@
 import React from 'react';
 
 const TweetChart = (props) => {
-    
-
-
-
-	// console.log(props.tweets);
-
-	return <p>Test</p>;
+	return <p>Tweet Chart</p>;
 };
 
 export default TweetChart;
