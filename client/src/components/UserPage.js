@@ -15,15 +15,43 @@ const UserPage = (props) => {
 	userId || history.push('/');
 
 	const [user, setUser] = useState({});
+	const [tweets, setTweets] = useState([]);
+	const [retweets, setRetweets] = useState([]);
+	const [quoted, setQuoted] = useState([]);
 
 	useEffect(() => {
-		const sendRequest = async () => {
+		const sendUserRequest = async () => {
 			const response = await Axios.get(`/api/twitter/user/${userId}`);
 			setUser(response.data);
-			console.log(response.data);
+		};
+		const sendUserTweetsRequest = async () => {
+			const response = await Axios.get(`/api/twitter/user/${userId}/tweets`);
+			// setTweets(response.data);
+			let tempRetweets = [];
+			let tempTweets = [];
+			let tempQuoted = [];
+
+			// console.log(response.data);
+			let a = response.data.map((status) => {
+				if (status.retweeted_status) {
+					/* Retweeted status->user->verified */
+					tempRetweets.push(status);
+				} else if (status.quoted_status) {
+					/* Quoted status->user->verified. */
+					tempQuoted.push(status);
+				} else {
+					/* Entities ->user_mentions->go through list get id, perform a search for that id -> verified */
+					tempTweets.push(status);
+				}
+				// return status.retweeted_status
+			});
+			console.log(tempRetweets);
+			console.log(tempQuoted);
+			console.log(tempTweets);
 		};
 
-		sendRequest();
+		sendUserRequest();
+		sendUserTweetsRequest();
 	}, []);
 
 	return (
@@ -39,7 +67,7 @@ const UserPage = (props) => {
 					<ProfileImage image={user.profile_image_url_https} />
 				</div>
 				<div className="right-panel">
-					<UserChartsPanel user={user} />
+					<UserChartsPanel tweets={tweets} user={user} />
 				</div>
 				<p>Test {props.match.params.id}</p>
 			</div>

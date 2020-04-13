@@ -48,10 +48,25 @@ async function searchForVerifiedUser(name) {
 	}
 }
 
+async function getTweetsByUserId(userId) {
+	try {
+		const response = await client.get(`https://api.twitter.com/1.1/statuses/user_timeline.json`, {
+			user_id: userId,
+			count: 20,
+			include_rts: true
+		});
+
+		return response;
+	} catch (e) {
+		console.log(e);
+		throw new Error('Error fetching user.');
+	}
+}
+
 function getVerifiedUsers(users) {
 	return users.filter((user) => {
 		return user.verified;
 	});
 }
 
-module.exports = { searchForVerifiedUser, getUser };
+module.exports = { searchForVerifiedUser, getUser, getTweetsByUserId };

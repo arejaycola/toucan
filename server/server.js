@@ -24,4 +24,10 @@ app.get('/api/twitter/user/:userid', async (req, res) => {
 	res.send(results);
 });
 
+app.get('/api/twitter/user/:userid/tweets', async (req, res) => {
+	let id = req.params.userid;
+	let results = await Twitter.getTweetsByUserId(id);
+	res.send(results);
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -4,8 +4,8 @@ import RetweetChart from './RetweetChart';
 const UserChartsPanel = (props) => {
 	return (
 		<div>
-			<TweetChart />
-			<RetweetChart />
+			<TweetChart tweets={props.tweets} user={props.user}/>
+			<RetweetChart user={props.user} />
 			<p>{props.user.name}</p>
 		</div>
 	);
