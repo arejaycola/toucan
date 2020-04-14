@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { SearchContext } from '../contexts/SearchContext';
+import { TweetContext } from '../contexts/TweetContext';
 import BannerImage from '../components/BannerImage';
 import UserStatsPanel from '../components/UserStatsPanel';
 import ProfileImage from '../components/ProfileImage';
@@ -15,9 +15,7 @@ const UserPage = (props) => {
 	userId || history.push('/');
 
 	const [user, setUser] = useState({});
-	const [tweets, setTweets] = useState([]);
-	const [retweets, setRetweets] = useState([]);
-	const [quotedTweets, setQuotedTweets] = useState([]);
+	const { setTweets, setRetweets, setQuotedTweets } = useContext(TweetContext);
 
 	useEffect(() => {
 		const sendUserRequest = async () => {
@@ -71,7 +69,7 @@ const UserPage = (props) => {
 					<ProfileImage image={user.profile_image_url_https} />
 				</div>
 				<div className="right-panel">
-					<UserChartsPanel tweets={tweets} retweets={retweets} quotedTweets={quotedTweets} user={user} />
+					<UserChartsPanel user={user} />
 				</div>
 			</div>
 		</div>

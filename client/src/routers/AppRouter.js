@@ -7,6 +7,7 @@ import SearchResultsPage from '../components/SearchResultsPage';
 import UserPage from '../components/UserPage';
 import PublicRoute from './PublicRoute';
 import SearchContextProvider from '../contexts/SearchContext';
+import TweetContextProvider from '../contexts/TweetContext';
 
 export const history = createBrowserHistory();
 
@@ -18,8 +19,10 @@ const AppRouter = () => {
 					<SearchContextProvider>
 						<PublicRoute path="/" component={HomePage} exact={true} />
 						<PublicRoute path="/search/:text" component={SearchResultsPage} exact={true} />
-						<PublicRoute path="/user/" component={UserPage} exact={true} />
-						<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+						<TweetContextProvider>
+							<PublicRoute path="/user/" component={UserPage} exact={true} />
+							<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+						</TweetContextProvider>
 					</SearchContextProvider>
 					<Route component={NotFoundPage} />
 				</Switch>
