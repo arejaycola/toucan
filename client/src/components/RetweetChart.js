@@ -11,12 +11,12 @@ const RetweetChart = () => {
 	const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
 	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
 
-	let tempVerifiedDay = Array(7).fill(0);
-	let tempUnverifiedDay = Array(7).fill(0);
-	let tempVerifiedHour = Array(24).fill(0);
-	let tempUnverifiedHour = Array(24).fill(0);
-
 	useEffect(() => {
+		let tempVerifiedDay = Array(7).fill(0);
+		let tempUnverifiedDay = Array(7).fill(0);
+		let tempVerifiedHour = Array(24).fill(0);
+		let tempUnverifiedHour = Array(24).fill(0);
+
 		retweets.map((retweet) => {
 			let tempMoment = moment(new Date(retweet.created_at));
 			if (retweet.retweeted_status.user.verified) {
@@ -25,7 +25,6 @@ const RetweetChart = () => {
 			} else {
 				tempUnverifiedDay[tempMoment.weekday()]++;
 				tempUnverifiedHour[tempMoment.hour()]++;
-				console.log(tempMoment.hour());
 			}
 		});
 
@@ -42,16 +41,15 @@ const RetweetChart = () => {
 			.format('dddd');
 	};
 	const hourTickFormat = (d) => {
-		console.log(d);
-		if (d == 12) {
+		if (d === 12) {
 			return '12 pm';
-		} else if (d == 0) {
+		} else if (d === 0) {
 			return '12am';
 		}
 
 		return moment()
 			.hour(d)
-			.format('hh');
+			.format('h');
 	};
 
 	return (

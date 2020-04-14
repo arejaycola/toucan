@@ -4,10 +4,10 @@
 }
 
 .line-verified {
-	stroke: lightskyblue;
+	stroke: $verified;
 }
 .line-unverified {
-	stroke: royalblue;
+	stroke: $unverified;
 }
 
 .overlay {
@@ -24,4 +24,28 @@
 .focus circle {
 	fill: none;
 	stroke: steelblue;
+}
+
+text {
+	color: rgb(64, 64, 65);
+	transform: rotate(-65);
+}
+
+.legend-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	.legend {
+		padding: 0 $xs-size;
+		text-align: center;
+		border: 1px solid $dark-grey;
+		.unverified {
+			color: $unverified;
+		}
+
+		.verified {
+			color: $verified;
+		}
+	}
 }

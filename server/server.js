@@ -30,4 +30,9 @@ app.get('/api/twitter/user/:userid/tweets', async (req, res) => {
 	res.send(results);
 });
 
+app.post('/api/twitter/users', async (req, res) => {
+	let results = await Twitter.getUsersByIds(req.body.user_ids);
+	res.send(results);
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));

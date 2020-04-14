@@ -58,9 +58,12 @@ const UserPage = (props) => {
 
 	return (
 		<div className="layout-container">
-			<div className="banner-container">
-				<BannerImage image={user.profile_banner_url} />
-			</div>
+			{user.profile_banner_url ? (
+				<div className="banner-container">
+					<BannerImage image={user.profile_banner_url} />
+				</div>
+			) : null}
+
 			<div className="bottom-container">
 				<div className="left-panel">
 					<UserStatsPanel user={user} />
