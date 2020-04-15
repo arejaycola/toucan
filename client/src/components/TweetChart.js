@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
 import { TweetContext } from '../contexts/TweetContext';
-import D3RetweetChart from './D3RetweetChart';
+import D3Chart from './D3Chart';
 
 const TweetChart = () => {
 	const { tweets } = useContext(TweetContext);
@@ -32,13 +32,13 @@ const TweetChart = () => {
 		const sendUsersRequest = async () => {
 			if (userIds.length > 0) {
 				const response = await Axios.post(`/api/twitter/users/`, {
-					user_ids: userIds.toString()
+					user_ids: userIds.toString(),
 				});
 
 				let users = response.data.map((user) => {
 					return {
 						id: user.id,
-						verified: user.verified
+						verified: user.verified,
 					};
 				});
 
@@ -87,9 +87,7 @@ const TweetChart = () => {
 	}, [tweets]);
 
 	const dayTickFormat = (d) => {
-		return moment()
-			.weekday(d)
-			.format('dddd');
+		return moment().weekday(d).format('dddd');
 	};
 	const hourTickFormat = (d) => {
 		if (d == 12) {
@@ -98,16 +96,14 @@ const TweetChart = () => {
 			return '12am';
 		}
 
-		return moment()
-			.hour(d)
-			.format('hh');
+		return moment().hour(d).format('hh');
 	};
 
 	return (
 		<div style={{ textAlign: 'center' }}>
 			<p>Retweet Chart</p>
-			<D3RetweetChart id="d3-tweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
-			<D3RetweetChart id="d3-tweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
+			<D3Chart id="d3-tweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
+			<D3Chart id="d3-tweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
 			{/* <D3RetweetChartDay data={props.retweets} /> */}
 		</div>
 	);

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import { TweetContext } from '../contexts/TweetContext';
-import D3RetweetChart from './D3RetweetChart';
+import D3Chart from './D3Chart';
 
 const RetweetChart = () => {
 	const { retweets } = useContext(TweetContext);
@@ -54,8 +54,8 @@ const RetweetChart = () => {
 	return (
 		<div style={{ textAlign: 'center' }}>
 			<p>Retweet Chart</p>
-			<D3RetweetChart id="d3-retweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
-			<D3RetweetChart id="d3-retweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
+			<D3Chart id="d3-retweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
+			<D3Chart id="d3-retweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
 			{/* <D3RetweetChartDay data={props.retweets} /> */}
 		</div>
 	);
