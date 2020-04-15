@@ -74,8 +74,6 @@ const TweetChart = () => {
 					});
 				});
 
-				// console.log(tempVerifiedDay);
-				// console.log(tempUnverifiedDay);
 				setVerifiedDay(tempVerifiedDay);
 				setUnverifiedDay(tempUnverifiedDay);
 				setVerifiedHour(tempVerifiedHour);
@@ -101,7 +99,7 @@ const TweetChart = () => {
 
 	return (
 		<div style={{ textAlign: 'center' }}>
-			<p>Retweet Chart</p>
+			<p>Tweet Chart</p>
 			<D3Chart id="d3-tweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
 			<D3Chart id="d3-tweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
 			{/* <D3RetweetChartDay data={props.retweets} /> */}
