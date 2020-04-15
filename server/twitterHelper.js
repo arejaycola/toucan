@@ -4,11 +4,11 @@ var client = new Twitter({
 	consumer_key: process.env.TWITTER_CONSUMER_KEY,
 	consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
 	access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-	access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+	access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
 var params = { screen_name: 'nodejs' };
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
+client.get('statuses/user_timeline', params, function (error, tweets, response) {
 	if (!error) {
 		// console.log(tweets);
 	}
@@ -17,7 +17,7 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 const getUser = async (id) => {
 	try {
 		const response = await client.get(`https://api.twitter.com/1.1/users/show.json`, {
-			user_id: id
+			user_id: id,
 		});
 
 		return response;
@@ -33,7 +33,7 @@ async function searchForVerifiedUser(name) {
 			q: `${name}`,
 			count: 20,
 			page: 1,
-			include_entities: false
+			include_entities: false,
 		});
 		var verifiedUsers = getVerifiedUsers(response);
 
@@ -48,15 +48,53 @@ async function searchForVerifiedUser(name) {
 	}
 }
 
-async function getTweetsByUserId(userId) {
+async function getLastThousandTweets(params) {
 	try {
-		const response = await client.get(`https://api.twitter.com/1.1/statuses/user_timeline.json`, {
-			user_id: userId,
-			count: 2000,
-			include_rts: true
-		});
+		const response = await client.get(`https://api.twitter.com/1.1/statuses/user_timeline.json`, params);
 
 		return response;
+	} catch (e) {
+		console.log(e);
+		throw new Error('Error fetching tweets.');
+	}
+}
+
+async function getTweetsByUserId(userId) {
+	let number = 199;
+	let results = [];
+	let maxId = -1;
+
+	let params = {};
+	try {
+		if (maxId == -1) {
+			params = {
+				user_id: userId,
+				count: 200,
+				include_rts: true,
+			};
+		} else {
+			params = {
+				user_id: userId,
+				count: 200,
+				include_rts: true,
+				max_id: maxId,
+			};
+		}
+		while (number == 199 && results.length <= 1000) {
+			let response = await getLastThousandTweets(params);
+
+			maxId =
+				Math.max.apply(
+					Math,
+					response.map(function (o) {
+						return o.id;
+					})
+				) - 1;
+			results = [...results, ...response];
+			number = response.length;
+		}
+
+		return results;
 	} catch (e) {
 		console.log(e);
 		throw new Error('Error fetching user.');
@@ -68,7 +106,7 @@ async function getUsersByIds(userIds) {
 		const response = await client.get(`https://api.twitter.com/1.1/users/lookup.json`, {
 			user_id: userIds,
 			count: 2000,
-			include_rts: true
+			include_rts: true,
 		});
 
 		return response;
