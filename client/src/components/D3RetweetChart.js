@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 export default (props) => {
 	const svgHeight = 275;
-	const svgWidth = 475;
+	const svgWidth = 450;
 
 	const d3RetweetChartDay = useRef(null);
 	useEffect(() => {

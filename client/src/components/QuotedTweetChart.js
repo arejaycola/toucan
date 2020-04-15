@@ -4,7 +4,7 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3RetweetChart from './D3RetweetChart';
 
 const QuotedTweetChart = () => {
-	const { retweets } = useContext(TweetContext);
+	const { quotedTweets } = useContext(TweetContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -17,9 +17,11 @@ const QuotedTweetChart = () => {
 	let tempUnverifiedHour = Array(24).fill(0);
 
 	useEffect(() => {
-		retweets.map((retweet) => {
-			let tempMoment = moment(new Date(retweet.created_at));
-			if (retweet.retweeted_status.user.verified) {
+		quotedTweets.map((quotedTweet) => {
+			let tempMoment = moment(new Date(quotedTweet.created_at));
+			console.log(quotedTweet);
+
+			if (quotedTweet.quoted_status.user.verified) {
 				tempVerifiedDay[tempMoment.weekday()]++;
 				tempVerifiedHour[tempMoment.hour()]++;
 			} else {
@@ -32,12 +34,10 @@ const QuotedTweetChart = () => {
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
-	}, [retweets]);
+	}, [quotedTweets]);
 
 	const dayTickFormat = (d) => {
-		return moment()
-			.weekday(d)
-			.format('dddd');
+		return moment().weekday(d).format('dddd');
 	};
 	const hourTickFormat = (d) => {
 		if (d == 12) {
@@ -46,16 +46,14 @@ const QuotedTweetChart = () => {
 			return '12am';
 		}
 
-		return moment()
-			.hour(d)
-			.format('hh');
+		return moment().hour(d).format('hh');
 	};
 
 	return (
 		<div style={{ textAlign: 'center' }}>
-			<p>Tweet Chart</p>
-			<D3RetweetChart id="d3-tweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
-			<D3RetweetChart id="d3-tweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
+			<p>Quoted Tweet Chart</p>
+			<D3RetweetChart id="d3-quoted-tweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
+			<D3RetweetChart id="d3-quoted-tweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
 			{/* <D3RetweetChartDay data={props.retweets} /> */}
 		</div>
 	);

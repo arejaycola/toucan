@@ -32,7 +32,6 @@ const RetweetChart = () => {
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
-		// console.log(tempVerifiedHour);
 	}, [retweets]);
 
 	const dayTickFormat = (d) => {
