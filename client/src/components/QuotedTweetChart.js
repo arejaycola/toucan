@@ -19,7 +19,6 @@ const QuotedTweetChart = () => {
 	useEffect(() => {
 		quotedTweets.map((quotedTweet) => {
 			let tempMoment = moment(new Date(quotedTweet.created_at));
-			console.log(quotedTweet);
 
 			if (quotedTweet.quoted_status.user.verified) {
 				tempVerifiedDay[tempMoment.weekday()]++;

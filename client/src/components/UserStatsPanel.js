@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLocationArrow, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import numeral from 'numeral';
 
+import { TweetContext } from '../contexts/TweetContext';
+import TweetStatsContainer from './TweetStatsContainer';
+
 const UserStatsPanel = (props) => {
+	const { tweets, quotedTweets, retweets } = useContext(TweetContext);
+
 	return (
 		<div>
 			<h3>
@@ -58,40 +63,7 @@ const UserStatsPanel = (props) => {
 					Followers
 				</div>
 			</div>
-			<div className="tweet-stats-container">
-				<h3>Tweets</h3>
-				<hr />
-				<div className="line-1">
-					<div className="total-tweets-container">
-						<p className="short-line">
-							<strong>{numeral(props.user.statuses_count).format('0,0')}</strong>
-						</p>
-						<p>Total Tweets</p>
-					</div>
-					<div className="total-retweets-container">
-						<p className="short-line">
-							<strong>{numeral(props.user.statuses_count).format('0,0')}</strong>
-						</p>
-						<p>Total Retweets</p>
-					</div>
-				</div>
-				<div className="line-2">
-					<div className="total-tweets-container">
-						<p className="short-line">
-							<strong>{numeral(props.user.statuses_count).format('0,0')}</strong>
-						</p>
-						<p className="short-line">Tweets to Unverified Users</p>
-						<p className="muted-small">(last 7 days)</p>
-					</div>
-					<div className="total-retweets-container">
-						<p className="short-line">
-							<strong>{numeral(props.user.statuses_count).format('0,0')}</strong>
-						</p>
-						<p className="short-line">Retweets to Unverified Users</p>
-						<p className="muted-small">(last 7 days)</p>
-					</div>
-				</div>
-			</div>
+			<TweetStatsContainer user={props.user} />
 		</div>
 	);
 };

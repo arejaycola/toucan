@@ -5,12 +5,14 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 
 const TweetChart = () => {
-	const { tweets } = useContext(TweetContext);
+	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
 	const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
 	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
+
+	let unverifiedMentionCount = 0;
 
 	let tempVerifiedDay = Array(7).fill(0);
 	let tempUnverifiedDay = Array(7).fill(0);
@@ -22,6 +24,8 @@ const TweetChart = () => {
 		const filteredTweets = tweets.filter((tweet) => {
 			return tweet.entities.user_mentions.length > 0;
 		});
+
+		setTweetsCount(tweets.length);
 
 		const userIds = filteredTweets
 			.map((tweet) => {
@@ -55,6 +59,9 @@ const TweetChart = () => {
 
 							if (userMentions.id === user.id) {
 								userMentions.verified = user.verified;
+								if (user.verified === false) {
+									unverifiedMentionCount++;
+								}
 							}
 						}
 					}
@@ -74,6 +81,7 @@ const TweetChart = () => {
 					});
 				});
 
+				setTweetsToUnverifiedCount(unverifiedMentionCount);
 				setVerifiedDay(tempVerifiedDay);
 				setUnverifiedDay(tempUnverifiedDay);
 				setVerifiedHour(tempVerifiedHour);

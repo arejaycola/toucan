@@ -6,9 +6,24 @@ const TweetContextProvider = (props) => {
 	const [tweets, setTweets] = useState([]);
 	const [retweets, setRetweets] = useState([]);
 	const [quotedTweets, setQuotedTweets] = useState([]);
+	const [tweetsToUnverifiedCount, setTweetsToUnverifiedCount] = useState(0);
+	const [tweetsCount, setTweetsCount] = useState(0);
 
 	return (
-		<TweetContext.Provider value={{ tweets, setTweets, retweets, setRetweets, quotedTweets, setQuotedTweets }}>
+		<TweetContext.Provider
+			value={{
+				tweets,
+				setTweets,
+				retweets,
+				setRetweets,
+				quotedTweets,
+				setQuotedTweets,
+				tweetsToUnverifiedCount,
+				setTweetsToUnverifiedCount,
+				tweetsCount,
+				setTweetsCount,
+			}}
+		>
 			{props.children}
 		</TweetContext.Provider>
 	);
