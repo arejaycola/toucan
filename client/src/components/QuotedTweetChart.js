@@ -4,7 +4,7 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 
 const QuotedTweetChart = () => {
-	const { quotedTweets } = useContext(TweetContext);
+	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -16,7 +16,11 @@ const QuotedTweetChart = () => {
 	let tempVerifiedHour = Array(24).fill(0);
 	let tempUnverifiedHour = Array(24).fill(0);
 
+	let unverifiedMentionCount = 0;
+
 	useEffect(() => {
+		setQuotedTweetsCount(quotedTweets.length);
+
 		quotedTweets.map((quotedTweet) => {
 			let tempMoment = moment(new Date(quotedTweet.created_at));
 
@@ -26,9 +30,11 @@ const QuotedTweetChart = () => {
 			} else {
 				tempUnverifiedDay[tempMoment.weekday()]++;
 				tempUnverifiedHour[tempMoment.hour()]++;
+				unverifiedMentionCount++;
 			}
 		});
 
+		setQuotedTweetsToUnverifiedCount(unverifiedMentionCount);
 		setVerifiedDay(tempVerifiedDay);
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);

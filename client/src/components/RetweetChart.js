@@ -4,18 +4,22 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 
 const RetweetChart = () => {
-	const { retweets } = useContext(TweetContext);
+	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
 	const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
 	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
 
+	let unverifiedMentionCount = 0;
+
 	useEffect(() => {
 		let tempVerifiedDay = Array(7).fill(0);
 		let tempUnverifiedDay = Array(7).fill(0);
 		let tempVerifiedHour = Array(24).fill(0);
 		let tempUnverifiedHour = Array(24).fill(0);
+
+		setRetweetsCount(retweets.length);
 
 		retweets.map((retweet) => {
 			let tempMoment = moment(new Date(retweet.created_at));
@@ -25,9 +29,11 @@ const RetweetChart = () => {
 			} else {
 				tempUnverifiedDay[tempMoment.weekday()]++;
 				tempUnverifiedHour[tempMoment.hour()]++;
+				unverifiedMentionCount++;
 			}
 		});
 
+		setRetweetsToUnverifiedCount(unverifiedMentionCount);
 		setVerifiedDay(tempVerifiedDay);
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
@@ -35,9 +41,7 @@ const RetweetChart = () => {
 	}, [retweets]);
 
 	const dayTickFormat = (d) => {
-		return moment()
-			.weekday(d)
-			.format('dddd');
+		return moment().weekday(d).format('dddd');
 	};
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -46,9 +50,7 @@ const RetweetChart = () => {
 			return '12am';
 		}
 
-		return moment()
-			.hour(d)
-			.format('h');
+		return moment().hour(d).format('h');
 	};
 
 	return (
