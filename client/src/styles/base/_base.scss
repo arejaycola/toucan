@@ -1,16 +1,19 @@
 * {
 	box-sizing: border-box;
+	color: $dark-grey;
 }
 
 html {
-	font-size: 62.5%;
+
+	// font-size: 62.5%;
 }
 
 body {
 	color: $dark-grey;
-	font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
-	font-size: $m-size;
-	line-height: 1.6;
+	// color: $dark-grey;
+	// font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+	// font-size: $m-size;
+	// line-height: 1.6;
 	// background: url("https://mdn.mozillademos.org/files/12057/starsolid.gif");
 	background: url('/toucan.jpg');
 	background-size: cover;
@@ -21,9 +24,9 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 
-	.muted-small {
-		color: #6c757d !important;
-		font-size: $s-size;
-		line-height: 1.2rem;
-	}
+	// .muted-small {
+	// 	color: #6c757d !important;
+	// 	font-size: $s-size;
+	// 	line-height: 1.2rem;
+	// }
 }
