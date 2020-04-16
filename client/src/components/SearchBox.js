@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { FormControl, Button, Form, Col, Row } from 'react-bootstrap';
 
 const SearchBox = () => {
 	const [searchText, setSearchText] = useState('');
@@ -12,12 +13,32 @@ const SearchBox = () => {
 	};
 
 	return (
-		<form className="search-box-form " onSubmit={searchButtonClick}>
-			<h1 className="title">Toucan</h1>
-			<h4 className="sub-title">Enter a verified Twitter Account</h4>
-			<input onChange={(e) => setSearchText(e.target.value)} className="text-input" type="text" />
-			<button className="button">Search</button>
-		</form>
+		<Col md="12">
+			<Form onSubmit={searchButtonClick}>
+				<Row>
+					<Col>
+						<h1 className="">Toucan</h1>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<h5 className="font-weight-light">Enter a verified Twitter Account</h5>
+					</Col>
+				</Row>
+				<Row>
+					<Col className="mx-auto" md="8">
+						<Form.Control type="text" onChange={(e) => setSearchText(e.target.value)} />
+					</Col>
+				</Row>
+				<Row className="mt-2">
+					<Col className="mx-auto" xs="12" md="4">
+						<Button type="submit" block className="button">
+							Search
+						</Button>
+					</Col>
+				</Row>
+			</Form>
+		</Col>
 	);
 };
 
