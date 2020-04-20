@@ -9,8 +9,10 @@
 		"heroku-postbuild": "cd client && npm install && npm run build"
 	},
 	"dependencies": {
+		"@fortawesome/free-brands-svg-icons": "^5.13.0",
 		"axios": "^0.19.2",
 		"body-parser": "^1.18.3",
+		"bootstrap": "^4.4.1",
 		"cors": "^2.8.5",
 		"d3": "^5.15.1",
 		"dotenv": "^8.2.0",
@@ -18,6 +20,7 @@
 		"history": "^4.10.1",
 		"moment": "^2.24.0",
 		"nodemon": "2.0.2",
+		"react-bootstrap": "^1.0.0",
 		"react-pose": "^4.0.10",
 		"react-router-dom": "^5.1.2",
 		"react-spring": "^8.0.27",

@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './styles/index.scss';
-import 'normalize.css/normalize.css';
+// import 'normalize.css/normalize.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.scss';
 import AppRouter from './routers/AppRouter';
 
 import * as serviceWorker from './serviceWorker';
-
-
 
 ReactDOM.render(<AppRouter />, document.getElementById('root'));
 // ReactDOM.render(<App />, document.getElementById('root'));

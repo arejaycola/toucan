@@ -1,17 +1,17 @@
-.text-input {
-	border: 1px solid #cacccd;
-	font-size: $font-size-large;
-	font-weight: 300;
-	height: 35px;
-	padding: $xs-size;
-}
+// .text-input {
+// 	border: 1px solid #cacccd;
+// 	font-size: $font-size-large;
+// 	font-weight: 300;
+// 	height: 35px;
+// 	padding: $xs-size;
+// }
 
-.select{
-    @extend .text-input;
+// .select{
+//     @extend .text-input;
     
-}
+// }
 
-.textarea{
-    @extend .text-input;
-    height: 10rem;
-}
+// .textarea{
+//     @extend .text-input;
+//     height: 10rem;
+// }

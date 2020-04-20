@@ -6,6 +6,7 @@ import SearchBox from './SearchBox';
 import SearchHistory from './SearchHistory';
 import SearchResultsList from './SearchResultList';
 import { SearchContext } from '../contexts/SearchContext';
+import { Col, Row, Container } from 'react-bootstrap';
 
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
@@ -25,20 +26,22 @@ const SearchResultsPage = (props) => {
 	}, [searchString]);
 
 	return (
-		<div className="search-page-container">
-			<div className="left-side">
-				<div className="search-box">
-					<SearchBox />
-				</div>
-				<SearchHistory />
-			</div>
-			<div className="right-side">
-				<div className="instructions">
-					<p>Click on a user below to view their Twitter habits.</p>
-				</div>
-				<SearchResultsList />
-			</div>
-		</div>
+		<>
+			<Col xs="12" md="8" lg="6" className="semi-transparent mb-5 mt-3 mt-md-5 bg-light rounded mx-auto py-5 text-center">
+				<SearchBox />
+				{/* <p>Click on a user below to view their Twitter habits.</p> */}
+			</Col>
+			<Container fluid>
+				<Row>
+					<Col className="d-none d-lg-block" md="2">
+						<SearchHistory />
+					</Col>
+					<Col m="10" >
+						<SearchResultsList />
+					</Col>
+				</Row>
+			</Container>
+		</>
 	);
 };
 

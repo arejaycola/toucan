@@ -31,21 +31,10 @@ text {
 	transform: rotate(-65);
 }
 
-.legend-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	.legend {
-		padding: 0 $xs-size;
-		text-align: center;
-		border: 1px solid $dark-grey;
-		.unverified {
-			color: $unverified;
-		}
+.unverified path {
+	color: $unverified;
+}
 
-		.verified {
-			color: $verified;
-		}
-	}
+.verified path {
+	color: $verified;
 }

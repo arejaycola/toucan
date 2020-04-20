@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
+import { Row, Col } from 'react-bootstrap';
 import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 
@@ -106,12 +107,25 @@ const TweetChart = () => {
 	};
 
 	return (
-		<div style={{ textAlign: 'center' }}>
-			<p>Tweet Chart</p>
-			<D3Chart id="d3-tweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
-			<D3Chart id="d3-tweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
-			{/* <D3RetweetChartDay data={props.retweets} /> */}
-		</div>
+		<Row className="mt-3 text-center justify-content-center">
+			<Col>
+				<Row>
+					<Col>
+						<h4>Tweets</h4>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<h6>By Day</h6>
+						<D3Chart id="d3-tweet-chart-day" label="# of Tweets" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
+					</Col>
+					<Col>
+						<h6>By Hour</h6>
+						<D3Chart id="d3-tweet-chart-hour" label="# of Tweets" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
+					</Col>
+				</Row>
+			</Col>
+		</Row>
 	);
 };
 

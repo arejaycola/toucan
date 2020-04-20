@@ -1,23 +1,32 @@
 import React from 'react';
-import { faSquareFull } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareFull } from '@fortawesome/free-solid-svg-icons';
+import { Row, Col } from 'react-bootstrap';
 
 const Legend = () => {
 	return (
-		<div className="legend-container">
-			<div className="legend">
-				<p>
-					<FontAwesomeIcon className="unverified" icon={faSquareFull} />
-					<br />
-					Unverified
-				</p>
-				<p>
-					<FontAwesomeIcon className="verified" icon={faSquareFull} />
-					<br />
-					Verified
-				</p>
-			</div>
-		</div>
+		<Row className="justify-content-center text-center">
+			<Col xs={2}>
+				<Row>
+					<Col>
+						<FontAwesomeIcon className="unverified" icon={faSquareFull} />
+					</Col>
+				</Row>
+				<Row>
+					<Col>Unverified</Col>
+				</Row>
+			</Col>
+			<Col xs={2}>
+				<Row>
+					<Col>
+						<FontAwesomeIcon className="verified" icon={faSquareFull} />
+					</Col>
+				</Row>
+				<Row>
+					<Col>Verified</Col>
+				</Row>
+			</Col>
+		</Row>
 	);
 };
 

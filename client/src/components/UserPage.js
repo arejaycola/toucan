@@ -6,6 +6,7 @@ import UserStatsPanel from '../components/UserStatsPanel';
 import ProfileImage from '../components/ProfileImage';
 import UserChartsPanel from '../components/UserChartsPanel';
 import Axios from 'axios';
+import { Container } from 'react-bootstrap';
 
 const UserPage = (props) => {
 	const history = useHistory();
@@ -57,25 +58,10 @@ const UserPage = (props) => {
 	}, []);
 
 	return (
-		<div className="layout-container">
-			{user.profile_banner_url ? (
-				<div className="banner-container">
-					<BannerImage image={user.profile_banner_url} />
-				</div>
-			) : null}
-
-			<div className="bottom-container">
-				<div className="left-panel">
-					<UserStatsPanel user={user} />
-				</div>
-				<div className="profile-image-container">
-					<ProfileImage image={user.profile_image_url_https} />
-				</div>
-				<div className="right-panel">
-					<UserChartsPanel user={user} />
-				</div>
-			</div>
-		</div>
+		<>
+			<UserStatsPanel user={user} />
+			<UserChartsPanel user={user} />
+		</>
 	);
 };
 
