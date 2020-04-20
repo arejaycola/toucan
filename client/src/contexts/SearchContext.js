@@ -8,7 +8,11 @@ const SearchContextProvider = (props) => {
 	const [selectedUser, setSelectedUser] = useState([]);
 
 	const addSearchHistory = (newHistory) => {
-		setSearchHistory((items) => [...items, newHistory]);
+		let previousHistory = localStorage.getItem('searchHistory') !== 'null' ? JSON.parse(localStorage.getItem('searchHistory')) : [];
+
+		localStorage.setItem('searchHistory', JSON.stringify([newHistory, ...previousHistory]));
+
+		// setSearchHistory((items) => [...items, newHistory]);
 	};
 
 	return (
