@@ -16,8 +16,8 @@ const SearchResults = () => {
 			{searchResults.length != 0
 				? searchResults.map((result) => {
 						return (
-							<Card className="mb-3 shadow" key={result.id} style={{ minWidth: '18rem', maxWidth: '18rem' }}>
-								<Card.Img variant="top" src={`${result.profile_image_url_https.replace('_normal', '')}`} />
+							<Card className="custom-card mb-3 mx-auto semi-transparent mt-5" key={result.id}>
+								<Card.Img className="mx-auto" variant="top" src={`${result.profile_image_url_https.replace('_normal', '')}`} />
 								<Card.Body>
 									<Card.Title className=" font-weight-bold">{result.name}</Card.Title>
 									<Card.Text className="mb-2">

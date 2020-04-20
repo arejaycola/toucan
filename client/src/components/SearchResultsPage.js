@@ -29,14 +29,14 @@ const SearchResultsPage = (props) => {
 		<>
 			<Col xs="12" md="8" lg="6" className="semi-transparent mb-5 mt-3 mt-md-5 bg-light rounded mx-auto py-5 text-center">
 				<SearchBox />
-			{/* <p>Click on a user below to view their Twitter habits.</p> */}
+				{/* <p>Click on a user below to view their Twitter habits.</p> */}
 			</Col>
 			<Container fluid>
 				<Row>
-					<Col md="3">
+					<Col className="d-none d-lg-block" md="2">
 						<SearchHistory />
 					</Col>
-					<Col md="9">
+					<Col m="10" >
 						<SearchResultsList />
 					</Col>
 				</Row>

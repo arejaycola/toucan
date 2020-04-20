@@ -9,6 +9,7 @@
 		"heroku-postbuild": "cd client && npm install && npm run build"
 	},
 	"dependencies": {
+		"@fortawesome/free-brands-svg-icons": "^5.13.0",
 		"axios": "^0.19.2",
 		"body-parser": "^1.18.3",
 		"bootstrap": "^4.4.1",
