@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 
 import SearchBox from './SearchBox';
@@ -9,6 +9,8 @@ import { Col, Row, Container } from 'react-bootstrap';
 
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
+	const [hasResults, setHasResults] = useState(false);
+
 	const { setSearchResults } = useContext(SearchContext);
 
 	useEffect(() => {
@@ -16,6 +18,7 @@ const SearchResultsPage = (props) => {
 			const response = await Axios.get(`/api/twitter/search/${searchString}`);
 			if (response) {
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
+				setHasResults(true);
 			}
 		};
 		sendRequest();
@@ -32,9 +35,7 @@ const SearchResultsPage = (props) => {
 					<Col className="d-none d-lg-block" md="2">
 						<SearchHistory />
 					</Col>
-					<Col m="10">
-						<SearchResultsList />
-					</Col>
+					<Col m="10">{hasResults ? <SearchResultsList /> : 'No Results Found'}</Col>
 				</Row>
 			</Container>
 		</>
