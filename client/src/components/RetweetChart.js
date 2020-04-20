@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
+import { Row, Col } from 'react-bootstrap';
 
 const RetweetChart = () => {
 	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
@@ -54,12 +55,37 @@ const RetweetChart = () => {
 	};
 
 	return (
-		<div style={{ textAlign: 'center' }}>
-			<p>Retweet Chart</p>
-			<D3Chart id="d3-retweet-chart-day" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
-			<D3Chart id="d3-retweet-chart-hour" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
-			{/* <D3RetweetChartDay data={props.retweets} /> */}
-		</div>
+		<Row className="mt-3 text-center justify-content-center">
+			<Col>
+				<Row>
+					<Col>
+						<h4>Retweets</h4>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<h6>By Day</h6>
+						<D3Chart
+							id="d3-retweet-chart-day"
+							label="# of Retweets"
+							tickFormat={dayTickFormat}
+							dataVerified={verifiedDay}
+							dataUnverified={unverifiedDay}
+						/>
+					</Col>
+					<Col>
+						<h6>By Hour</h6>
+						<D3Chart
+							id="d3-retweet-chart-hour"
+							label="# of Retweets"
+							tickFormat={hourTickFormat}
+							dataVerified={verifiedHour}
+							dataUnverified={unverifiedHour}
+						/>
+					</Col>
+				</Row>
+			</Col>
+		</Row>
 	);
 };
 

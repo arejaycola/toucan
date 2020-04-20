@@ -59,10 +59,7 @@ const UserPage = (props) => {
 
 	return (
 		<>
-		<div className=''>
-
 			<UserStatsPanel user={user} />
-		</div>
 			<UserChartsPanel user={user} />
 		</>
 	);

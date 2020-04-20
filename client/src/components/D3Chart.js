@@ -12,14 +12,12 @@ export default (props) => {
 				top: 10,
 				right: 25,
 				bottom: 65,
-				left: 25
+				left: 55,
 			};
 			const width = svgWidth - margin.left - margin.right;
 			const height = svgHeight - margin.top - margin.bottom;
 
-			d3.select(d3RetweetChartDay.current)
-				.selectAll('g')
-				.remove();
+			d3.select(d3RetweetChartDay.current).selectAll('g').remove();
 
 			const svg = d3
 				.select(d3RetweetChartDay.current)
@@ -39,10 +37,7 @@ export default (props) => {
 				.nice()
 				.range([height, 0]);
 
-			const xAxis = d3
-				.axisBottom(xScale)
-				.ticks(xScale.domain()[1])
-				.tickFormat(props.tickFormat);
+			const xAxis = d3.axisBottom(xScale).ticks(xScale.domain()[1]).tickFormat(props.tickFormat);
 
 			const yAxis = d3
 				.axisLeft(yScale)
@@ -57,34 +52,33 @@ export default (props) => {
 				.style('text-anchor', 'end')
 				.attr('dx', '-.8em')
 				.attr('dy', '.15em')
-				.attr('transform', function(d) {
+				.attr('transform', function (d) {
 					return 'rotate(-65)';
 				});
-			svg.append('g')
-				.attr('class', 'y axis')
-				.call(yAxis);
+			svg.append('g').attr('class', 'y axis').call(yAxis);
 
 			let line = d3
 				.line()
-				.x(function(d, i) {
+				.x(function (d, i) {
 					return xScale(i);
 				})
-				.y(function(d) {
+				.y(function (d) {
 					return yScale(d);
 				})
 				.curve(d3.curveMonotoneX);
 
-			svg.append('path')
-				.datum(props.dataUnverified)
-				.classed('line', true)
-				.classed('line-unverified', true)
-				.attr('d', line);
+			svg.append('path').datum(props.dataUnverified).classed('line', true).classed('line-unverified', true).attr('d', line);
 
-			svg.append('path')
-				.datum(props.dataVerified)
-				.classed('line', true)
-				.classed('line-verified', true)
-				.attr('d', line);
+			svg.append('path').datum(props.dataVerified).classed('line', true).classed('line-verified', true).attr('d', line);
+
+			svg.append('text')
+				.attr('text-anchor', 'middle')
+				.attr('transform', 'rotate(-90)')
+				.attr('y', -margin.left + 25)
+				.attr('x', -height / 2)
+				.style('font-size', '.9rem')
+				.style('fill', '#555')
+				.text(props.label);
 		}
 	}, [props.dataVerified, props.dataUnverified, d3RetweetChartDay.current]);
 
