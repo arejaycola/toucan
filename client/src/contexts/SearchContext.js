@@ -12,20 +12,15 @@ const SearchContextProvider = (props) => {
 	const addSearchHistory = (newHistory) => {
 		let history = localStorage.getItem('searchHistory') != null ? JSON.parse(localStorage.getItem('searchHistory')) : [];
 
-		/* Pop the oldest search result if over 10. */
 		/* Remove any duplicates */
-		console.log(history);
 		history = [newHistory, ...history];
 		history = Array.from(new Set(history));
-		console.log(history);
-		localStorage.setItem('searchHistory', JSON.stringify([newHistory, ...history]));
 
 		if (history.length > 10) {
 			history.pop();
 		}
 
-		// console.log('Previous  ', previousHistory);
-		// console.log('Context ', searchHistory);
+		localStorage.setItem('searchHistory', JSON.stringify([newHistory, ...history]));
 		setSearchHistory(history);
 	};
 
