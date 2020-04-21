@@ -6,6 +6,7 @@ import SearchHistory from './SearchHistory';
 import SearchResultsList from './SearchResultList';
 import { SearchContext } from '../contexts/SearchContext';
 import { Col, Row, Container } from 'react-bootstrap';
+import NoResultsFound from './NoResultsFound';
 
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
@@ -38,7 +39,7 @@ const SearchResultsPage = (props) => {
 					<Col className="d-none d-lg-block" md="2">
 						<SearchHistory />
 					</Col>
-					<Col m="10">{hasResults ? <SearchResultsList /> : 'No Results Found'}</Col>
+					<Col m="10">{hasResults ? <SearchResultsList /> : <NoResultsFound />}</Col>
 				</Row>
 			</Container>
 		</>
