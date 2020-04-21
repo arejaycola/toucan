@@ -4,9 +4,13 @@ import Axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
 import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
+import Loader from 'react-loader-spinner';
 
 const TweetChart = () => {
 	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
+
+	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
+	const [hasVerifiedHour, setHasVerifiedHour] = useState(false);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -82,6 +86,9 @@ const TweetChart = () => {
 					});
 				});
 
+				setHasVerifiedDay(true);
+				setHasVerifiedHour(true);
+
 				setTweetsToUnverifiedCount(unverifiedMentionCount);
 				setVerifiedDay(tempVerifiedDay);
 				setUnverifiedDay(tempUnverifiedDay);
@@ -117,23 +124,43 @@ const TweetChart = () => {
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						<D3Chart
-							id="d3-tweet-chart-day"
-							label="# of Tweets"
-							tickFormat={dayTickFormat}
-							dataVerified={verifiedDay}
-							dataUnverified={unverifiedDay}
-						/>
+						{hasVerifiedDay ? (
+							<D3Chart
+								id="d3-tweet-chart-day"
+								label="# of Tweets"
+								tickFormat={dayTickFormat}
+								dataVerified={verifiedDay}
+								dataUnverified={unverifiedDay}
+							/>
+						) : (
+							<Loader
+								type="Audio"
+								color="#00BFFF"
+								height={50}
+								width={50}
+								timeout={3000}
+							/>
+						)}
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						<D3Chart
-							id="d3-tweet-chart-hour"
-							label="# of Tweets"
-							tickFormat={hourTickFormat}
-							dataVerified={verifiedHour}
-							dataUnverified={unverifiedHour}
-						/>
+						{hasVerifiedHour ? (
+							<D3Chart
+								id="d3-tweet-chart-hour"
+								label="# of Tweets"
+								tickFormat={hourTickFormat}
+								dataVerified={verifiedHour}
+								dataUnverified={unverifiedHour}
+							/>
+						) : (
+							<Loader
+								type="Audio"
+								color="#00BFFF"
+								height={50}
+								width={50}
+								timeout={5000}
+							/>
+						)}
 					</Col>
 				</Row>
 			</Col>

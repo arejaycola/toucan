@@ -3,9 +3,13 @@ import moment from 'moment';
 import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import { Row, Col } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
 
 const QuotedTweetChart = () => {
 	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
+
+	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
+	const [hasVerifiedHour, setHasVerifiedHour] = useState(false);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -40,6 +44,13 @@ const QuotedTweetChart = () => {
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
+
+		setTimeout(() => {
+			/* Add a small delay for effect. */
+			setHasVerifiedDay(true);
+			setHasVerifiedHour(true);
+			
+		}, 1000);
 	}, [quotedTweets]);
 
 	const dayTickFormat = (d) => {
@@ -66,23 +77,31 @@ const QuotedTweetChart = () => {
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						<D3Chart
-							id="d3-quoted-tweet-chart-day"
-							label="# of Quoted Tweets"
-							tickFormat={dayTickFormat}
-							dataVerified={verifiedDay}
-							dataUnverified={unverifiedDay}
-						/>
+						{hasVerifiedDay ? (
+							<D3Chart
+								id="d3-quoted-tweet-chart-day"
+								label="# of Quoted Tweets"
+								tickFormat={dayTickFormat}
+								dataVerified={verifiedDay}
+								dataUnverified={unverifiedDay}
+							/>
+						) : (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={3000} />
+						)}
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						<D3Chart
-							id="d3-quoted-tweet-chart-hour"
-							label="# of Quoted Tweets"
-							tickFormat={hourTickFormat}
-							dataVerified={verifiedHour}
-							dataUnverified={unverifiedHour}
-						/>
+						{hasVerifiedHour ? (
+							<D3Chart
+								id="d3-quoted-tweet-chart-hour"
+								label="# of Quoted Tweets"
+								tickFormat={hourTickFormat}
+								dataVerified={verifiedHour}
+								dataUnverified={unverifiedHour}
+							/>
+						) : (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={3000} />
+						)}
 					</Col>
 				</Row>
 			</Col>
