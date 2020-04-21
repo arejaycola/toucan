@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SearchContext } from '../contexts/SearchContext';
 import { Col, ListGroup } from 'react-bootstrap';
+import { useState } from 'react';
 
 const SearchHistory = () => {
-	// const { searchHistory } = useContext(SearchContext);
-	const searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+	const { searchHistory } = useContext(SearchContext);
 
 	return (
 		<Col className="semi-transparent rounded mt-5 text-center p-3">
 			<h3 className="header">Search History</h3>
 
-			{searchHistory.length == 0 ? (
+			{searchHistory == null ? (
 				<ListGroup.Item>No search history...</ListGroup.Item>
 			) : (
 				<ListGroup>

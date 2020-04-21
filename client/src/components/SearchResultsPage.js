@@ -18,7 +18,10 @@ const SearchResultsPage = (props) => {
 			const response = await Axios.get(`/api/twitter/search/${searchString}`);
 			if (response) {
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
-				setHasResults(true);
+
+				if (response.data.length > 0) {
+					setHasResults(true);
+				}
 			}
 		};
 		sendRequest();

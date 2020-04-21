@@ -13,8 +13,7 @@ const SearchBox = ({ defaultValue }) => {
 	const searchButtonClick = async (e) => {
 		e.preventDefault();
 		const text = { searchString: searchText.length == 0 ? 'Rob' : searchText };
-
-		addSearchHistory(searchText.length == 0 ? 'Rob' : searchText);
+		addSearchHistory(text.searchString);
 		history.push(`/search/${text.searchString}`);
 	};
 

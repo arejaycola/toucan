@@ -1,24 +1,32 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const SearchContext = createContext();
 
 const SearchContextProvider = (props) => {
 	const [searchResults, setSearchResults] = useState('');
-	const [searchHistory, setSearchHistory] = useState([]);
+	const [searchHistory, setSearchHistory] = useState(
+		localStorage.getItem('searchHistory') !== 'null' ? JSON.parse(localStorage.getItem('searchHistory')) : []
+	);
 	const [selectedUser, setSelectedUser] = useState([]);
 
 	const addSearchHistory = (newHistory) => {
-		let previousHistory = localStorage.getItem('searchHistory') !== 'null' ? JSON.parse(localStorage.getItem('searchHistory')) : [];
+		let history = localStorage.getItem('searchHistory') != null ? JSON.parse(localStorage.getItem('searchHistory')) : [];
 
-		console.log(previousHistory);
 		/* Pop the oldest search result if over 10. */
-		if(previousHistory.length > 10){
-			previousHistory.pop();
-		}
-		console.log(previousHistory);
-		localStorage.setItem('searchHistory', JSON.stringify([newHistory, ...previousHistory]));
+		/* Remove any duplicates */
+		console.log(history);
+		history = [newHistory, ...history];
+		history = Array.from(new Set(history));
+		console.log(history);
+		localStorage.setItem('searchHistory', JSON.stringify([newHistory, ...history]));
 
-		// setSearchHistory((items) => [...items, newHistory]);
+		if (history.length > 10) {
+			history.pop();
+		}
+
+		// console.log('Previous  ', previousHistory);
+		// console.log('Context ', searchHistory);
+		setSearchHistory(history);
 	};
 
 	return (
