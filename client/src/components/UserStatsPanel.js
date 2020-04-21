@@ -73,7 +73,7 @@ const UserStatsPanel = (props) => {
 							<Row className="mt-2">
 								<Col>
 									<FontAwesomeIcon style={{ marginRight: '10px' }} icon={faLocationArrow} />
-									{props.user.location ? props.location : 'No Location Provided'}
+									{props.user.location ? props.user.location : 'No Location Provided'}
 								</Col>
 							</Row>
 
