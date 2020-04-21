@@ -31,8 +31,29 @@ app.get('/api/twitter/user/:userid/tweets', async (req, res) => {
 });
 
 app.post('/api/twitter/users', async (req, res) => {
-	let results = await Twitter.getUsersByIds(req.body.user_ids);
-	res.send(results);
+	try {
+		let userIds = req.body.user_ids;
+		let chunks = [];
+		let index = 0;
+		let results = [];
+		// console.log(userIds.length);
+		while (index < userIds.length) {
+			// console.log("Index ", index);
+			chunks.push(userIds.slice(index, index + 100));
+			index += 100;
+		}
+
+		for (let i = 0; i < chunks.length; i++) {
+			/* Get the comma separated list of ids. */
+			const chunk = chunks[i].toString();
+			const response = await Twitter.getUsersByIds(chunk);
+			results = [ ...results, ...response ];
+		}
+
+		res.send(results);
+	} catch (e) {
+		console.log(e);
+	}
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

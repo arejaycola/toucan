@@ -48,10 +48,10 @@ async function searchForVerifiedUser(name) {
 	}
 }
 
-async function getLastThousandTweets(params) {
+async function getTweets(params) {
 	try {
 		const response = await client.get(`https://api.twitter.com/1.1/statuses/user_timeline.json`, params);
-
+		console.log(params);
 		return response;
 	} catch (e) {
 		console.log(e);
@@ -81,8 +81,7 @@ async function getTweetsByUserId(userId) {
 			};
 		}
 		while (number == 199 && results.length <= 1000) {
-			let response = await getLastThousandTweets(params);
-
+			let response = await getTweets(params);
 			maxId =
 				Math.max.apply(
 					Math,
@@ -105,14 +104,13 @@ async function getUsersByIds(userIds) {
 	try {
 		const response = await client.get(`https://api.twitter.com/1.1/users/lookup.json`, {
 			user_id: userIds,
-			count: 2000,
-			include_rts: true,
+			count: 100,
 		});
 
 		return response;
 	} catch (e) {
 		console.log(e);
-		throw new Error('Error fetching user.');
+		throw new Error(e);
 	}
 }
 
