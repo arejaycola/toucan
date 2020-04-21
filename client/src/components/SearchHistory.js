@@ -1,17 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SearchContext } from '../contexts/SearchContext';
+import { Row, Col, ListGroup } from 'react-bootstrap';
+import { useState } from 'react';
+import SearchHistoryItem from './SearchHistoryItem';
 
 const SearchHistory = () => {
-	const { searchHistory } = useContext(SearchContext);
+	const { setSearchHistory, searchHistory } = useContext(SearchContext);
+
+	const clearSearchResultsClick = () => {
+		localStorage.removeItem('searchHistory');
+		setSearchHistory(null);
+	};
 
 	return (
-		<div className="search-history-container">
-			<h2 className="header">Search History</h2>
-			{searchHistory.map((item, i) => {
-				return <p className='search-history-item' key={i}>{item}</p>;
-			})}
-			
-		</div>
+		<Col className="semi-transparent rounded mt-5 text-center p-3">
+			<h3 className="header">Search History</h3>
+
+			{searchHistory == null ? (
+				<ListGroup.Item variant="light">No search history...</ListGroup.Item>
+			) : (
+				<ListGroup>
+					{Array.from(new Set(searchHistory)).map((item, i) => {
+						return <SearchHistoryItem key={i} item={item} />;
+					})}
+				</ListGroup>
+			)}
+			<Row className="mt-3">
+				<Col>
+					<a href='#' onClick={clearSearchResultsClick}>
+						<h6>
+							<small className="text-primary">Clear Search History</small>
+						</h6>
+					</a>
+				</Col>
+			</Row>
+		</Col>
 	);
 };
 

@@ -4,6 +4,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import SearchBox from './SearchBox';
 
 const HomePage = () => {
+
 	return (
 		<>
 			<Container>

@@ -37,7 +37,7 @@ const TweetChart = () => {
 		const sendUsersRequest = async () => {
 			if (userIds.length > 0) {
 				const response = await Axios.post(`/api/twitter/users/`, {
-					user_ids: userIds.toString(),
+					user_ids: userIds,
 				});
 
 				let users = response.data.map((user) => {
@@ -117,11 +117,23 @@ const TweetChart = () => {
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						<D3Chart id="d3-tweet-chart-day" label="# of Tweets" tickFormat={dayTickFormat} dataVerified={verifiedDay} dataUnverified={unverifiedDay} />
+						<D3Chart
+							id="d3-tweet-chart-day"
+							label="# of Tweets"
+							tickFormat={dayTickFormat}
+							dataVerified={verifiedDay}
+							dataUnverified={unverifiedDay}
+						/>
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						<D3Chart id="d3-tweet-chart-hour" label="# of Tweets" tickFormat={hourTickFormat} dataVerified={verifiedHour} dataUnverified={unverifiedHour} />
+						<D3Chart
+							id="d3-tweet-chart-hour"
+							label="# of Tweets"
+							tickFormat={hourTickFormat}
+							dataVerified={verifiedHour}
+							dataUnverified={unverifiedHour}
+						/>
 					</Col>
 				</Row>
 			</Col>

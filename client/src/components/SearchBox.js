@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FormControl, Button, Form, Col, Row } from 'react-bootstrap';
+import { SearchContext } from '../contexts/SearchContext';
 
-const SearchBox = () => {
-	const [searchText, setSearchText] = useState('');
+const SearchBox = ({ defaultValue }) => {
+	const [searchText, setSearchText] = useState(defaultValue ? defaultValue : '');
+
+	const { addSearchHistory } = useContext(SearchContext);
+
 	const history = useHistory();
 
 	const searchButtonClick = async (e) => {
 		e.preventDefault();
 		const text = { searchString: searchText.length == 0 ? 'Rob' : searchText };
+		addSearchHistory(text.searchString);
 		history.push(`/search/${text.searchString}`);
 	};
 
@@ -27,7 +32,7 @@ const SearchBox = () => {
 				</Row>
 				<Row>
 					<Col className="mx-auto" md="8">
-						<Form.Control type="text" onChange={(e) => setSearchText(e.target.value)} />
+						<Form.Control type="text" defaultValue={defaultValue} onChange={(e) => setSearchText(e.target.value)} />
 					</Col>
 				</Row>
 				<Row className="mt-2">

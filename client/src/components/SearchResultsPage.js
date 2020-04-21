@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 
 import SearchBox from './SearchBox';
@@ -7,19 +6,23 @@ import SearchHistory from './SearchHistory';
 import SearchResultsList from './SearchResultList';
 import { SearchContext } from '../contexts/SearchContext';
 import { Col, Row, Container } from 'react-bootstrap';
+import NoResultsFound from './NoResultsFound';
 
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
-	const { addSearchHistory, setSearchResults } = useContext(SearchContext);
+	const [hasResults, setHasResults] = useState(false);
 
-	const history = useHistory();
+	const { setSearchResults } = useContext(SearchContext);
 
 	useEffect(() => {
 		const sendRequest = async () => {
 			const response = await Axios.get(`/api/twitter/search/${searchString}`);
 			if (response) {
-				addSearchHistory(searchString);
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
+
+				if (response.data.length > 0) {
+					setHasResults(true);
+				}
 			}
 		};
 		sendRequest();
@@ -28,7 +31,7 @@ const SearchResultsPage = (props) => {
 	return (
 		<>
 			<Col xs="12" md="8" lg="6" className="semi-transparent mt-3 mt-md-5 bg-light rounded mx-auto py-5 text-center">
-				<SearchBox />
+				<SearchBox defaultValue={searchString} />
 				{/* <p>Click on a user below to view their Twitter habits.</p> */}
 			</Col>
 			<Container fluid>
@@ -36,9 +39,7 @@ const SearchResultsPage = (props) => {
 					<Col className="d-none d-lg-block" md="2">
 						<SearchHistory />
 					</Col>
-					<Col m="10" >
-						<SearchResultsList />
-					</Col>
+					<Col m="10">{hasResults ? <SearchResultsList /> : <NoResultsFound />}</Col>
 				</Row>
 			</Container>
 		</>
