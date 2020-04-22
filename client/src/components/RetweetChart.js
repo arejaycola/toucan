@@ -5,7 +5,7 @@ import D3Chart from './D3Chart';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 
-const RetweetChart = () => {
+const RetweetChart = ({ addToGlobalCount }) => {
 	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
 
 	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
@@ -49,6 +49,13 @@ const RetweetChart = () => {
 			setHasVerifiedDay(true);
 			setHasVerifiedHour(true);
 		}
+
+		addToGlobalCount({
+			verifiedDay: tempVerifiedDay,
+			unverifiedDay: tempUnverifiedDay,
+			verifiedHour: tempVerifiedHour,
+			unverifiedHour: tempUnverifiedHour,
+		});
 	}, [retweets]);
 
 	const dayTickFormat = (d) => {

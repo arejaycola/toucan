@@ -6,7 +6,7 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import Loader from 'react-loader-spinner';
 
-const TweetChart = () => {
+const TweetChart = ({ addToGlobalCount }) => {
 	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
 
 	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
@@ -86,15 +86,21 @@ const TweetChart = () => {
 					});
 				});
 
-				
 				setTweetsToUnverifiedCount(unverifiedMentionCount);
 				setVerifiedDay(tempVerifiedDay);
 				setUnverifiedDay(tempUnverifiedDay);
 				setVerifiedHour(tempVerifiedHour);
 				setUnverifiedHour(tempUnverifiedHour);
-				
+
 				setHasVerifiedDay(true);
 				setHasVerifiedHour(true);
+
+				addToGlobalCount({
+					verifiedDay: tempVerifiedDay,
+					unverifiedDay: tempUnverifiedDay,
+					verifiedHour: tempVerifiedHour,
+					unverifiedHour: tempUnverifiedHour,
+				});
 			}
 		};
 
@@ -134,13 +140,7 @@ const TweetChart = () => {
 								dataUnverified={unverifiedDay}
 							/>
 						) : (
-							<Loader
-								type="Audio"
-								color="#00BFFF"
-								height={50}
-								width={50}
-								timeout={10000}
-							/>
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 					<Col>
@@ -154,13 +154,7 @@ const TweetChart = () => {
 								dataUnverified={unverifiedHour}
 							/>
 						) : (
-							<Loader
-								type="Audio"
-								color="#00BFFF"
-								height={50}
-								width={50}
-								timeout={10000}
-							/>
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 				</Row>

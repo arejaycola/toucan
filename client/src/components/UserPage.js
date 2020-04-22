@@ -48,9 +48,9 @@ const UserPage = (props) => {
 			setTweets(tempTweets);
 			setRetweets(tempRetweets);
 			setQuotedTweets(tempQuotedTweets);
-			console.log('Retweets: ', tempRetweets);
-			console.log('Quoted Tweets: ', tempQuotedTweets);
-			console.log('Tweets: ', tempTweets);
+			// console.log('Retweets: ', tempRetweets);
+			// console.log('Quoted Tweets: ', tempQuotedTweets);
+			// console.log('Tweets: ', tempTweets);
 		};
 
 		sendUserRequest();

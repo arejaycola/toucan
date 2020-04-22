@@ -5,7 +5,7 @@ import D3Chart from './D3Chart';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 
-const QuotedTweetChart = () => {
+const QuotedTweetChart = ({ addToGlobalCount }) => {
 	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
 
 	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
@@ -50,6 +50,13 @@ const QuotedTweetChart = () => {
 			setHasVerifiedDay(true);
 			setHasVerifiedHour(true);
 		}
+
+		addToGlobalCount({
+			verifiedDay: tempVerifiedDay,
+			unverifiedDay: tempUnverifiedDay,
+			verifiedHour: tempVerifiedHour,
+			unverifiedHour: tempUnverifiedHour,
+		});
 	}, [quotedTweets]);
 
 	const dayTickFormat = (d) => {
