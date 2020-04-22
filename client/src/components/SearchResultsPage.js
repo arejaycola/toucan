@@ -6,7 +6,7 @@ import SearchHistory from './SearchHistory';
 import SearchResultsList from './SearchResultList';
 import { SearchContext } from '../contexts/SearchContext';
 import { Col, Row, Container } from 'react-bootstrap';
-import NoResultsFound from './NoResultsFound';
+import Loader from 'react-loader-spinner';
 
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
@@ -19,10 +19,7 @@ const SearchResultsPage = (props) => {
 			const response = await Axios.get(`/api/twitter/search/${searchString}`);
 			if (response) {
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
-
-				if (response.data.length > 0) {
-					setHasResults(true);
-				}
+				setHasResults(true);
 			}
 		};
 		sendRequest();
@@ -39,7 +36,15 @@ const SearchResultsPage = (props) => {
 					<Col className="d-none d-lg-block" md="2">
 						<SearchHistory />
 					</Col>
-					<Col m="10">{hasResults ? <SearchResultsList /> : <NoResultsFound />}</Col>
+					<Col m="10">
+						{hasResults ? (
+							<SearchResultsList />
+						) : (
+							<Col className="mt-5 text-center">
+								<Loader type="MutatingDots" color="#00BFFF" secondaryColor="#00BFFF" height={100} width={100} timeout={3000} />
+							</Col>
+						)}
+					</Col>
 				</Row>
 			</Container>
 		</>

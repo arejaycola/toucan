@@ -45,12 +45,11 @@ const QuotedTweetChart = () => {
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
 
-		setTimeout(() => {
+		if (quotedTweets.length > 0) {
 			/* Add a small delay for effect. */
 			setHasVerifiedDay(true);
 			setHasVerifiedHour(true);
-			
-		}, 1000);
+		}
 	}, [quotedTweets]);
 
 	const dayTickFormat = (d) => {

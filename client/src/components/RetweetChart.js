@@ -43,11 +43,12 @@ const RetweetChart = () => {
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
-		setTimeout(() => {
+
+		if (retweets.length > 0) {
 			/* Add a small delay for effect. */
 			setHasVerifiedDay(true);
 			setHasVerifiedHour(true);
-		}, 1300);
+		}
 	}, [retweets]);
 
 	const dayTickFormat = (d) => {
@@ -83,7 +84,7 @@ const RetweetChart = () => {
 								dataUnverified={unverifiedDay}
 							/>
 						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={3000} />
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 					<Col>
@@ -97,7 +98,7 @@ const RetweetChart = () => {
 								dataUnverified={unverifiedHour}
 							/>
 						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={3000} />
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 				</Row>

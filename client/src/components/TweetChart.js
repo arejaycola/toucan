@@ -86,14 +86,15 @@ const TweetChart = () => {
 					});
 				});
 
-				setHasVerifiedDay(true);
-				setHasVerifiedHour(true);
-
+				
 				setTweetsToUnverifiedCount(unverifiedMentionCount);
 				setVerifiedDay(tempVerifiedDay);
 				setUnverifiedDay(tempUnverifiedDay);
 				setVerifiedHour(tempVerifiedHour);
 				setUnverifiedHour(tempUnverifiedHour);
+				
+				setHasVerifiedDay(true);
+				setHasVerifiedHour(true);
 			}
 		};
 
@@ -138,7 +139,7 @@ const TweetChart = () => {
 								color="#00BFFF"
 								height={50}
 								width={50}
-								timeout={3000}
+								timeout={10000}
 							/>
 						)}
 					</Col>
@@ -158,7 +159,7 @@ const TweetChart = () => {
 								color="#00BFFF"
 								height={50}
 								width={50}
-								timeout={5000}
+								timeout={10000}
 							/>
 						)}
 					</Col>

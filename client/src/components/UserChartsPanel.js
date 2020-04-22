@@ -6,6 +6,11 @@ import Legend from './Legend';
 import { Container, Col, Row } from 'react-bootstrap';
 
 const UserChartsPanel = (props) => {
+
+
+	
+
+
 	return (
 		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
 			<Legend />
