@@ -17,19 +17,16 @@ const TweetChart = ({ addToGlobalCount }) => {
 	const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
 	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
 
-	let unverifiedMentionCount = 0;
-
 	let tempVerifiedDay = Array(7).fill(0);
 	let tempUnverifiedDay = Array(7).fill(0);
 	let tempVerifiedHour = Array(24).fill(0);
 	let tempUnverifiedHour = Array(24).fill(0);
-
+	let unverifiedMentionCount = 0;
 	useEffect(() => {
 		/* Only look at tweets with a user mention */
 		const filteredTweets = tweets.filter((tweet) => {
 			return tweet.entities.user_mentions.length > 0;
 		});
-
 		setTweetsCount(tweets.length);
 
 		const userIds = filteredTweets
@@ -51,6 +48,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 					};
 				});
 
+				let unverifiedUserMentions = [];
 				/* TODO (04/14/2020 16:31) There has got to be a better way. */
 				/* Map the results to the existing tweets array and add the verified flag to all user mentions */
 				for (let i = 0; i < filteredTweets.length; i++) {
@@ -65,15 +63,14 @@ const TweetChart = ({ addToGlobalCount }) => {
 							if (userMentions.id === user.id) {
 								userMentions.verified = user.verified;
 								if (user.verified === false) {
-									unverifiedMentionCount++;
+									unverifiedUserMentions['user-' + user.id] = 'unverified';
 								}
 							}
 						}
 					}
 				}
-
+				
 				filteredTweets.map((filteredTweet) => {
-					// console.log(tweet);
 					let tempMoment = moment(new Date(filteredTweet.created_at));
 					return filteredTweet.entities.user_mentions.map((userMentions) => {
 						if (userMentions.verified) {
@@ -86,7 +83,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 					});
 				});
 
-				setTweetsToUnverifiedCount(unverifiedMentionCount);
+				setTweetsToUnverifiedCount(Object.keys(unverifiedUserMentions).length);
 				setVerifiedDay(tempVerifiedDay);
 				setUnverifiedDay(tempUnverifiedDay);
 				setVerifiedHour(tempVerifiedHour);
