@@ -1,28 +1,9 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React from 'react';
 import moment from 'moment';
-import Axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
-import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
-import Loader from 'react-loader-spinner';
 
 const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }) => {
-	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
-
-	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
-	const [hasVerifiedHour, setHasVerifiedHour] = useState(false);
-	console.log(unverifiedHour);
-	// const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
-	// const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
-	// const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
-	// const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
-
-	// let tempVerifiedDay = Array(7).fill(0);
-	// let tempUnverifiedDay = Array(7).fill(0);
-	// let tempVerifiedHour = Array(24).fill(0);
-	// let tempUnverifiedHour = Array(24).fill(0);
-	// let unverifiedMentionCount = 0;
-
 	const dayTickFormat = (d) => {
 		return moment().weekday(d).format('dddd');
 	};
