@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import DayAndTime from './DayAndTime';
+import Time from './Time';
 import TimeToday from './TimeToday';
 
 const Recommendations = () => {
@@ -8,6 +9,7 @@ const Recommendations = () => {
 		<Row>
 			<Col>
 				<h3>Recommendations</h3>
+				<Time />
 				<TimeToday />
 				<DayAndTime />
 			</Col>
