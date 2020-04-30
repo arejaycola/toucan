@@ -3,6 +3,7 @@ import React, { createContext, useState } from 'react';
 export const TweetContext = createContext();
 
 const TweetContextProvider = (props) => {
+	const [statuses, setStatuses] = useState([]);
 	const [tweets, setTweets] = useState([]);
 	const [retweets, setRetweets] = useState([]);
 	const [quotedTweets, setQuotedTweets] = useState([]);
@@ -24,6 +25,8 @@ const TweetContextProvider = (props) => {
 	return (
 		<TweetContext.Provider
 			value={{
+				statuses,
+				setStatuses,
 				tweets,
 				setTweets,
 				retweets,
