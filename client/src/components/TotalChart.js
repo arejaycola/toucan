@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import moment from 'moment';
 import { Row, Col } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
 import D3Chart from './D3Chart';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }) => {
+	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
+
 	const dayTickFormat = (d) => {
 		return moment().weekday(d).format('dddd');
 	};
@@ -28,23 +32,31 @@ const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						<D3Chart
-							id="d3-total-status-chart-day"
-							label="# of Statuses"
-							tickFormat={dayTickFormat}
-							dataVerified={verifiedDay}
-							dataUnverified={unverifiedDay}
-						/>
+						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} />
+						) : (
+							<D3Chart
+								id="d3-total-status-chart-day"
+								label="# of Statuses"
+								tickFormat={dayTickFormat}
+								dataVerified={verifiedDay}
+								dataUnverified={unverifiedDay}
+							/>
+						)}
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						<D3Chart
-							id="d3-total-status-chart-hour"
-							label="# of Tweets"
-							tickFormat={hourTickFormat}
-							dataVerified={verifiedHour}
-							dataUnverified={unverifiedHour}
-						/>
+						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} />
+						) : (
+							<D3Chart
+								id="d3-total-status-chart-hour"
+								label="# of Tweets"
+								tickFormat={hourTickFormat}
+								dataVerified={verifiedHour}
+								dataUnverified={unverifiedHour}
+							/>
+						)}
 					</Col>
 				</Row>
 			</Col>
