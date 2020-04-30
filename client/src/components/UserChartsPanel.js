@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import TotalChart from './TotalChart';
 import TweetChart from './TweetChart';
 import RetweetChart from './RetweetChart';
 import QuotedTweetChart from './QuotedTweetChart';
@@ -54,38 +55,38 @@ const UserChartsPanel = (props) => {
 		});
 	};
 
-	useEffect(() => {
-		let day = [];
-		let tempArray = [];
-		let ratio = Array(7).fill(0);
+	// useEffect(() => {
+	// 	let day = [];
+	// 	let tempArray = [];
+	// 	let ratio = Array(7).fill(0);
 
-		/* Combine the unverifiedDay and verifiedDay to see his most active day */
-		for (let i = 0; i < globalVerifiedDayCount.length; i++) {
-			tempArray[i] = globalVerifiedDayCount[i] + globalUnverifiedDayCount[i];
-			ratio[i] = globalUnverifiedDayCount[i] / (globalVerifiedDayCount[i] + globalUnverifiedDayCount[i]);
-		}
+	// 	/* Combine the unverifiedDay and verifiedDay to see his most active day */
+	// 	for (let i = 0; i < globalVerifiedDayCount.length; i++) {
+	// 		tempArray[i] = globalVerifiedDayCount[i] + globalUnverifiedDayCount[i];
+	// 		ratio[i] = globalUnverifiedDayCount[i] / (globalVerifiedDayCount[i] + globalUnverifiedDayCount[i]);
+	// 	}
 
-		day = tempArray.indexOf(Math.max(...tempArray));
-		setDayRatio(ratio);
-	}, [globalVerifiedDayCount, globalUnverifiedDayCount]);
+	// 	day = tempArray.indexOf(Math.max(...tempArray));
+	// 	setDayRatio(ratio);
+	// }, [globalVerifiedDayCount, globalUnverifiedDayCount]);
 
-	useEffect(() => {
-		let hour = [];
-		let tempArray = [];
-		let ratio = Array(24).fill(0);
-		/* Combine the unverifiedDay and verifiedDay to see his most active day */
+	// useEffect(() => {
+	// 	let hour = [];
+	// 	let tempArray = [];
+	// 	let ratio = Array(24).fill(0);
+	// 	/* Combine the unverifiedDay and verifiedDay to see his most active day */
 
-		for (let i = 0; i < globalVerifiedHourCount.length; i++) {
-			tempArray[i] = globalVerifiedHourCount[i] + globalUnverifiedHourCount[i];
-			ratio[i] = globalUnverifiedHourCount[i] / (globalVerifiedHourCount[i] + globalUnverifiedHourCount[i]);
+	// 	for (let i = 0; i < globalVerifiedHourCount.length; i++) {
+	// 		tempArray[i] = globalVerifiedHourCount[i] + globalUnverifiedHourCount[i];
+	// 		ratio[i] = globalUnverifiedHourCount[i] / (globalVerifiedHourCount[i] + globalUnverifiedHourCount[i]);
 
-			if (isNaN(ratio[i])) {
-				ratio[i] = 0;
-			}
-		}
-		hour = tempArray.indexOf(Math.max(...tempArray));
-		setHourRatio(ratio);
-	}, [globalVerifiedHourCount, globalUnverifiedHourCount]);
+	// 		if (isNaN(ratio[i])) {
+	// 			ratio[i] = 0;
+	// 		}
+	// 	}
+	// 	hour = tempArray.indexOf(Math.max(...tempArray));
+	// 	setHourRatio(ratio);
+	// }, [globalVerifiedHourCount, globalUnverifiedHourCount]);
 
 	return (
 		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
@@ -105,6 +106,13 @@ const UserChartsPanel = (props) => {
 				({numeral(hourRatio[hourRatio.indexOf(Math.max(...hourRatio))]).format('0.00%')})
 			</p>
 			<Legend />
+			<TotalChart
+				verifiedDay={globalVerifiedDayCount}
+				unverifiedDay={globalUnverifiedDayCount}
+				verifiedHour={globalVerifiedHourCount}
+				unverifiedHour={globalUnverifiedHourCount}
+				user={props.user}
+			/>
 			<TweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
 			<RetweetChart addToGlobalCount={addToGlobalCount} />
 			<QuotedTweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
