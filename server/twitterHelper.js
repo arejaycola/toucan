@@ -51,7 +51,6 @@ async function searchForVerifiedUser(name) {
 async function getTweets(params) {
 	try {
 		const response = await client.get(`https://api.twitter.com/1.1/statuses/user_timeline.json`, params);
-		console.log(params);
 		return response;
 	} catch (e) {
 		console.log(e);
@@ -59,8 +58,8 @@ async function getTweets(params) {
 	}
 }
 
-async function getTweetsByUserId(userId) {
-	let number = 199;
+async function getTweetsByUserId(userId, numberOfTweets) {
+	let number = 200;
 	let results = [];
 	let maxId = -1;
 
@@ -80,7 +79,8 @@ async function getTweetsByUserId(userId) {
 				max_id: maxId,
 			};
 		}
-		while (number == 199 && results.length <= 1000) {
+
+		while (number == 200 && results.length <= numberOfTweets) {
 			let response = await getTweets(params);
 			maxId =
 				Math.max.apply(
@@ -92,7 +92,6 @@ async function getTweetsByUserId(userId) {
 			results = [...results, ...response];
 			number = response.length;
 		}
-
 		return results;
 	} catch (e) {
 		console.log(e);

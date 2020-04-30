@@ -24,9 +24,11 @@ app.get('/api/twitter/user/:userid', async (req, res) => {
 	res.send(results);
 });
 
-app.get('/api/twitter/user/:userid/tweets', async (req, res) => {
+app.get('/api/twitter/user/:userid/tweets/:numberOfTweets', async (req, res) => {
 	let id = req.params.userid;
-	let results = await Twitter.getTweetsByUserId(id);
+	const numberOfTweets = req.params.numberOfTweets;
+
+	let results = await Twitter.getTweetsByUserId(id, numberOfTweets);
 	res.send(results);
 });
 
@@ -47,7 +49,7 @@ app.post('/api/twitter/users', async (req, res) => {
 			/* Get the comma separated list of ids. */
 			const chunk = chunks[i].toString();
 			const response = await Twitter.getUsersByIds(chunk);
-			results = [ ...results, ...response ];
+			results = [...results, ...response];
 		}
 
 		res.send(results);
