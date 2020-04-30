@@ -4,12 +4,11 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const QuotedTweetChart = ({ addToGlobalCount }) => {
 	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
-
-	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
-	const [hasVerifiedHour, setHasVerifiedHour] = useState(false);
+	const { isQuotedTweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -46,9 +45,7 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 		setUnverifiedHour(tempUnverifiedHour);
 
 		if (quotedTweets.length > 0) {
-			/* Add a small delay for effect. */
-			setHasVerifiedDay(true);
-			setHasVerifiedHour(true);
+			setIsQuotedTweetsLoading(false);
 		}
 
 		addToGlobalCount({
@@ -83,7 +80,9 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						{hasVerifiedDay ? (
+						{isQuotedTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={30000} />
+						) : (
 							<D3Chart
 								id="d3-quoted-tweet-chart-day"
 								label="# of Quoted Tweets"
@@ -91,13 +90,13 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 								dataVerified={verifiedDay}
 								dataUnverified={unverifiedDay}
 							/>
-						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={3000} />
 						)}
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						{hasVerifiedHour ? (
+						{isQuotedTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={30000} />
+						) : (
 							<D3Chart
 								id="d3-quoted-tweet-chart-hour"
 								label="# of Quoted Tweets"
@@ -105,8 +104,6 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 								dataVerified={verifiedHour}
 								dataUnverified={unverifiedHour}
 							/>
-						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={3000} />
 						)}
 					</Col>
 				</Row>

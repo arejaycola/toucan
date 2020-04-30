@@ -5,12 +5,11 @@ import { Row, Col } from 'react-bootstrap';
 import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import Loader from 'react-loader-spinner';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const TweetChart = ({ addToGlobalCount }) => {
 	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
-
-	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
-	const [hasVerifiedHour, setHasVerifiedHour] = useState(false);
+	const { isTweetsLoading, setIsTweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -69,7 +68,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 						}
 					}
 				}
-				
+
 				filteredTweets.map((filteredTweet) => {
 					let tempMoment = moment(new Date(filteredTweet.created_at));
 					return filteredTweet.entities.user_mentions.map((userMentions) => {
@@ -89,8 +88,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 				setVerifiedHour(tempVerifiedHour);
 				setUnverifiedHour(tempUnverifiedHour);
 
-				setHasVerifiedDay(true);
-				setHasVerifiedHour(true);
+				setIsTweetsLoading(false);
 
 				addToGlobalCount({
 					verifiedDay: tempVerifiedDay,
@@ -128,7 +126,9 @@ const TweetChart = ({ addToGlobalCount }) => {
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						{hasVerifiedDay ? (
+						{isTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
+						) : (
 							<D3Chart
 								id="d3-tweet-chart-day"
 								label="# of Tweets"
@@ -136,13 +136,13 @@ const TweetChart = ({ addToGlobalCount }) => {
 								dataVerified={verifiedDay}
 								dataUnverified={unverifiedDay}
 							/>
-						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						{hasVerifiedHour ? (
+						{isTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
+						) : (
 							<D3Chart
 								id="d3-tweet-chart-hour"
 								label="# of Tweets"
@@ -150,8 +150,6 @@ const TweetChart = ({ addToGlobalCount }) => {
 								dataVerified={verifiedHour}
 								dataUnverified={unverifiedHour}
 							/>
-						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 				</Row>

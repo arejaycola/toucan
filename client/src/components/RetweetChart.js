@@ -4,12 +4,11 @@ import { TweetContext } from '../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const RetweetChart = ({ addToGlobalCount }) => {
 	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
-
-	const [hasVerifiedDay, setHasVerifiedDay] = useState(false);
-	const [hasVerifiedHour, setHasVerifiedHour] = useState(false);
+	const { isRetweetsLoading, setIsRetweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
@@ -46,8 +45,7 @@ const RetweetChart = ({ addToGlobalCount }) => {
 
 		if (retweets.length > 0) {
 			/* Add a small delay for effect. */
-			setHasVerifiedDay(true);
-			setHasVerifiedHour(true);
+			setIsRetweetsLoading(false);
 		}
 
 		addToGlobalCount({
@@ -82,7 +80,9 @@ const RetweetChart = ({ addToGlobalCount }) => {
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						{hasVerifiedDay ? (
+						{isRetweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
+						) : (
 							<D3Chart
 								id="d3-retweet-chart-day"
 								label="# of Retweets"
@@ -90,13 +90,13 @@ const RetweetChart = ({ addToGlobalCount }) => {
 								dataVerified={verifiedDay}
 								dataUnverified={unverifiedDay}
 							/>
-						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						{hasVerifiedHour ? (
+						{isRetweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
+						) : (
 							<D3Chart
 								id="d3-retweet-chart-hour"
 								label="# of Retweets"
@@ -104,8 +104,6 @@ const RetweetChart = ({ addToGlobalCount }) => {
 								dataVerified={verifiedHour}
 								dataUnverified={unverifiedHour}
 							/>
-						) : (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
 						)}
 					</Col>
 				</Row>
