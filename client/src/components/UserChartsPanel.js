@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import TotalChart from './TotalChart';
 import TweetChart from './TweetChart';
 import RetweetChart from './RetweetChart';
 import QuotedTweetChart from './QuotedTweetChart';
+import Recommendations from './Recommendations/Recommendations';
 import Legend from './Legend';
 import { Container, Col, Row } from 'react-bootstrap';
-import numeral from 'numeral';
-import moment from 'moment';
+import { TweetContext } from '../contexts/TweetContext';
 
 const UserChartsPanel = (props) => {
-	const [globalVerifiedDayCount, setGlobalVerifiedDayCount] = useState(Array(7).fill(0));
-	const [globalVerifiedHourCount, setGlobalVerifiedHourCount] = useState(Array(24).fill(0));
-	const [globalUnverifiedDayCount, setGlobalUnverifiedDayCount] = useState(Array(7).fill(0));
-	const [globalUnverifiedHourCount, setGlobalUnverifiedHourCount] = useState(Array(24).fill(0));
-
-	const [dayRatio, setDayRatio] = useState(Array(7).fill(0));
-	const [hourRatio, setHourRatio] = useState(Array(24).fill(0));
+	const {
+		globalVerifiedDayCount,
+		setGlobalVerifiedDayCount,
+		globalVerifiedHourCount,
+		setGlobalVerifiedHourCount,
+		globalUnverifiedDayCount,
+		setGlobalUnverifiedDayCount,
+		globalUnverifiedHourCount,
+		setGlobalUnverifiedHourCount,
+	} = useContext(TweetContext);
 
 	const addToGlobalCount = ({ verifiedDay, unverifiedDay, verifiedHour, unverifiedHour }) => {
 		setGlobalVerifiedDayCount((old) => {
@@ -55,67 +58,33 @@ const UserChartsPanel = (props) => {
 		});
 	};
 
-	// useEffect(() => {
-	// 	let day = [];
-	// 	let tempArray = [];
-	// 	let ratio = Array(7).fill(0);
-
-	// 	/* Combine the unverifiedDay and verifiedDay to see his most active day */
-	// 	for (let i = 0; i < globalVerifiedDayCount.length; i++) {
-	// 		tempArray[i] = globalVerifiedDayCount[i] + globalUnverifiedDayCount[i];
-	// 		ratio[i] = globalUnverifiedDayCount[i] / (globalVerifiedDayCount[i] + globalUnverifiedDayCount[i]);
-	// 	}
-
-	// 	day = tempArray.indexOf(Math.max(...tempArray));
-	// 	setDayRatio(ratio);
-	// }, [globalVerifiedDayCount, globalUnverifiedDayCount]);
-
-	// useEffect(() => {
-	// 	let hour = [];
-	// 	let tempArray = [];
-	// 	let ratio = Array(24).fill(0);
-	// 	/* Combine the unverifiedDay and verifiedDay to see his most active day */
-
-	// 	for (let i = 0; i < globalVerifiedHourCount.length; i++) {
-	// 		tempArray[i] = globalVerifiedHourCount[i] + globalUnverifiedHourCount[i];
-	// 		ratio[i] = globalUnverifiedHourCount[i] / (globalVerifiedHourCount[i] + globalUnverifiedHourCount[i]);
-
-	// 		if (isNaN(ratio[i])) {
-	// 			ratio[i] = 0;
-	// 		}
-	// 	}
-	// 	hour = tempArray.indexOf(Math.max(...tempArray));
-	// 	setHourRatio(ratio);
-	// }, [globalVerifiedHourCount, globalUnverifiedHourCount]);
-
 	return (
 		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
-			<p>
-				Day with the highest percent of statuses to unverifed users:
-				{moment()
-					.weekday(dayRatio.indexOf(Math.max(...dayRatio)))
-					.format('dddd')}
-				({numeral(dayRatio[dayRatio.indexOf(Math.max(...dayRatio))]).format('0.00%')})
-			</p>
-			<p>
-				Hour with the highest percent of statuses to unverifed users:
-				{moment()
-					.hour(hourRatio.indexOf(Math.max(...hourRatio)))
-					.minute('00')
-					.format('h:mm A')}
-				({numeral(hourRatio[hourRatio.indexOf(Math.max(...hourRatio))]).format('0.00%')})
-			</p>
-			<Legend />
-			<TotalChart
-				verifiedDay={globalVerifiedDayCount}
-				unverifiedDay={globalUnverifiedDayCount}
-				verifiedHour={globalVerifiedHourCount}
-				unverifiedHour={globalUnverifiedHourCount}
-				user={props.user}
-			/>
-			<TweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
-			<RetweetChart addToGlobalCount={addToGlobalCount} />
-			<QuotedTweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
+			<Row>
+				<Col md={4}>
+					<Recommendations />
+				</Col>
+
+				<Col md={8}>
+					<Legend />
+					<TotalChart
+						verifiedDay={globalVerifiedDayCount}
+						unverifiedDay={globalUnverifiedDayCount}
+						verifiedHour={globalVerifiedHourCount}
+						unverifiedHour={globalUnverifiedHourCount}
+						user={props.user}
+					/>
+				</Col>
+			</Row>
+			<div className="d-none">
+				<TweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
+			</div>
+			<div className="d-none">
+				<RetweetChart className="d-none" addToGlobalCount={addToGlobalCount} />
+			</div>
+			<div className="d-none">
+				<QuotedTweetChart className="d-none" addToGlobalCount={addToGlobalCount} user={props.user} />
+			</div>
 		</Container>
 	);
 };
