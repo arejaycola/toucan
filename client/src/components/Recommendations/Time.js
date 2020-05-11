@@ -20,7 +20,7 @@ const Time = () => {
 		}
 	}, [globalUnverifiedHourCount]);
 
-	const bestHour = moment().set('hour', maxHour).set('minute', 0).format('HH:mm A');
+	const bestHour = moment().set('hour', maxHour).set('minute', 0).format('hh:mm A');
 
 	return (
 		<Row>
