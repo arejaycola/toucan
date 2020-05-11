@@ -27,7 +27,7 @@ const Time = () => {
 			<Col>
 				<Row>
 					<Col>
-						Best hour to tweet:&nbsp;
+						Best hour to tweet (on average):&nbsp;
 						{maxHour == -1 ? (
 							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={15000} />
 						) : (
