@@ -23,8 +23,7 @@ const TimeToday = () => {
 		statuses,
 	} = useContext(TweetContext);
 
-	const [todayCount, setTodayCount] = useState(Array(24).fill(0));
-	const [bestHour, setBestHour] = useState(0);
+	const [bestHours, setBestHours] = useState([]);
 
 	const tempToday = Array(24).fill(0);
 
@@ -38,39 +37,34 @@ const TimeToday = () => {
 				tempToday[moment(t.created_at).hour()]++;
 			});
 
-			setTodayCount(tempToday);
+			const maxHour = Math.max(...tempToday);
 
-			setBestHour(
-				moment()
-					.set('hour', tempToday.indexOf(Math.max(...tempToday)))
-					.set('minute', 0)
-					.format('HH:mm A')
-			);
+			/* Find all occurances of max. */
+			const tempBestHours = tempToday.reduce((a, e, i) => {
+				if (e === maxHour) {
+					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
+				}
+				return a;
+			}, []);
+
+			setBestHours(tempBestHours);
 		}
 	}, [statuses]);
-
-	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
-	// const { globalUnverifiedHourCount } = useContext(TweetContext);
-
-	const today = moment().weekday();
-	// const
-	// console.log(statuses.length);
-
-	// const bestHour = moment()
-	// 	.set('hour', globalUnverifiedHourCount.indexOf(Math.max(...globalUnverifiedHourCount)))
-	// 	.set('minute', 0)
-	// 	.format('HH:mm A');
 
 	return (
 		<Row>
 			<Col>
 				<Row>
 					<Col>
-						Best hour to tweet today:&nbsp;
+						Best hour(s) to tweet today:&nbsp;
 						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
 							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={3000} />
 						) : (
-							<strong>{bestHour}</strong>
+							<strong>
+								{bestHours.map((hour, i) => {
+									return i != bestHours.length - 1 ? <span key={i}>{hour}, </span> : <span key={i}>{hour}</span>;
+								})}
+							</strong>
 						)}
 					</Col>
 				</Row>
