@@ -8,24 +8,11 @@ import Loader from 'react-loader-spinner';
 const TimeToday = () => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const {
-		globalVerifiedDayCount,
-		setGlobalVerifiedDayCount,
-		globalVerifiedHourCount,
-		setGlobalVerifiedHourCount,
-		globalUnverifiedDayCount,
-		setGlobalUnverifiedDayCount,
-		globalUnverifiedHourCount,
-		setGlobalUnverifiedHourCount,
-		tweets,
-		retweets,
-		quotedTweets,
-		statuses,
-	} = useContext(TweetContext);
+	const { statuses } = useContext(TweetContext);
 
 	const [bestHours, setBestHours] = useState([]);
 
-	const tempToday = Array(24).fill(0);
+	const tempHoursToday = Array(24).fill(0);
 
 	useEffect(() => {
 		if (statuses.length > 0) {
@@ -34,13 +21,13 @@ const TimeToday = () => {
 			});
 
 			createdOnThisDay.map((t) => {
-				tempToday[moment(t.created_at).hour()]++;
+				tempHoursToday[moment(t.created_at).hour()]++;
 			});
 
-			const maxHour = Math.max(...tempToday);
+			const maxHour = Math.max(...tempHoursToday);
 
 			/* Find all occurances of max. */
-			const tempBestHours = tempToday.reduce((a, e, i) => {
+			const tempBestHours = tempHoursToday.reduce((a, e, i) => {
 				if (e === maxHour) {
 					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
 				}
