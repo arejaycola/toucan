@@ -30,28 +30,23 @@ const TimeToday = () => {
 			/* Find all occurances of max. */
 			const tempBestDays = tempDays.reduce((a, e, i) => {
 				if (e === maxDay) {
-					a.push(moment().set('day', i).set('hour', 0).set('minute', 0).weekday());
+					a.push(moment().set('day', i).weekday());
 				}
 				return a;
 			}, []);
-
+			
 			/* Return the statuses from any day with the max (in case the max happened on more than one day.) */
 			let tweetsFromBestDay = tempBestDays.map((day) => {
 				return statuses.filter((status) => {
 					return moment(status).weekday() === day;
 				});
 			})[0];
-			console.log(tempBestDays);
-			console.log(tweetsFromBestDay);
 
 			setBestDays(tempBestDays);
 
-			let createdOnThisDay = tweetsFromBestDay.filter((status) => {
-				return moment(status.created_at).weekday() === moment().weekday();
-			});
-
-			createdOnThisDay.map((t) => {
-				tempHours[moment(t.created_at).hour()]++;
+			tweetsFromBestDay.map((t) => {
+				console.log(t);
+				tempHours[moment(t).hour()]++;
 			});
 
 			const maxHour = Math.max(...tempHours);
