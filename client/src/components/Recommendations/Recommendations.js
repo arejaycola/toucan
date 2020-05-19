@@ -14,10 +14,10 @@ const Recommendations = () => {
 	return (
 		<>
 			<Row className="mb-4">
-				<Col className='text-center'>
+				<Col className="text-center">
 					<h3>
 						Recommendations
-						<a style={{ cursor: 'pointer' }}>
+						<a title="Adjust recommendation engine" style={{ cursor: 'pointer' }}>
 							<FontAwesomeIcon onClick={onSettingsClick} style={{ marginLeft: '10px' }} icon={faCog} />
 						</a>
 					</h3>
