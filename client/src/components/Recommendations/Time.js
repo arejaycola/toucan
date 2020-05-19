@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import moment from 'moment';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
@@ -27,12 +27,19 @@ const Time = () => {
 			<Col>
 				<Row>
 					<Col>
-						Best hour to tweet (on average):&nbsp;
 						{maxHour == -1 ? (
 							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={15000} />
 						) : (
 							<strong>{bestHour}</strong>
 						)}
+					</Col>
+				</Row>
+				<Row>
+					<Col>Best hour to tweet (on average)</Col>
+				</Row>
+				<Row className='mt-1'>
+					<Col>
+						<Button>View</Button>
 					</Col>
 				</Row>
 			</Col>

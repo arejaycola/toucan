@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
@@ -57,7 +57,7 @@ const TimeToday = () => {
 				}
 				return a;
 			}, []);
-			
+
 			setBestHours(tempBestHours);
 		}
 	}, [statuses]);
@@ -67,7 +67,6 @@ const TimeToday = () => {
 			<Col>
 				<Row>
 					<Col>
-						Best day and hour to tweet:&nbsp;
 						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
 							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={3000} />
 						) : (
@@ -84,6 +83,14 @@ const TimeToday = () => {
 								})}
 							</strong>
 						)}
+					</Col>
+				</Row>
+				<Row>
+					<Col>Best day and hour to tweet</Col>
+				</Row>
+				<Row className="mt-1">
+					<Col>
+						<Button>View</Button>
 					</Col>
 				</Row>
 			</Col>
