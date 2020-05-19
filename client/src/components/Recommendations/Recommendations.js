@@ -23,7 +23,7 @@ const Recommendations = () => {
 					</h3>
 				</Col>
 			</Row>
-			<Row>
+			<Row className="text-center">
 				<Col className="mb-3" sm={4}>
 					<DayAndTime />
 				</Col>
