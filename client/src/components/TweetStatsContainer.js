@@ -42,7 +42,7 @@ const TweetStatsContainer = (props) => {
 						<Col>% Tweets with Unverified User Mention</Col>
 					</Row>
 				</Col>
-				<Col sm="6" className="mt-5 mt-sm-0">
+				<Col sm="6" className="mt-4 mt-sm-0">
 					<Row>
 						<Col>
 							<strong>{numeral(retweetsToUnverifiedCount / retweetsCount).format('0.00%')}</strong>
@@ -53,7 +53,7 @@ const TweetStatsContainer = (props) => {
 					</Row>
 				</Col>
 			</Row>
-			<Row className="mt-5 mt-sm-3">
+			<Row className="mt-4 mt-sm-3">
 				<Col sm="6">
 					<Row>
 						<Col>
@@ -64,7 +64,7 @@ const TweetStatsContainer = (props) => {
 						<Col>% Quoted Tweets from Unverified User</Col>
 					</Row>
 				</Col>
-				<Col sm="6" className="mt-5 mt-sm-0">
+				<Col sm="6" className="mt-4 mt-sm-0">
 					<Row>
 						<Col>
 							<strong>{totalTweets}</strong>
