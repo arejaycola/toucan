@@ -61,21 +61,21 @@ const UserChartsPanel = (props) => {
 	return (
 		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
 			<Row>
-				<Col md={4}>
+				<Col>
 					<Recommendations />
 				</Col>
-
-				<Col md={8}>
-					<Legend />
-					<TotalChart
-						verifiedDay={globalVerifiedDayCount}
-						unverifiedDay={globalUnverifiedDayCount}
-						verifiedHour={globalVerifiedHourCount}
-						unverifiedHour={globalUnverifiedHourCount}
-						user={props.user}
-					/>
-				</Col>
 			</Row>
+
+			<div className="d-none">
+				<Legend />
+				<TotalChart
+					verifiedDay={globalVerifiedDayCount}
+					unverifiedDay={globalUnverifiedDayCount}
+					verifiedHour={globalVerifiedHourCount}
+					unverifiedHour={globalUnverifiedHourCount}
+					user={props.user}
+				/>
+			</div>
 			<div className="d-none">
 				<TweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
 			</div>
