@@ -11,6 +11,13 @@ const Recommendations = () => {
 		console.log('tehe');
 	};
 
+	const onViewClick = (id) => {
+		if (id === 'time-today') {
+		} else if (id === 'day-time') {
+		} else if (id === 'time') {
+		}
+	};
+
 	return (
 		<>
 			<Row className="mb-4">
@@ -25,13 +32,13 @@ const Recommendations = () => {
 			</Row>
 			<Row className="text-center">
 				<Col className="mb-3" sm={4}>
-					<DayAndTime />
+					<DayAndTime onViewClick={onViewClick} />
 				</Col>
 				<Col className="mb-3" sm={4}>
-					<TimeToday />
+					<TimeToday onViewClick={onViewClick} />
 				</Col>
 				<Col className="mb-3" sm={4}>
-					<Time />
+					<Time onViewClick={onViewClick} />
 				</Col>
 			</Row>
 		</>

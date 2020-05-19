@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
-import { Container, Col, Row, Button} from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
 
-const TimeToday = () => {
+const TimeToday = ({ onViewClick }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const { statuses } = useContext(TweetContext);
@@ -59,7 +59,9 @@ const TimeToday = () => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button>View</Button>
+						<Button id="time-today" onClick={(e) => onViewClick('time-today')}>
+							View
+						</Button>
 					</Col>
 				</Row>
 			</Col>

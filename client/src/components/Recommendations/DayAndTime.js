@@ -5,7 +5,7 @@ import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
 
-const TimeToday = () => {
+const TimeToday = ({ onViewClick }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	let { statuses } = useContext(TweetContext);
@@ -90,7 +90,9 @@ const TimeToday = () => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button>View</Button>
+						<Button id="day-time" onClick={(e) => onViewClick('day-time')}>
+							View
+						</Button>
 					</Col>
 				</Row>
 			</Col>
