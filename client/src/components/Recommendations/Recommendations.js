@@ -14,7 +14,7 @@ const Recommendations = () => {
 	return (
 		<>
 			<Row className="mb-4">
-				<Col>
+				<Col className='text-center'>
 					<h3>
 						Recommendations
 						<a style={{ cursor: 'pointer' }}>
