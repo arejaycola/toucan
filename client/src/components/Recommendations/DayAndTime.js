@@ -34,7 +34,7 @@ const TimeToday = () => {
 				}
 				return a;
 			}, []);
-			
+
 			/* Return the statuses from any day with the max (in case the max happened on more than one day.) */
 			let tweetsFromBestDay = tempBestDays.map((day) => {
 				return statuses.filter((status) => {
@@ -45,7 +45,6 @@ const TimeToday = () => {
 			setBestDays(tempBestDays);
 
 			tweetsFromBestDay.map((t) => {
-				console.log(t);
 				tempHours[moment(t).hour()]++;
 			});
 
@@ -58,7 +57,7 @@ const TimeToday = () => {
 				}
 				return a;
 			}, []);
-
+			
 			setBestHours(tempBestHours);
 		}
 	}, [statuses]);
