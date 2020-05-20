@@ -5,9 +5,10 @@ export default (props) => {
 	const svgHeight = 275;
 	const svgWidth = 450;
 
-	const d3RetweetChartDay = useRef(null);
+	const d3Chart = useRef(null);
 	useEffect(() => {
-		if (props.dataVerified && props.dataUnverified && d3RetweetChartDay.current) {
+		// console.log(props);
+		if (props.data && d3Chart.current) {
 			const margin = {
 				top: 10,
 				right: 25,
@@ -17,10 +18,10 @@ export default (props) => {
 			const width = svgWidth - margin.left - margin.right;
 			const height = svgHeight - margin.top - margin.bottom;
 
-			d3.select(d3RetweetChartDay.current).selectAll('g').remove();
+			d3.select(d3Chart.current).selectAll('g').remove();
 
 			const svg = d3
-				.select(d3RetweetChartDay.current)
+				.select(d3Chart.current)
 				.attr('viewbox', `0 0 ${svgHeight} ${svgWidth}`)
 				.append('g')
 				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
@@ -31,9 +32,20 @@ export default (props) => {
 				.nice()
 				.range([0, width]);
 
+			let yScaleMax = -1;
+
+			/* Calculate the max of all the data elements passed. */
+			props.data.forEach((category) => {
+				const localMax = d3.max(category.datum);
+
+				if (localMax > yScaleMax) {
+					yScaleMax = localMax;
+				}
+			});
+
 			const yScale = d3
 				.scaleLinear()
-				.domain([0, d3.max([d3.max(props.dataUnverified), d3.max(props.dataVerified)])])
+				.domain([0, yScaleMax])
 				.nice()
 				.range([height, 0]);
 
@@ -80,7 +92,7 @@ export default (props) => {
 				.style('fill', '#555')
 				.text(props.label);
 		}
-	}, [props.dataVerified, props.dataUnverified, d3RetweetChartDay.current]);
+	}, [props.dataVerified, props.dataUnverified, d3Chart.current]);
 
-	return <svg className={props.id} width={svgWidth} height={svgHeight} ref={d3RetweetChartDay} />;
+	return <svg className={props.id} width={svgWidth} height={svgHeight} ref={d3Chart} />;
 };
