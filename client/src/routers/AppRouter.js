@@ -9,6 +9,7 @@ import PublicRoute from './PublicRoute';
 import SearchContextProvider from '../contexts/SearchContext';
 import TweetContextProvider from '../contexts/TweetContext';
 import LoadingContextProvider from '../contexts/LoadingContext';
+import ChartContextProvider from '../contexts/ChartContext';
 
 export const history = createBrowserHistory();
 
@@ -23,7 +24,9 @@ const AppRouter = () => {
 						<TweetContextProvider>
 							<PublicRoute path="/user/" component={UserPage} exact={true} />
 							<LoadingContextProvider>
-								<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+								<ChartContextProvider>
+									<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+								</ChartContextProvider>
 							</LoadingContextProvider>
 						</TweetContextProvider>
 					</SearchContextProvider>

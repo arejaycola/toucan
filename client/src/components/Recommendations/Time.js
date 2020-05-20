@@ -13,6 +13,7 @@ const Time = ({onViewClick}) => {
 	const [maxHour, setMaxHour] = useState(-1);
 
 	useEffect(() => {
+		console.log(!isTweetsLoading , !isRetweetsLoading , !isQuotedTweetsLoading);
 		if (!isTweetsLoading && !isRetweetsLoading && !isQuotedTweetsLoading) {
 			const globalCount = globalUnverifiedHourCount;
 			const max = globalCount.indexOf(Math.max(...globalCount));

@@ -21,6 +21,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 	let tempVerifiedHour = Array(24).fill(0);
 	let tempUnverifiedHour = Array(24).fill(0);
 	let unverifiedMentionCount = 0;
+
 	useEffect(() => {
 		/* Only look at tweets with a user mention */
 		const filteredTweets = tweets.filter((tweet) => {
@@ -133,8 +134,10 @@ const TweetChart = ({ addToGlobalCount }) => {
 								id="d3-tweet-chart-day"
 								label="# of Tweets"
 								tickFormat={dayTickFormat}
-								dataVerified={verifiedDay}
-								dataUnverified={unverifiedDay}
+								data={[
+									{ type: 'verified', datum: verifiedDay },
+									{ type: 'unverified', datum: unverifiedDay },
+								]}
 							/>
 						)}
 					</Col>
@@ -147,8 +150,10 @@ const TweetChart = ({ addToGlobalCount }) => {
 								id="d3-tweet-chart-hour"
 								label="# of Tweets"
 								tickFormat={hourTickFormat}
-								dataVerified={verifiedHour}
-								dataUnverified={unverifiedHour}
+								data={[
+									{ type: 'verified', datum: verifiedHour },
+									{ type: 'unverified', datum: unverifiedHour },
+								]}
 							/>
 						)}
 					</Col>

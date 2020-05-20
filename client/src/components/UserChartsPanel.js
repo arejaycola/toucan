@@ -66,7 +66,7 @@ const UserChartsPanel = (props) => {
 				</Col>
 			</Row>
 
-			<div className="d-none">
+			{/* <div className="d-none">
 				<Legend />
 				<TotalChart
 					verifiedDay={globalVerifiedDayCount}
@@ -75,16 +75,16 @@ const UserChartsPanel = (props) => {
 					unverifiedHour={globalUnverifiedHourCount}
 					user={props.user}
 				/>
-			</div>
-			<div className="d-none">
-				<TweetChart addToGlobalCount={addToGlobalCount} user={props.user} />
-			</div>
-			<div className="d-none">
-				<RetweetChart className="d-none" addToGlobalCount={addToGlobalCount} />
-			</div>
-			<div className="d-none">
-				<QuotedTweetChart className="d-none" addToGlobalCount={addToGlobalCount} user={props.user} />
-			</div>
+			</div> */}
+			{/* <div className="d-none"> */}
+			<TweetChart addToGlobalCount={addToGlobalCount} />
+			{/* </div> */}
+			{/* <div className="d-none"> */}
+			<RetweetChart addToGlobalCount={addToGlobalCount} />
+			{/* </div> */}
+			{/* <div className="d-none"> */}
+			<QuotedTweetChart addToGlobalCount={addToGlobalCount} />
+			{/* </div> */}
 		</Container>
 	);
 };

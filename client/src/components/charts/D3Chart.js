@@ -7,7 +7,6 @@ export default (props) => {
 
 	const d3Chart = useRef(null);
 	useEffect(() => {
-		// console.log(props);
 		if (props.data && d3Chart.current) {
 			const margin = {
 				top: 10,
@@ -26,15 +25,19 @@ export default (props) => {
 				.append('g')
 				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-			const xScale = d3
-				.scaleLinear()
-				.domain([0, d3.max([props.dataUnverified.length - 1, props.dataVerified.length - 1])])
-				.nice()
-				.range([0, width]);
+			/* Calculate the xScaleMax. This shouldn't need to happen because it should always be the same but just in case. */
+			let xScaleMax = -1;
+			props.data.forEach((category) => {
+				const localMax = category.datum.length - 1;
+				if (localMax > xScaleMax) {
+					xScaleMax = localMax;
+				}
+			});
 
-			let yScaleMax = -1;
+			const xScale = d3.scaleLinear().domain([0, xScaleMax]).nice().range([0, width]);
 
 			/* Calculate the max of all the data elements passed. */
+			let yScaleMax = -1;
 			props.data.forEach((category) => {
 				const localMax = d3.max(category.datum);
 
@@ -43,11 +46,7 @@ export default (props) => {
 				}
 			});
 
-			const yScale = d3
-				.scaleLinear()
-				.domain([0, yScaleMax])
-				.nice()
-				.range([height, 0]);
+			const yScale = d3.scaleLinear().domain([0, yScaleMax]).nice().range([height, 0]);
 
 			const xAxis = d3.axisBottom(xScale).ticks(xScale.domain()[1]).tickFormat(props.tickFormat);
 
@@ -79,9 +78,10 @@ export default (props) => {
 				})
 				.curve(d3.curveMonotoneX);
 
-			svg.append('path').datum(props.dataUnverified).classed('line', true).classed('line-unverified', true).attr('d', line);
-
-			svg.append('path').datum(props.dataVerified).classed('line', true).classed('line-verified', true).attr('d', line);
+			/* Plot all of the data sent to this component */
+			for (let i = 0; i < props.data.length; i++) {
+				svg.append('path').datum(props.data[i].datum).classed('line', true).classed(`line-${props.data[i].type}`, true).attr('d', line);
+			}
 
 			svg.append('text')
 				.attr('text-anchor', 'middle')
@@ -92,7 +92,7 @@ export default (props) => {
 				.style('fill', '#555')
 				.text(props.label);
 		}
-	}, [props.dataVerified, props.dataUnverified, d3Chart.current]);
+	}, [props.data, d3Chart.current]);
 
 	return <svg className={props.id} width={svgWidth} height={svgHeight} ref={d3Chart} />;
 };

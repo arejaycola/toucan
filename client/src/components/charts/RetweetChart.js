@@ -87,8 +87,10 @@ const RetweetChart = ({ addToGlobalCount }) => {
 								id="d3-retweet-chart-day"
 								label="# of Retweets"
 								tickFormat={dayTickFormat}
-								dataVerified={verifiedDay}
-								dataUnverified={unverifiedDay}
+								data={[
+									{ type: 'verified', datum: verifiedDay },
+									{ type: 'unverified', datum: unverifiedDay },
+								]}
 							/>
 						)}
 					</Col>
@@ -101,8 +103,10 @@ const RetweetChart = ({ addToGlobalCount }) => {
 								id="d3-retweet-chart-hour"
 								label="# of Retweets"
 								tickFormat={hourTickFormat}
-								dataVerified={verifiedHour}
-								dataUnverified={unverifiedHour}
+								data={[
+									{ type: 'verified', datum: verifiedHour },
+									{ type: 'unverified', datum: unverifiedHour },
+								]}
 							/>
 						)}
 					</Col>

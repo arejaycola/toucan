@@ -87,8 +87,10 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 								id="d3-quoted-tweet-chart-day"
 								label="# of Quoted Tweets"
 								tickFormat={dayTickFormat}
-								dataVerified={verifiedDay}
-								dataUnverified={unverifiedDay}
+								data={[
+									{ type: 'verified', datum: verifiedDay },
+									{ type: 'unverified', datum: unverifiedDay },
+								]}
 							/>
 						)}
 					</Col>
@@ -101,8 +103,10 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 								id="d3-quoted-tweet-chart-hour"
 								label="# of Quoted Tweets"
 								tickFormat={hourTickFormat}
-								dataVerified={verifiedHour}
-								dataUnverified={unverifiedHour}
+								data={[
+									{ type: 'verified', datum: verifiedHour },
+									{ type: 'unverified', datum: unverifiedHour },
+								]}
 							/>
 						)}
 					</Col>
