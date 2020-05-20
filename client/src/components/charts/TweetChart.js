@@ -2,10 +2,10 @@ import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
-import { TweetContext } from '../contexts/TweetContext';
+import { TweetContext } from '../../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import Loader from 'react-loader-spinner';
-import { LoadingContext } from '../contexts/LoadingContext';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
 const TweetChart = ({ addToGlobalCount }) => {
 	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);

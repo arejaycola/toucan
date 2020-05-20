@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import TotalChart from './TotalChart';
-import TweetChart from './TweetChart';
-import RetweetChart from './RetweetChart';
-import QuotedTweetChart from './QuotedTweetChart';
-import Recommendations from './Recommendations/Recommendations';
+import TotalChart from './charts/TotalChart';
+import TweetChart from './charts/TweetChart';
+import RetweetChart from './charts/RetweetChart';
+import QuotedTweetChart from './charts//QuotedTweetChart';
+import Recommendations from './recommendations/Recommendations';
 import Legend from './Legend';
 import { Container, Col, Row } from 'react-bootstrap';
 import { TweetContext } from '../contexts/TweetContext';

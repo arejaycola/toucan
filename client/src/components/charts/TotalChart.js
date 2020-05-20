@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 import D3Chart from './D3Chart';
-import { LoadingContext } from '../contexts/LoadingContext';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
 const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);

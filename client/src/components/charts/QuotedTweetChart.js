@@ -1,33 +1,34 @@
 import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
-import { TweetContext } from '../contexts/TweetContext';
+import { TweetContext } from '../../contexts/TweetContext';
 import D3Chart from './D3Chart';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
-import { LoadingContext } from '../contexts/LoadingContext';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
-const RetweetChart = ({ addToGlobalCount }) => {
-	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
-	const { isRetweetsLoading, setIsRetweetsLoading } = useContext(LoadingContext);
+const QuotedTweetChart = ({ addToGlobalCount }) => {
+	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
+	const { isQuotedTweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
 	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
 	const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
 	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
 
+	let tempVerifiedDay = Array(7).fill(0);
+	let tempUnverifiedDay = Array(7).fill(0);
+	let tempVerifiedHour = Array(24).fill(0);
+	let tempUnverifiedHour = Array(24).fill(0);
+
 	let unverifiedMentionCount = 0;
 
 	useEffect(() => {
-		let tempVerifiedDay = Array(7).fill(0);
-		let tempUnverifiedDay = Array(7).fill(0);
-		let tempVerifiedHour = Array(24).fill(0);
-		let tempUnverifiedHour = Array(24).fill(0);
+		setQuotedTweetsCount(quotedTweets.length);
 
-		setRetweetsCount(retweets.length);
+		quotedTweets.map((quotedTweet) => {
+			let tempMoment = moment(new Date(quotedTweet.created_at));
 
-		retweets.map((retweet) => {
-			let tempMoment = moment(new Date(retweet.created_at));
-			if (retweet.retweeted_status.user.verified) {
+			if (quotedTweet.quoted_status.user.verified) {
 				tempVerifiedDay[tempMoment.weekday()]++;
 				tempVerifiedHour[tempMoment.hour()]++;
 			} else {
@@ -37,15 +38,14 @@ const RetweetChart = ({ addToGlobalCount }) => {
 			}
 		});
 
-		setRetweetsToUnverifiedCount(unverifiedMentionCount);
+		setQuotedTweetsToUnverifiedCount(unverifiedMentionCount);
 		setVerifiedDay(tempVerifiedDay);
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
 
-		if (retweets.length > 0) {
-			/* Add a small delay for effect. */
-			setIsRetweetsLoading(false);
+		if (quotedTweets.length > 0) {
+			setIsQuotedTweetsLoading(false);
 		}
 
 		addToGlobalCount({
@@ -54,19 +54,19 @@ const RetweetChart = ({ addToGlobalCount }) => {
 			verifiedHour: tempVerifiedHour,
 			unverifiedHour: tempUnverifiedHour,
 		});
-	}, [retweets]);
+	}, [quotedTweets]);
 
 	const dayTickFormat = (d) => {
 		return moment().weekday(d).format('dddd');
 	};
 	const hourTickFormat = (d) => {
-		if (d === 12) {
+		if (d == 12) {
 			return '12 pm';
-		} else if (d === 0) {
+		} else if (d == 0) {
 			return '12am';
 		}
 
-		return moment().hour(d).format('h');
+		return moment().hour(d).format('hh');
 	};
 
 	return (
@@ -74,18 +74,18 @@ const RetweetChart = ({ addToGlobalCount }) => {
 			<Col>
 				<Row>
 					<Col>
-						<h4>Retweets</h4>
+						<h4>Quoted Tweets</h4>
 					</Col>
 				</Row>
 				<Row>
 					<Col>
 						<h6>By Day</h6>
-						{isRetweetsLoading ? (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
+						{isQuotedTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={30000} />
 						) : (
 							<D3Chart
-								id="d3-retweet-chart-day"
-								label="# of Retweets"
+								id="d3-quoted-tweet-chart-day"
+								label="# of Quoted Tweets"
 								tickFormat={dayTickFormat}
 								dataVerified={verifiedDay}
 								dataUnverified={unverifiedDay}
@@ -94,12 +94,12 @@ const RetweetChart = ({ addToGlobalCount }) => {
 					</Col>
 					<Col>
 						<h6>By Hour</h6>
-						{isRetweetsLoading ? (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
+						{isQuotedTweetsLoading ? (
+							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={30000} />
 						) : (
 							<D3Chart
-								id="d3-retweet-chart-hour"
-								label="# of Retweets"
+								id="d3-quoted-tweet-chart-hour"
+								label="# of Quoted Tweets"
 								tickFormat={hourTickFormat}
 								dataVerified={verifiedHour}
 								dataUnverified={unverifiedHour}
@@ -112,4 +112,4 @@ const RetweetChart = ({ addToGlobalCount }) => {
 	);
 };
 
-export default RetweetChart;
+export default QuotedTweetChart;
