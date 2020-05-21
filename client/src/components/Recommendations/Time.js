@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import moment from 'moment';
-import { Col, Row, Button } from 'react-bootstrap';
+import { Col, Row, Button, Modal } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import D3Chart from '../charts/D3Chart';
+import ModalXLarge from '../ModalXLarge';
 
 const Time = ({ onViewClick }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -37,7 +38,6 @@ const Time = ({ onViewClick }) => {
 			}
 
 			setHoursForGraphing(tempArray);
-			// const max = tempArray.indexOf(Math.max(...tempArray));
 			const maxHour = Math.max(...tempArray);
 
 			const tempBestHours = tempArray.reduce((a, e, i) => {
@@ -77,12 +77,19 @@ const Time = ({ onViewClick }) => {
 						</Button>
 
 						{showChart ? (
-							<D3Chart
-								id="d3-time-today-chart"
-								label="# of Statuses"
-								tickFormat={hourTickFormat}
-								data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
-							/>
+							<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
+								<Row>
+									<Col className="text-center">
+										<h6>Best Hour</h6>
+										<D3Chart
+											id="d3-time-chart"
+											label="# of Statuses"
+											tickFormat={hourTickFormat}
+											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+										/>
+									</Col>
+								</Row>
+							</ModalXLarge>
 						) : null}
 					</Col>
 				</Row>

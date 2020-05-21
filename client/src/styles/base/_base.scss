@@ -4,7 +4,6 @@
 }
 
 html {
-
 	// font-size: 62.5%;
 }
 
@@ -29,4 +28,19 @@ body {
 	// 	font-size: $s-size;
 	// 	line-height: 1.2rem;
 	// }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+	.xl-modal {
+		max-width: 65% !important;
+	}
 }

@@ -5,6 +5,7 @@ import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
 import D3Chart from '../charts/D3Chart';
+import ModalXLarge from '../ModalXLarge';
 
 const TimeToday = () => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
