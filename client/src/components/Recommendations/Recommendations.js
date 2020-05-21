@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import DayAndTime from './DayAndTime';
 import Time from './Time';
 import TimeToday from './TimeToday';
@@ -14,36 +14,27 @@ const Recommendations = () => {
 		console.log('tehe');
 	};
 
-	const onViewClick = (id) => {
-		if (id === 'time-today') {
-			setShowTimeTodayChart(true);
-		} else if (id === 'day-time') {
-		} else if (id === 'time') {
-		}
-	};
-
 	return (
 		<>
 			<Row className="mb-4">
 				<Col className="text-center">
 					<h3>
 						Recommendations
-						<a href='!#' title="Adjust recommendation engine" style={{ cursor: 'pointer' }}>
-							<FontAwesomeIcon onClick={onSettingsClick} style={{ marginLeft: '10px' }} icon={faCog} />
-						</a>
+						<Button onClick={onSettingsClick} className="m-1 p-0" size="lg" variant="link" title="Adjust recommendation engine">
+							<FontAwesomeIcon icon={faCog} />
+						</Button>
 					</h3>
 				</Col>
 			</Row>
 			<Row className="text-center">
 				<Col className="mb-3" sm={4}>
-					<DayAndTime onViewClick={onViewClick} />
+					<DayAndTime />
 				</Col>
 				<Col className="mb-3" sm={4}>
-					<TimeToday onViewClick={onViewClick} />
-					{showTimeTodayChart ? 'Show Chart' : null}
+					<TimeToday />
 				</Col>
 				<Col className="mb-3" sm={4}>
-					<Time onViewClick={onViewClick} />
+					<Time />
 				</Col>
 			</Row>
 		</>
