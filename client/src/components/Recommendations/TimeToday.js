@@ -83,12 +83,14 @@ const TimeToday = () => {
 						</Button>
 
 						{showChart ? (
-							<D3Chart
-								id="d3-time-today-chart"
-								label="# of Statuses"
-								tickFormat={hourTickFormat}
-								data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
-							/>
+							<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
+								<D3Chart
+									id="d3-time-today-chart"
+									label="# of Statuses"
+									tickFormat={hourTickFormat}
+									data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+								/>
+							</ModalXLarge>
 						) : null}
 					</Col>
 				</Row>

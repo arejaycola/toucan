@@ -77,12 +77,12 @@ const Time = ({ onViewClick }) => {
 						</Button>
 
 						{showChart ? (
-							<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
+							<ModalXLarge title={'Best Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
 								<Row>
 									<Col className="text-center">
 										<h6>Best Hour</h6>
 										<D3Chart
-											id="d3-time-chart"
+											id="d3-hour-chart"
 											label="# of Statuses"
 											tickFormat={hourTickFormat}
 											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}

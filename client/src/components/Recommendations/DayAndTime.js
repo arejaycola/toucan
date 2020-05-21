@@ -5,6 +5,7 @@ import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
 import D3Chart from '../charts/D3Chart';
+import ModalXLarge from '../ModalXLarge';
 
 const TimeToday = ({ onViewClick }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -119,7 +120,7 @@ const TimeToday = ({ onViewClick }) => {
 						</Button>
 
 						{showChart ? (
-							<>
+							<ModalXLarge title={'Best Day and Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
 								<D3Chart
 									id="d3-day-time-day-chart"
 									label="# of Statuses"
@@ -132,7 +133,7 @@ const TimeToday = ({ onViewClick }) => {
 									tickFormat={hourTickFormat}
 									data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
 								/>
-							</>
+							</ModalXLarge>
 						) : null}
 					</Col>
 				</Row>
