@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import React from 'react';
+import { Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import NotFoundPage from '../components/NotFoundPage';
 import HomePage from '../components/HomePage';

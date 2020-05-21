@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { SearchContext } from '../contexts/SearchContext';
 import { useHistory } from 'react-router-dom';
-import { Col, Card, Row, CardGroup, CardDeck, Button } from 'react-bootstrap';
+import { Card, CardDeck, Button } from 'react-bootstrap';
 import NoResultsFound from './NoResultsFound';
 
 
@@ -15,7 +15,7 @@ const SearchResults = () => {
 
 	return (
 		<CardDeck>
-			{searchResults.length != 0 ? (
+			{searchResults.length !== 0 ? (
 				searchResults.map((result) => {
 					return (
 						<Card className="custom-card mb-3 mx-auto semi-transparent mt-5" key={result.id}>

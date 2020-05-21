@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FormControl, Button, Form, Col, Row } from 'react-bootstrap';
+import { Button, Form, Col, Row } from 'react-bootstrap';
 import { SearchContext } from '../contexts/SearchContext';
 
 const SearchBox = ({ defaultValue }) => {
@@ -12,7 +12,7 @@ const SearchBox = ({ defaultValue }) => {
 
 	const searchButtonClick = async (e) => {
 		e.preventDefault();
-		const text = { searchString: searchText.length == 0 ? 'Rob' : searchText };
+		const text = { searchString: searchText.length === 0 ? 'Rob' : searchText };
 		addSearchHistory(text.searchString);
 		history.push(`/search/${text.searchString}`);
 	};

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import moment from 'moment';
-import { Container, Col, Row, Button } from 'react-bootstrap';
+import {  Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
@@ -13,7 +13,6 @@ const Time = ({onViewClick}) => {
 	const [maxHour, setMaxHour] = useState(-1);
 
 	useEffect(() => {
-		console.log(!isTweetsLoading , !isRetweetsLoading , !isQuotedTweetsLoading);
 		if (!isTweetsLoading && !isRetweetsLoading && !isQuotedTweetsLoading) {
 			const globalCount = globalUnverifiedHourCount;
 			const max = globalCount.indexOf(Math.max(...globalCount));
@@ -28,7 +27,7 @@ const Time = ({onViewClick}) => {
 			<Col>
 				<Row>
 					<Col>
-						{maxHour == -1 ? (
+						{maxHour === -1 ? (
 							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={15000} />
 						) : (
 							<strong>{bestHour}</strong>

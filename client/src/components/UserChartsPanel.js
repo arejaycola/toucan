@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import TotalChart from './charts/TotalChart';
 import TweetChart from './charts/TweetChart';
 import RetweetChart from './charts/RetweetChart';
@@ -66,8 +66,8 @@ const UserChartsPanel = (props) => {
 				</Col>
 			</Row>
 
-			{/* <div className="d-none">
-				<Legend />
+			<div className="d-none">
+				{/* <Legend /> */}
 				<TotalChart
 					verifiedDay={globalVerifiedDayCount}
 					unverifiedDay={globalUnverifiedDayCount}
@@ -75,16 +75,17 @@ const UserChartsPanel = (props) => {
 					unverifiedHour={globalUnverifiedHourCount}
 					user={props.user}
 				/>
-			</div> */}
-			{/* <div className="d-none"> */}
-			<TweetChart addToGlobalCount={addToGlobalCount} />
-			{/* </div> */}
-			{/* <div className="d-none"> */}
-			<RetweetChart addToGlobalCount={addToGlobalCount} />
-			{/* </div> */}
-			{/* <div className="d-none"> */}
-			<QuotedTweetChart addToGlobalCount={addToGlobalCount} />
-			{/* </div> */}
+			</div>
+			<div className="d-none">
+				<Legend />
+				<TweetChart addToGlobalCount={addToGlobalCount} />
+			</div>
+			<div className="d-none">
+				<RetweetChart addToGlobalCount={addToGlobalCount} />
+			</div>
+			<div className="d-none">
+				<QuotedTweetChart addToGlobalCount={addToGlobalCount} />
+			</div>
 		</Container>
 	);
 };

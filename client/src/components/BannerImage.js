@@ -3,7 +3,7 @@ import React from 'react';
 const BannerImage = (props) => {
 	return (
 		<div className="banner-image-container">
-			<img src={props.image} />
+			<img alt='Profile Banner Image' src={props.image} />
 		</div>
 	);
 };

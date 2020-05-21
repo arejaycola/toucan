@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const ProfileImage = (props) => {
     const imageURL = props.image || '';
-	return <img src={imageURL.replace('_normal', '')} />;
+	return <img alt="Profile Image" src={imageURL.replace('_normal', '')} />;
 };
 
 export default ProfileImage;

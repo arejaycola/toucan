@@ -60,9 +60,9 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 		return moment().weekday(d).format('dddd');
 	};
 	const hourTickFormat = (d) => {
-		if (d == 12) {
+		if (d === 12) {
 			return '12 pm';
-		} else if (d == 0) {
+		} else if (d === 0) {
 			return '12am';
 		}
 

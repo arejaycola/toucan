@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import { Row, Col } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
@@ -12,9 +12,9 @@ const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }
 		return moment().weekday(d).format('dddd');
 	};
 	const hourTickFormat = (d) => {
-		if (d == 12) {
+		if (d === 12) {
 			return '12 pm';
-		} else if (d == 0) {
+		} else if (d === 0) {
 			return '12am';
 		}
 

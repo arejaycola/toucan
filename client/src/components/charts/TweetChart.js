@@ -20,7 +20,6 @@ const TweetChart = ({ addToGlobalCount }) => {
 	let tempUnverifiedDay = Array(7).fill(0);
 	let tempVerifiedHour = Array(24).fill(0);
 	let tempUnverifiedHour = Array(24).fill(0);
-	let unverifiedMentionCount = 0;
 
 	useEffect(() => {
 		/* Only look at tweets with a user mention */

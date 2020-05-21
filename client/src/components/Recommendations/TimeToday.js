@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
-import { Container, Col, Row, Button } from 'react-bootstrap';
+import {  Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
@@ -48,7 +48,7 @@ const TimeToday = ({ onViewClick }) => {
 						) : (
 							<strong>
 								{bestHours.map((hour, i) => {
-									return i != bestHours.length - 1 ? <span key={i}>{hour}, </span> : <span key={i}>{hour}</span>;
+									return i !== bestHours.length - 1 ? <span key={i}>{hour}, </span> : <span key={i}>{hour}</span>;
 								})}
 							</strong>
 						)}

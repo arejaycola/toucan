@@ -1,21 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink, faLocationArrow, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import moment from 'moment';
 import numeral from 'numeral';
 
-import { TweetContext } from '../contexts/TweetContext';
 import TweetStatsContainer from './TweetStatsContainer';
 import { Row, Image, Col, Container } from 'react-bootstrap';
 
 const UserStatsPanel = (props) => {
-	const { tweets, quotedTweets, retweets } = useContext(TweetContext);
-
 	useEffect(() => {
 		/* Move the window to the top so scroll position isn't preserved */
 		window.scrollTo(0, 0);
 	}, []);
+
 	return (
 		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
 			<Row className="mx-auto">
@@ -30,7 +28,7 @@ const UserStatsPanel = (props) => {
 							<Row>
 								<Col xs={12}>
 									<h3 className="mb-0">
-										{props.user.name} <img style={{ height: '20px' }} src="/verified.png" />
+										{props.user.name} <img alt="Verified Twitter Icon" style={{ height: '20px' }} src="/verified.png" />
 									</h3>
 								</Col>
 							</Row>

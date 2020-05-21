@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, Col, Row, Button } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import DayAndTime from './DayAndTime';
 import Time from './Time';
 import TimeToday from './TimeToday';
@@ -28,7 +28,7 @@ const Recommendations = () => {
 				<Col className="text-center">
 					<h3>
 						Recommendations
-						<a title="Adjust recommendation engine" style={{ cursor: 'pointer' }}>
+						<a href='!#' title="Adjust recommendation engine" style={{ cursor: 'pointer' }}>
 							<FontAwesomeIcon onClick={onSettingsClick} style={{ marginLeft: '10px' }} icon={faCog} />
 						</a>
 					</h3>

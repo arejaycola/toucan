@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { SearchContext } from '../contexts/SearchContext';
 import { Row, Col, ListGroup } from 'react-bootstrap';
-import { useState } from 'react';
 import SearchHistoryItem from './SearchHistoryItem';
 
 const SearchHistory = () => {
@@ -27,7 +26,7 @@ const SearchHistory = () => {
 			)}
 			<Row className="mt-3">
 				<Col>
-					<a href='#' onClick={clearSearchResultsClick}>
+					<a href="!#" onClick={clearSearchResultsClick}>
 						<h6>
 							<small className="text-primary">Clear Search History</small>
 						</h6>
