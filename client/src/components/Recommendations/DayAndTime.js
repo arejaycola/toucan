@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import moment from 'moment';
-import { Container, Col, Row, Button } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
+import D3Chart from '../charts/D3Chart';
 
 const TimeToday = ({ onViewClick }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -12,9 +13,30 @@ const TimeToday = ({ onViewClick }) => {
 
 	const [bestDays, setBestDays] = useState([]);
 	const [bestHours, setBestHours] = useState([]);
+	const [showChart, setShowChart] = useState(false);
+	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
+	const [daysForGraphing, setDaysForGraphing] = useState(Array(7).fill(0));
 
 	const tempDays = Array(7).fill(0);
 	const tempHours = Array(24).fill(0);
+
+	const onToggleViewClick = () => {
+		setShowChart(!showChart);
+	};
+
+	const dayTickFormat = (d) => {
+		return moment().weekday(d).format('dddd');
+	};
+
+	const hourTickFormat = (d) => {
+		if (d === 12) {
+			return '12 pm';
+		} else if (d === 0) {
+			return '12am';
+		}
+
+		return moment().hour(d).format('h');
+	};
 
 	useEffect(() => {
 		if (statuses.length > 0) {
@@ -43,6 +65,7 @@ const TimeToday = ({ onViewClick }) => {
 			})[0];
 
 			setBestDays(tempBestDays);
+			setDaysForGraphing(tempDays);
 
 			tweetsFromBestDay.map((t) => {
 				tempHours[moment(t).hour()]++;
@@ -59,6 +82,7 @@ const TimeToday = ({ onViewClick }) => {
 			}, []);
 
 			setBestHours(tempBestHours);
+			setHoursForGraphing(tempHours);
 		}
 	}, [statuses]);
 
@@ -90,9 +114,26 @@ const TimeToday = ({ onViewClick }) => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button id="day-time" onClick={(e) => onViewClick('day-time')}>
-							View
+						<Button id="day-time" onClick={onToggleViewClick}>
+							{showChart ? 'Hide' : 'View'}
 						</Button>
+
+						{showChart ? (
+							<>
+								<D3Chart
+									id="d3-day-time-day-chart"
+									label="# of Statuses"
+									tickFormat={dayTickFormat}
+									data={[{ type: 'dark-gray', datum: daysForGraphing }]}
+								/>
+								<D3Chart
+									id="d3-day-time-hours-chart"
+									label="# of Statuses"
+									tickFormat={hourTickFormat}
+									data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+								/>
+							</>
+						) : null}
 					</Col>
 				</Row>
 			</Col>
