@@ -11,7 +11,7 @@ const Time = ({ onViewClick }) => {
 	const { globalUnverifiedHourCount, globalVerifiedHourCount } = useContext(TweetContext);
 
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
-	const [maxHour, setMaxHour] = useState(-1);
+	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
@@ -31,31 +31,39 @@ const Time = ({ onViewClick }) => {
 
 	useEffect(() => {
 		if (!isTweetsLoading && !isRetweetsLoading && !isQuotedTweetsLoading) {
-			console.log(globalUnverifiedHourCount);
-			console.log(globalVerifiedHourCount);
-
 			const tempArray = Array(24).fill(0);
 			for (let i = 0; i < globalVerifiedHourCount.length; i++) {
 				tempArray[i] = globalVerifiedHourCount[i] + globalUnverifiedHourCount[i];
 			}
 
 			setHoursForGraphing(tempArray);
-			const max = tempArray.indexOf(Math.max(...tempArray));
-			setMaxHour(max);
+			// const max = tempArray.indexOf(Math.max(...tempArray));
+			const maxHour = Math.max(...tempArray);
+
+			const tempBestHours = tempArray.reduce((a, e, i) => {
+				if (e === maxHour) {
+					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
+				}
+				return a;
+			}, []);
+
+			setBestHours(tempBestHours);
 		}
 	}, [globalUnverifiedHourCount, globalVerifiedHourCount]);
-
-	const bestHour = moment().set('hour', maxHour).set('minute', 0).format('hh:mm A');
 
 	return (
 		<Row>
 			<Col>
 				<Row>
 					<Col>
-						{maxHour === -1 ? (
+						{bestHours.length === 0 ? (
 							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={15000} />
 						) : (
-							<strong>{bestHour}</strong>
+							<strong>
+								{bestHours.map((hour, i) => {
+									return i !== bestHours.length - 1 ? <span key={i}>{hour}, </span> : <span key={i}>{hour}</span>;
+								})}
+							</strong>
 						)}
 					</Col>
 				</Row>
