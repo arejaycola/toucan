@@ -4,7 +4,7 @@ import { Col, Row, Button, Modal, Form } from 'react-bootstrap';
 const Filters = () => {
 	return (
 		<>
-			<Row>
+			<Row className='text-center'>
 				<Col>
 					<h3>Filters</h3>
 				</Col>

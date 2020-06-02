@@ -5,6 +5,7 @@ import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
 import D3Chart from '../charts/D3Chart';
+import Filters from './Filters';
 import ModalXLarge from '../ModalXLarge';
 
 const TimeToday = ({ onViewClick, viewDisabled }) => {
@@ -121,18 +122,27 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 						{showChart ? (
 							<ModalXLarge title={'Best Day and Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
-								<D3Chart
-									id="d3-day-time-day-chart"
-									label="# of Statuses"
-									tickFormat={dayTickFormat}
-									data={[{ type: 'dark-gray', datum: daysForGraphing }]}
-								/>
-								<D3Chart
-									id="d3-day-time-hours-chart"
-									label="# of Statuses"
-									tickFormat={hourTickFormat}
-									data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
-								/>
+								<Row>
+									<Col className="text-center">
+										<h6>Best Day</h6>
+										<D3Chart
+											id="d3-day-time-day-chart"
+											label="# of Statuses"
+											tickFormat={dayTickFormat}
+											data={[{ type: 'dark-gray', datum: daysForGraphing }]}
+										/>
+									</Col>
+									<Col className="text-center">
+										<h6>Best Hour</h6>
+										<D3Chart
+											id="d3-day-time-hours-chart"
+											label="# of Statuses"
+											tickFormat={hourTickFormat}
+											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+										/>
+									</Col>
+								</Row>
+								<Filters />
 							</ModalXLarge>
 						) : null}
 					</Col>

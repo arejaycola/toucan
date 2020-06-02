@@ -89,9 +89,9 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
 										/>
 
-										<Filters />
 									</Col>
 								</Row>
+										<Filters />
 							</ModalXLarge>
 						) : null}
 					</Col>

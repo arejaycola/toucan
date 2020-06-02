@@ -6,6 +6,7 @@ import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
 import D3Chart from '../charts/D3Chart';
 import ModalXLarge from '../ModalXLarge';
+import Filters from './Filters';
 
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -84,12 +85,19 @@ const TimeToday = ({ viewDisabled }) => {
 
 						{showChart ? (
 							<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
-								<D3Chart
-									id="d3-time-today-chart"
-									label="# of Statuses"
-									tickFormat={hourTickFormat}
-									data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
-								/>
+								<Row>
+									<Col className="text-center">
+										<h6>Best Hour Today</h6>
+
+										<D3Chart
+											id="d3-time-today-chart"
+											label="# of Statuses"
+											tickFormat={hourTickFormat}
+											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+										/>
+									</Col>
+								</Row>
+								<Filters />
 							</ModalXLarge>
 						) : null}
 					</Col>
