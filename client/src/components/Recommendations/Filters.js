@@ -25,9 +25,9 @@ const Filters = ({ toggleStatus, toggleUserType, showAllStatuses, showTweets, sh
 				</Col>
 				<Col xs={'auto'} className="text-left">
 					<h5>User Type</h5>
-					<Form.Check type="switch" id="show-all-user" label="All" onChange={(e) => toggleUserType(e)} />
-					<Form.Check type="switch" id="show-verified" label="Verified" onChange={(e) => toggleUserType(e)} />
-					<Form.Check type="switch" id="show-unverified" label="Unverified" onChange={(e) => toggleUserType(e)} />
+					<Form.Check checked={showBothUserTypes} type="switch" id="show-both-user" label="Both" onChange={(e) => toggleUserType(e)} />
+					<Form.Check checked={showVerifiedUsers} type="switch" id="show-verified" label="Verified" onChange={(e) => toggleUserType(e)} />
+					<Form.Check checked={showUnverifiedUsers} type="switch" id="show-unverified" label="Unverified" onChange={(e) => toggleUserType(e)} />
 				</Col>
 			</Row>
 		</>
