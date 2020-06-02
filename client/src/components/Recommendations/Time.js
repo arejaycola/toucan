@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import D3Chart from '../charts/D3Chart';
 import ModalXLarge from '../ModalXLarge';
+import Filters from './Filters';
 
 const Time = ({ onViewClick }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -87,6 +88,8 @@ const Time = ({ onViewClick }) => {
 											tickFormat={hourTickFormat}
 											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
 										/>
+
+										<Filters />
 									</Col>
 								</Row>
 							</ModalXLarge>
