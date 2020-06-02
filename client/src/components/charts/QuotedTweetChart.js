@@ -7,7 +7,9 @@ import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
 const QuotedTweetChart = ({ addToGlobalCount }) => {
-	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
+	const { quotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount, setVerifiedQuotedTime, setUnverifiedQuotedTime } = useContext(
+		TweetContext
+	);
 	const { isQuotedTweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
@@ -39,6 +41,9 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 		});
 
 		setQuotedTweetsToUnverifiedCount(unverifiedMentionCount);
+		setVerifiedQuotedTime(tempVerifiedHour);
+		setUnverifiedQuotedTime(tempUnverifiedHour);
+
 		setVerifiedDay(tempVerifiedDay);
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);

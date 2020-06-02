@@ -18,8 +18,9 @@ const Time = ({ onViewClick, viewDisabled }) => {
 		unverifiedRetweetsTime,
 		unverifiedTweetsTime,
 		verifiedTweetsTime,
+		unverifiedQuotedTime,
+		verifiedQuotedTime,
 	} = useContext(TweetContext);
-console.log(verifiedTweetsTime);
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
 	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
@@ -130,6 +131,7 @@ console.log(verifiedTweetsTime);
 												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
 												{ show: showRetweets, type: 'verified-retweets-time', datum: verifiedRetweetsTime },
 												{ show: showTweets, type: 'verified-tweets-time', datum: verifiedTweetsTime },
+												{ show: showQuotedTweets, type: 'verified-quoted-time', datum: verifiedQuotedTime },
 											]}
 										/>
 									</Col>
