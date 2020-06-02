@@ -7,7 +7,7 @@ import Loader from 'react-loader-spinner';
 import D3Chart from '../charts/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 
-const TimeToday = ({ onViewClick }) => {
+const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	let { statuses } = useContext(TweetContext);
@@ -115,7 +115,7 @@ const TimeToday = ({ onViewClick }) => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button id="day-time" onClick={onToggleViewClick}>
+						<Button id="day-time" onClick={onToggleViewClick} disabled={viewDisabled}>
 							{showChart ? 'Hide' : 'View'}
 						</Button>
 

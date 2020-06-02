@@ -8,7 +8,7 @@ import D3Chart from '../charts/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 import Filters from './Filters';
 
-const Time = ({ onViewClick }) => {
+const Time = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 	const { globalUnverifiedHourCount, globalVerifiedHourCount } = useContext(TweetContext);
 
@@ -73,7 +73,7 @@ const Time = ({ onViewClick }) => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button id="time-today" onClick={onToggleViewClick}>
+						<Button id="time-today" onClick={onToggleViewClick} disabled={viewDisabled}>
 							{showChart ? 'Hide' : 'View'}
 						</Button>
 
