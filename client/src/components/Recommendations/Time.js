@@ -10,7 +10,9 @@ import Filters from './Filters';
 
 const Time = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
-	const { globalUnverifiedHourCount, globalVerifiedHourCount } = useContext(TweetContext);
+	const { tweetsToUnverifiedCount, globalUnverifiedHourCount, globalVerifiedHourCount, verifiedRetweetsTime, unverifiedRetweetsTime } = useContext(
+		TweetContext
+	);
 
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
 	const [bestHours, setBestHours] = useState([]);
@@ -46,8 +48,6 @@ const Time = ({ onViewClick, viewDisabled }) => {
 		} else if (e.target.id === 'show-quoted-tweets') {
 			setShowQuotedTweets(!showQuotedTweets);
 		}
-		console.log('Toggle');
-		console.log(e.target.id);
 	};
 	const toggleUserType = (e) => {
 		console.log('Toggle Type');
@@ -109,7 +109,12 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											id="d3-hour-chart"
 											label="# of Statuses"
 											tickFormat={hourTickFormat}
-											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+											showAllStatuses={showAllStatuses}
+											showReweets={showRetweets}
+											data={[
+												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
+												{ show: showRetweets, type: 'verified-retweets-time', datum: verifiedRetweetsTime },
+											]}
 										/>
 									</Col>
 								</Row>

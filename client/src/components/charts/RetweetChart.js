@@ -7,7 +7,7 @@ import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
 const RetweetChart = ({ addToGlobalCount }) => {
-	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
+	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount, setVerifiedRetweetsTime, setUnverifiedRetweetsTime } = useContext(TweetContext);
 	const { isRetweetsLoading, setIsRetweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
@@ -16,7 +16,6 @@ const RetweetChart = ({ addToGlobalCount }) => {
 	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
 
 	let unverifiedMentionCount = 0;
-
 	useEffect(() => {
 		let tempVerifiedDay = Array(7).fill(0);
 		let tempUnverifiedDay = Array(7).fill(0);
@@ -38,6 +37,8 @@ const RetweetChart = ({ addToGlobalCount }) => {
 		});
 
 		setRetweetsToUnverifiedCount(unverifiedMentionCount);
+		setVerifiedRetweetsTime(tempVerifiedHour);
+		setUnverifiedRetweetsTime(tempUnverifiedHour);
 		setVerifiedDay(tempVerifiedDay);
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);

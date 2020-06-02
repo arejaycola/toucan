@@ -3,7 +3,15 @@
 	stroke-width: 3;
 }
 
-.line-dark-gray{
+.line-all {
+	stroke: black;
+}
+
+.line-verified-retweets-time {
+	stroke: red;
+}
+
+.line-dark-gray {
 	stroke: $darkslategray;
 }
 

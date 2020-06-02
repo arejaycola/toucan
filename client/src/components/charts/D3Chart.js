@@ -14,6 +14,7 @@ export default (props) => {
 				bottom: 65,
 				left: 55,
 			};
+
 			const width = svgWidth - margin.left - margin.right;
 			const height = svgHeight - margin.top - margin.bottom;
 
@@ -80,7 +81,9 @@ export default (props) => {
 
 			/* Plot all of the data sent to this component */
 			for (let i = 0; i < props.data.length; i++) {
-				svg.append('path').datum(props.data[i].datum).classed('line', true).classed(`line-${props.data[i].type}`, true).attr('d', line);
+				if (props.data[i].show) {
+					svg.append('path').datum(props.data[i].datum).classed('line', true).classed(`line-${props.data[i].type}`, true).attr('d', line);
+				}
 			}
 
 			svg.append('text')
