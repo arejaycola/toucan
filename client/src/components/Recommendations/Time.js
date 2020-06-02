@@ -10,19 +10,29 @@ import Filters from './Filters';
 
 const Time = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
-	const { tweetsToUnverifiedCount, globalUnverifiedHourCount, globalVerifiedHourCount, verifiedRetweetsTime, unverifiedRetweetsTime } = useContext(
-		TweetContext
-	);
-
+	const {
+		tweetsToUnverifiedCount,
+		globalUnverifiedHourCount,
+		globalVerifiedHourCount,
+		verifiedRetweetsTime,
+		unverifiedRetweetsTime,
+		unverifiedTweetsTime,
+		verifiedTweetsTime,
+	} = useContext(TweetContext);
+console.log(verifiedTweetsTime);
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
 	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
+	/* State related to chart filtering */
 	const [showAllStatuses, setShowAllStatuses] = useState(true);
 	const [showTweets, setShowTweets] = useState(false);
 	const [showRetweets, setShowRetweets] = useState(false);
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
+	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
+	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -50,8 +60,13 @@ const Time = ({ onViewClick, viewDisabled }) => {
 		}
 	};
 	const toggleUserType = (e) => {
-		console.log('Toggle Type');
-		console.log(e.target);
+		if (e.target.id === 'show-both-users') {
+			setShowBothUserTypes(!showBothUserTypes);
+		} else if (e.target.id === 'show-verified') {
+			setShowVerifiedUsers(!showVerifiedUsers);
+		} else if (e.target.id === 'show-unverified') {
+			setShowUnverifiedUsers(!showUnverifiedUsers);
+		}
 	};
 
 	useEffect(() => {
@@ -114,6 +129,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											data={[
 												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
 												{ show: showRetweets, type: 'verified-retweets-time', datum: verifiedRetweetsTime },
+												{ show: showTweets, type: 'verified-tweets-time', datum: verifiedTweetsTime },
 											]}
 										/>
 									</Col>
@@ -123,7 +139,11 @@ const Time = ({ onViewClick, viewDisabled }) => {
 									showTweets={showTweets}
 									showRetweets={showRetweets}
 									showQuotedTweets={showQuotedTweets}
+									showBothUserTypes={showBothUserTypes}
+									showVerifiedUsers={showVerifiedUsers}
+									showUnverifiedUsers={showUnverifiedUsers}
 									toggleStatus={toggleStatus}
+									toggleUserType={toggleUserType}
 								/>
 							</ModalXLarge>
 						) : null}

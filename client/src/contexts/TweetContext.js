@@ -25,6 +25,9 @@ const TweetContextProvider = (props) => {
 	const [verifiedRetweetsTime, setVerifiedRetweetsTime] = useState(Array(24).fill(0));
 	const [unverifiedRetweetsTime, setUnverifiedRetweetsTime] = useState(Array(24).fill(0));
 
+	const [unverifiedTweetsTime, setUnverifiedTweetsTime] = useState(Array(24).fill(0));
+	const [verifiedTweetsTime, setVerifiedTweetsTime] = useState(Array(24).fill(0));
+
 	return (
 		<TweetContext.Provider
 			value={{
@@ -43,12 +46,20 @@ const TweetContextProvider = (props) => {
 				retweetsCount,
 				setRetweetsCount,
 
+				
+
 				verifiedRetweetsTime,
 				setVerifiedRetweetsTime,
 				unverifiedRetweetsTime,
 				setUnverifiedRetweetsTime,
 
-				
+				verifiedTweetsTime,
+				setVerifiedTweetsTime,
+				unverifiedTweetsTime,
+				setUnverifiedTweetsTime,
+
+
+
 				retweetsToUnverifiedCount,
 				setRetweetsToUnverifiedCount,
 				quotedTweetsCount,
