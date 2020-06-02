@@ -17,6 +17,11 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
+	const [showAllStatuses, setShowAllStatuses] = useState(true);
+	const [showTweets, setShowTweets] = useState(false);
+	const [showRetweets, setShowRetweets] = useState(false);
+	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+
 	const hourTickFormat = (d) => {
 		if (d === 12) {
 			return '12 pm';
@@ -32,8 +37,17 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	};
 
 	const toggleStatus = (e) => {
+		if (e.target.id === 'show-all-status') {
+			setShowAllStatuses(!showAllStatuses);
+		} else if (e.target.id === 'show-tweets') {
+			setShowTweets(!showTweets);
+		} else if (e.target.id === 'show-retweets') {
+			setShowRetweets(!showRetweets);
+		} else if (e.target.id === 'show-quoted-tweets') {
+			setShowQuotedTweets(!showQuotedTweets);
+		}
 		console.log('Toggle');
-		console.log(e.target);
+		console.log(e.target.id);
 	};
 	const toggleUserType = (e) => {
 		console.log('Toggle Type');
@@ -99,7 +113,13 @@ const Time = ({ onViewClick, viewDisabled }) => {
 										/>
 									</Col>
 								</Row>
-								<Filters toggleStatus={toggleStatus} />
+								<Filters
+									showAllStatuses={showAllStatuses}
+									showTweets={showTweets}
+									showRetweets={showRetweets}
+									showQuotedTweets={showQuotedTweets}
+									toggleStatus={toggleStatus}
+								/>
 							</ModalXLarge>
 						) : null}
 					</Col>
