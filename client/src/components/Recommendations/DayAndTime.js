@@ -19,6 +19,8 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [daysForGraphing, setDaysForGraphing] = useState(Array(7).fill(0));
 
+	const [showAllStatuses, setShowAllStatuses] = useState(true);
+
 	const tempDays = Array(7).fill(0);
 	const tempHours = Array(24).fill(0);
 
@@ -38,6 +40,18 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		}
 
 		return moment().hour(d).format('h');
+	};
+
+	const toggleStatus = (e) => {
+		if (e.target.id === 'show-all-status') {
+			setShowAllStatuses(!showAllStatuses);
+		} else if (e.target.id === 'show-tweets') {
+			// setShowTweets(!showTweets);
+		} else if (e.target.id === 'show-retweets') {
+			// setShowRetweets(!showRetweets);
+		} else if (e.target.id === 'show-quoted-tweets') {
+			// setShowQuotedTweets(!showQuotedTweets);
+		}
 	};
 
 	useEffect(() => {
@@ -129,7 +143,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											id="d3-day-time-day-chart"
 											label="# of Statuses"
 											tickFormat={dayTickFormat}
-											data={[{ type: 'dark-gray', datum: daysForGraphing }]}
+											data={[{ show: showAllStatuses, type: 'all', datum: daysForGraphing }]}
 										/>
 									</Col>
 									<Col className="text-center">
@@ -138,11 +152,11 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											id="d3-day-time-hours-chart"
 											label="# of Statuses"
 											tickFormat={hourTickFormat}
-											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
+											data={[{ show: showAllStatuses, type: 'all', datum: hoursForGraphing }]}
 										/>
 									</Col>
 								</Row>
-								<Filters />
+								<Filters showAllStatuses={showAllStatuses} toggleStatus={toggleStatus} />
 							</ModalXLarge>
 						) : null}
 					</Col>
