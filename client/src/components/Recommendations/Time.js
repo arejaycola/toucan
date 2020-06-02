@@ -31,6 +31,15 @@ const Time = ({ onViewClick, viewDisabled }) => {
 		setShowChart(!showChart);
 	};
 
+	const toggleStatus = (e) => {
+		console.log('Toggle');
+		console.log(e.target);
+	};
+	const toggleUserType = (e) => {
+		console.log('Toggle Type');
+		console.log(e.target);
+	};
+
 	useEffect(() => {
 		if (!isTweetsLoading && !isRetweetsLoading && !isQuotedTweetsLoading) {
 			const tempArray = Array(24).fill(0);
@@ -88,10 +97,9 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											tickFormat={hourTickFormat}
 											data={[{ type: 'dark-gray', datum: hoursForGraphing }]}
 										/>
-
 									</Col>
 								</Row>
-										<Filters />
+								<Filters toggleStatus={toggleStatus} />
 							</ModalXLarge>
 						) : null}
 					</Col>
