@@ -1,0 +1,34 @@
+.custom-control {
+	.custom-control-input:checked {
+		~ .custom-control-label {
+            &#show-quoted-tweets {
+			    &:before {
+					border-color: $quoted !important;
+					color: $quoted !important;
+					background-color: $quoted !important;
+				}
+			}
+            &#show-retweets {
+			    &:before {
+					border-color: $retweets !important;
+					color: $retweets !important;
+					background-color: $retweets !important;
+				}
+			}
+            &#show-tweets {
+			    &:before {
+					border-color: $tweets !important;
+					color: $tweets !important;
+					background-color: $tweets !important;
+				}
+			}
+            &#show-all-status {
+			    &:before {
+					border-color: $all-statuses !important;
+					color: $all-statuses !important;
+					background-color: $all-statuses !important;
+				}
+			}
+		}
+	}
+}
