@@ -11,13 +11,15 @@ import Filters from './Filters';
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses } = useContext(TweetContext);
+	const { statuses, retweets } = useContext(TweetContext);
 
 	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
+	const [retweetsToday, setRetweetsToday] = useState(Array(24).fill(0));
 	const [showAllStatuses, setShowAllStatuses] = useState(true);
+	const [showRetweets, setShowRetweets] = useState(false);
 
 	const tempHoursToday = Array(24).fill(0);
 	const hourTickFormat = (d) => {
@@ -40,7 +42,7 @@ const TimeToday = ({ viewDisabled }) => {
 		} else if (e.target.id === 'show-tweets') {
 			// setShowTweets(!showTweets);
 		} else if (e.target.id === 'show-retweets') {
-			// setShowRetweets(!showRetweets);
+			setShowRetweets(!showRetweets);
 		} else if (e.target.id === 'show-quoted-tweets') {
 			// setShowQuotedTweets(!showQuotedTweets);
 		}
@@ -48,13 +50,15 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useEffect(() => {
 		if (statuses.length > 0) {
-			let createdOnThisDay = statuses.filter((status) => {
-				return moment(status.created_at).weekday() === moment().weekday();
-			});
 
-			createdOnThisDay.map((t) => {
-				tempHoursToday[moment(t.created_at).hour()]++;
-			});
+			/* Only return statuses from today*/
+			statuses
+				.filter((status) => {
+					return moment(status.created_at).weekday() === moment().weekday();
+				})
+				.map((t) => {
+					tempHoursToday[moment(t.created_at).hour()]++;
+				});
 
 			const maxHour = Math.max(...tempHoursToday);
 
@@ -65,10 +69,24 @@ const TimeToday = ({ viewDisabled }) => {
 				}
 				return a;
 			}, []);
+
 			setBestHours(tempBestHours);
+
 			setHoursForGraphing(tempHoursToday);
 		}
 	}, [statuses]);
+
+	useEffect(() => {
+		retweets
+			.filter((retweet) => {
+				return moment(retweet.created_at).weekday() === moment().weekday();
+			})
+			.map((retweet) => {
+				tempHoursToday[moment(retweet.created_at).hour()]++;
+			});
+
+		setRetweetsToday(tempHoursToday);
+	}, [retweets]);
 
 	return (
 		<Row>
@@ -105,13 +123,18 @@ const TimeToday = ({ viewDisabled }) => {
 
 										<D3Chart
 											id="d3-time-today-chart"
-											label="# of Statuses"
+											label="# of Statuses w/ User Mention"
 											tickFormat={hourTickFormat}
-											data={[{ show: showAllStatuses, type: 'all', datum: hoursForGraphing }]}
+											data={[
+												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
+												{ show: showRetweets, type: 'verified-retweets-time', datum: retweetsToday },
+												// { show: showTweets, type: 'verified-tweets-time', datum: verifiedTweetsTime },
+												// { show: showQuotedTweets, type: 'verified-quoted-time', datum: verifiedQuotedTime },
+											]}
 										/>
 									</Col>
 								</Row>
-								<Filters showAllStatuses={showAllStatuses} toggleStatus={toggleStatus} />
+								<Filters showAllStatuses={showAllStatuses} showRetweets={showRetweets} toggleStatus={toggleStatus} />
 							</ModalXLarge>
 						) : null}
 					</Col>
