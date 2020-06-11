@@ -11,17 +11,18 @@ import Filters from './Filters';
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses, retweets } = useContext(TweetContext);
+	const { statuses, retweets, quotedTweets } = useContext(TweetContext);
 
 	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
 	const [retweetsToday, setRetweetsToday] = useState(Array(24).fill(0));
+	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
 	const [showAllStatuses, setShowAllStatuses] = useState(true);
 	const [showRetweets, setShowRetweets] = useState(false);
+	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 
-	const tempHoursToday = Array(24).fill(0);
 	const hourTickFormat = (d) => {
 		if (d === 12) {
 			return '12 pm';
@@ -44,12 +45,13 @@ const TimeToday = ({ viewDisabled }) => {
 		} else if (e.target.id === 'show-retweets') {
 			setShowRetweets(!showRetweets);
 		} else if (e.target.id === 'show-quoted-tweets') {
-			// setShowQuotedTweets(!showQuotedTweets);
+			setShowQuotedTweets(!showQuotedTweets);
 		}
 	};
 
 	useEffect(() => {
 		if (statuses.length > 0) {
+			let temp = Array(24).fill(0);
 
 			/* Only return statuses from today*/
 			statuses
@@ -57,13 +59,13 @@ const TimeToday = ({ viewDisabled }) => {
 					return moment(status.created_at).weekday() === moment().weekday();
 				})
 				.map((t) => {
-					tempHoursToday[moment(t.created_at).hour()]++;
+					temp[moment(t.created_at).hour()]++;
 				});
 
-			const maxHour = Math.max(...tempHoursToday);
+			const maxHour = Math.max(...temp);
 
 			/* Find all occurances of max. */
-			const tempBestHours = tempHoursToday.reduce((a, e, i) => {
+			const tempBestHours = temp.reduce((a, e, i) => {
 				if (e === maxHour) {
 					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
 				}
@@ -72,21 +74,36 @@ const TimeToday = ({ viewDisabled }) => {
 
 			setBestHours(tempBestHours);
 
-			setHoursForGraphing(tempHoursToday);
+			setHoursForGraphing(temp);
 		}
 	}, [statuses]);
 
 	useEffect(() => {
+		let temp = Array(24).fill(0);
+
 		retweets
 			.filter((retweet) => {
 				return moment(retweet.created_at).weekday() === moment().weekday();
 			})
 			.map((retweet) => {
-				tempHoursToday[moment(retweet.created_at).hour()]++;
+				temp[moment(retweet.created_at).hour()]++;
 			});
 
-		setRetweetsToday(tempHoursToday);
+		setRetweetsToday(temp);
 	}, [retweets]);
+
+	useEffect(() => {
+		let temp = Array(24).fill(0);
+		quotedTweets
+			.filter((quotedTweet) => {
+				return moment(quotedTweet.created_at).weekday() === moment().weekday();
+			})
+			.map((quotedTweet) => {
+				temp[moment(quotedTweet.created_at).hour()]++;
+			});
+
+		setQuotedTweetsToday(temp);
+	}, [quotedTweets]);
 
 	return (
 		<Row>
@@ -129,7 +146,7 @@ const TimeToday = ({ viewDisabled }) => {
 												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
 												{ show: showRetweets, type: 'verified-retweets-time', datum: retweetsToday },
 												// { show: showTweets, type: 'verified-tweets-time', datum: verifiedTweetsTime },
-												// { show: showQuotedTweets, type: 'verified-quoted-time', datum: verifiedQuotedTime },
+												{ show: showQuotedTweets, type: 'verified-quoted-time', datum: quotedTweetsToday },
 											]}
 										/>
 									</Col>
