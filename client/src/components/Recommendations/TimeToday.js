@@ -11,7 +11,7 @@ import Filters from './Filters';
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses, retweets, quotedTweets } = useContext(TweetContext);
+	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
 
 	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
@@ -19,9 +19,12 @@ const TimeToday = ({ viewDisabled }) => {
 
 	const [retweetsToday, setRetweetsToday] = useState(Array(24).fill(0));
 	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
+	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
+
 	const [showAllStatuses, setShowAllStatuses] = useState(true);
 	const [showRetweets, setShowRetweets] = useState(false);
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+	const [showTweets, setShowTweets] = useState(false);
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -41,7 +44,7 @@ const TimeToday = ({ viewDisabled }) => {
 		if (e.target.id === 'show-all-status') {
 			setShowAllStatuses(!showAllStatuses);
 		} else if (e.target.id === 'show-tweets') {
-			// setShowTweets(!showTweets);
+			setShowTweets(!showTweets);
 		} else if (e.target.id === 'show-retweets') {
 			setShowRetweets(!showRetweets);
 		} else if (e.target.id === 'show-quoted-tweets') {
@@ -105,6 +108,19 @@ const TimeToday = ({ viewDisabled }) => {
 		setQuotedTweetsToday(temp);
 	}, [quotedTweets]);
 
+	useEffect(() => {
+		let temp = Array(24).fill(0);
+		tweets
+			.filter((tweet) => {
+				return moment(tweet.created_at).weekday() === moment().weekday();
+			})
+			.map((tweet) => {
+				temp[moment(tweet.created_at).hour()]++;
+			});
+
+		setTweetsToday(temp);
+	}, [tweets]);
+
 	return (
 		<Row>
 			<Col>
@@ -144,14 +160,19 @@ const TimeToday = ({ viewDisabled }) => {
 											tickFormat={hourTickFormat}
 											data={[
 												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
-												{ show: showRetweets, type: 'verified-retweets-time', datum: retweetsToday },
-												// { show: showTweets, type: 'verified-tweets-time', datum: verifiedTweetsTime },
-												{ show: showQuotedTweets, type: 'verified-quoted-time', datum: quotedTweetsToday },
+												{ show: showRetweets, type: 'retweets', datum: retweetsToday },
+												{ show: showTweets, type: 'tweets', datum: tweetsToday },
+												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsToday },
 											]}
 										/>
 									</Col>
 								</Row>
-								<Filters showAllStatuses={showAllStatuses} showRetweets={showRetweets} toggleStatus={toggleStatus} />
+								<Filters
+									showAllStatuses={showAllStatuses}
+									showRetweets={showRetweets}
+									showQuotedTweets={showQuotedTweets}
+									toggleStatus={toggleStatus}
+								/>
 							</ModalXLarge>
 						) : null}
 					</Col>

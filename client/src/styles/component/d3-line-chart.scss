@@ -4,19 +4,22 @@
 }
 
 .line-all {
-	stroke: black;
+	stroke: $all;
 }
 
-.line-verified-retweets-time {
-	stroke: red;
+.line-retweets {
+	stroke: $retweets;
 }
 
-.line-verified-tweets-time {
-	stroke: blue;
+.line-tweets {
+	stroke: $tweets;
 }
-.line-verified-quoted-time {
-	stroke: green;
+.line-quoted {
+	stroke: $quoted;
 }
+
+
+
 
 .line-dark-gray {
 	stroke: $darkslategray;
