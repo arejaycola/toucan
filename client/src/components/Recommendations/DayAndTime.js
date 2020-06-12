@@ -16,11 +16,15 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [bestDays, setBestDays] = useState([]);
 	const [bestHours, setBestHours] = useState([]);
 	const [showChart, setShowChart] = useState(false);
-	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
-	const [daysForGraphing, setDaysForGraphing] = useState(Array(7).fill(0));
+	const [allStatusesHour, setAllStatusesHour] = useState(Array(24).fill(0));
+	const [allStatusesDay, setAllStatusesDay] = useState(Array(7).fill(0));
 
 	const [retweetsDay, setRetweetsDay] = useState(Array(7).fill(0));
-	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
+	const [retweetsHour, setRetweetsHour] = useState(Array(24).fill(0));
+
+	const [quotedTweetsDay, setQuotedTweetsDay] = useState(Array(7).fill(0));
+	const [quotedTweetsHour, setQuotedTweetsHour] = useState(Array(24).fill(0));
+
 	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
 
 	const [showAllStatuses, setShowAllStatuses] = useState(true);
@@ -57,7 +61,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		} else if (e.target.id === 'show-retweets') {
 			setShowRetweets(!showRetweets);
 		} else if (e.target.id === 'show-quoted-tweets') {
-			// setShowQuotedTweets(!showQuotedTweets);
+			setShowQuotedTweets(!showQuotedTweets);
 		}
 	};
 
@@ -66,6 +70,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			/* Keep track of statuses by day. */
 			let tempStatuses = statuses.map((status) => {
 				tempDays[moment(status.created_at).weekday()]++;
+				tempHours[moment(status.created_at).hour()]++;
 				return status.created_at;
 			});
 
@@ -80,7 +85,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 				return a;
 			}, []);
 
-			/* Return the statuses from any day with the max (in case the max happened on more than one day.) */
+			/* Return the statuses from any day with the max (in case the max happened on more than one day.) This currently only handles one max day */
 			let tweetsFromBestDay = tempBestDays.map((day) => {
 				return tempStatuses.filter((status) => {
 					return moment(status).weekday() === day;
@@ -88,11 +93,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			})[0];
 
 			setBestDays(tempBestDays);
-			setDaysForGraphing(tempDays);
-
-			tweetsFromBestDay.map((t) => {
-				tempHours[moment(t).hour()]++;
-			});
+			setAllStatusesDay(tempDays);
 
 			const maxHour = Math.max(...tempHours);
 
@@ -105,21 +106,35 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			}, []);
 
 			setBestHours(tempBestHours);
-			setHoursForGraphing(tempHours);
+			setAllStatusesHour(tempHours);
 		}
 	}, [statuses]);
 
 	useEffect(() => {
-		let temp = Array(7).fill(0);
+		let tempDay = Array(7).fill(0);
+		let tempHour = Array(24).fill(0);
 
 		retweets.map((retweet) => {
-			temp[moment(retweet.created_at).weekday()]++;
+			tempDay[moment(retweet.created_at).weekday()]++;
+			tempHour[moment(retweet.created_at).hour()]++;
 		});
 
-		
-
-		setRetweetsDay(temp);
+		setRetweetsDay(tempDay);
+		setRetweetsHour(tempHour);
 	}, [retweets]);
+
+	useEffect(() => {
+		let tempDay = Array(7).fill(0);
+		let tempHour = Array(24).fill(0);
+
+		quotedTweets.map((quotedTweet) => {
+			tempDay[moment(quotedTweet.created_at).weekday()]++;
+			tempHour[moment(quotedTweet.created_at).hour()]++;
+		});
+
+		setQuotedTweetsDay(tempDay);
+		setQuotedTweetsHour(tempHour);
+	}, [quotedTweets]);
 
 	return (
 		<Row>
@@ -163,10 +178,10 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											label="# of Statuses"
 											tickFormat={dayTickFormat}
 											data={[
-												{ show: showAllStatuses, type: 'all', datum: daysForGraphing },
+												{ show: showAllStatuses, type: 'all', datum: allStatusesDay },
 												{ show: showRetweets, type: 'retweets', datum: retweetsDay },
 												// { show: showTweets, type: 'tweets', datum: tweetsToday },
-												// { show: showQuotedTweets, type: 'quoted', datum: quotedTweetsToday },
+												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsDay },
 											]}
 										/>
 									</Col>
@@ -177,10 +192,10 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											label="# of Statuses"
 											tickFormat={hourTickFormat}
 											data={[
-												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
-												// { show: showRetweets, type: 'retweets', datum: retweetsToday },
+												{ show: showAllStatuses, type: 'all', datum: allStatusesHour },
+												{ show: showRetweets, type: 'retweets', datum: retweetsHour },
 												// { show: showTweets, type: 'tweets', datum: tweetsToday },
-												// { show: showQuotedTweets, type: 'quoted', datum: quotedTweetsToday },
+												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsHour },
 											]}
 										/>
 									</Col>
