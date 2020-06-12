@@ -170,6 +170,7 @@ const TimeToday = ({ viewDisabled }) => {
 								<Filters
 									showAllStatuses={showAllStatuses}
 									showRetweets={showRetweets}
+									showTweets={showTweets}
 									showQuotedTweets={showQuotedTweets}
 									toggleStatus={toggleStatus}
 								/>

@@ -16,6 +16,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [bestDays, setBestDays] = useState([]);
 	const [bestHours, setBestHours] = useState([]);
 	const [showChart, setShowChart] = useState(false);
+
 	const [allStatusesHour, setAllStatusesHour] = useState(Array(24).fill(0));
 	const [allStatusesDay, setAllStatusesDay] = useState(Array(7).fill(0));
 
@@ -25,15 +26,13 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [quotedTweetsDay, setQuotedTweetsDay] = useState(Array(7).fill(0));
 	const [quotedTweetsHour, setQuotedTweetsHour] = useState(Array(24).fill(0));
 
-	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
+	const [tweetsDay, setTweetsDay] = useState(Array(7).fill(0));
+	const [tweetsHour, setTweetsHour] = useState(Array(24).fill(0));
 
 	const [showAllStatuses, setShowAllStatuses] = useState(true);
 	const [showRetweets, setShowRetweets] = useState(false);
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 	const [showTweets, setShowTweets] = useState(false);
-
-	const tempDays = Array(7).fill(0);
-	const tempHours = Array(24).fill(0);
 
 	const onToggleViewClick = () => {
 		setShowChart(!showChart);
@@ -57,7 +56,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		if (e.target.id === 'show-all-status') {
 			setShowAllStatuses(!showAllStatuses);
 		} else if (e.target.id === 'show-tweets') {
-			// setShowTweets(!showTweets);
+			setShowTweets(!showTweets);
 		} else if (e.target.id === 'show-retweets') {
 			setShowRetweets(!showRetweets);
 		} else if (e.target.id === 'show-quoted-tweets') {
@@ -67,6 +66,9 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 	useEffect(() => {
 		if (statuses.length > 0) {
+			const tempDays = Array(7).fill(0);
+			const tempHours = Array(24).fill(0);
+
 			/* Keep track of statuses by day. */
 			let tempStatuses = statuses.map((status) => {
 				tempDays[moment(status.created_at).weekday()]++;
@@ -136,6 +138,19 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		setQuotedTweetsHour(tempHour);
 	}, [quotedTweets]);
 
+	useEffect(() => {
+		let tempDay = Array(7).fill(0);
+		let tempHour = Array(24).fill(0);
+
+		tweets.map((tweet) => {
+			tempDay[moment(tweet.created_at).weekday()]++;
+			tempHour[moment(tweet.created_at).hour()]++;
+		});
+
+		setTweetsDay(tempDay);
+		setTweetsHour(tempHour);
+	}, [tweets]);
+
 	return (
 		<Row>
 			<Col>
@@ -180,7 +195,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											data={[
 												{ show: showAllStatuses, type: 'all', datum: allStatusesDay },
 												{ show: showRetweets, type: 'retweets', datum: retweetsDay },
-												// { show: showTweets, type: 'tweets', datum: tweetsToday },
+												{ show: showTweets, type: 'tweets', datum: tweetsDay },
 												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsDay },
 											]}
 										/>
@@ -194,13 +209,19 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											data={[
 												{ show: showAllStatuses, type: 'all', datum: allStatusesHour },
 												{ show: showRetweets, type: 'retweets', datum: retweetsHour },
-												// { show: showTweets, type: 'tweets', datum: tweetsToday },
+												{ show: showTweets, type: 'tweets', datum: tweetsHour },
 												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsHour },
 											]}
 										/>
 									</Col>
 								</Row>
-								<Filters showAllStatuses={showAllStatuses} toggleStatus={toggleStatus} />
+								<Filters
+									showAllStatuses={showAllStatuses}
+									showRetweets={showRetweets}
+									showTweets={showTweets}
+									showQuotedTweets={showQuotedTweets}
+									toggleStatus={toggleStatus}
+								/>
 							</ModalXLarge>
 						) : null}
 					</Col>
