@@ -129,9 +129,9 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											showReweets={showRetweets}
 											data={[
 												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
-												{ show: showRetweets, type: 'retweets-time', datum: verifiedRetweetsTime },
-												{ show: showTweets, type: 'tweets-time', datum: verifiedTweetsTime },
-												{ show: showQuotedTweets, type: 'quoted-time', datum: verifiedQuotedTime },
+												{ show: showRetweets, type: 'retweets', datum: verifiedRetweetsTime },
+												{ show: showTweets, type: 'tweets', datum: verifiedTweetsTime },
+												{ show: showQuotedTweets, type: 'quoted', datum: verifiedQuotedTime },
 											]}
 										/>
 									</Col>
