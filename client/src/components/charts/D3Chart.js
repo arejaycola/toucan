@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 export default (props) => {
 	const svgHeight = 275;
-	const svgWidth = 450;
+	const svgWidth = 350;
 
 	const d3Chart = useRef(null);
 	useEffect(() => {
@@ -22,11 +22,13 @@ export default (props) => {
 
 			const svg = d3
 				.select(d3Chart.current)
-				.attr('viewbox', `0 0 ${svgHeight} ${svgWidth}`)
+				.attr('width', svgWidth)
+				.attr('height', svgHeight)
+
 				.append('g')
 				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-			/* Calculate the xScaleMax. This shouldn't need to happen because it should always be the same but just in case. */
+			// /* Calculate the xScaleMax. This shouldn't need to happen because it should always be the same but just in case. */
 			let xScaleMax = -1;
 			props.data.forEach((category) => {
 				const localMax = category.datum.length - 1;
@@ -35,7 +37,7 @@ export default (props) => {
 				}
 			});
 
-			const xScale = d3.scaleLinear().domain([0, xScaleMax]).nice().range([0, width]);
+			const xScale = d3.scaleLinear().nice().range([0, width]).domain([0, xScaleMax]);
 
 			/* Calculate the max of all the data elements passed. */
 			let yScaleMax = -1;
@@ -97,5 +99,5 @@ export default (props) => {
 		}
 	}, [props.data, d3Chart.current]);
 
-	return <svg className={props.id} width={svgWidth} height={svgHeight} ref={d3Chart} />;
+	return <svg className={props.id} ref={d3Chart} />;
 };

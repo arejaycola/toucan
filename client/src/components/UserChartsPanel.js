@@ -59,8 +59,8 @@ const UserChartsPanel = (props) => {
 	};
 
 	return (
-		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
-			<Row>
+		<Container className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
+			<Row className="mx-0">
 				<Col>
 					<Recommendations />
 				</Col>

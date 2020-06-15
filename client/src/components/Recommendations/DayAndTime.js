@@ -186,7 +186,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 						{showChart ? (
 							<ModalXLarge title={'Best Day and Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
 								<Row>
-									<Col className="text-center">
+									<Col className="text-center p-0 mx-0 ">
 										<h6>Best Day</h6>
 										<D3Chart
 											id="d3-day-time-day-chart"
@@ -200,7 +200,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 											]}
 										/>
 									</Col>
-									<Col className="text-center">
+									<Col className="text-center p-0 mx-0 ">
 										<h6>Best Hour</h6>
 										<D3Chart
 											id="d3-day-time-hours-chart"

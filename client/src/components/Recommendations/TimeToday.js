@@ -33,6 +33,7 @@ const TimeToday = ({ viewDisabled }) => {
 			return '12am';
 		}
 
+		console.log(d);
 		return moment().hour(d).format('h');
 	};
 
@@ -151,7 +152,7 @@ const TimeToday = ({ viewDisabled }) => {
 						{showChart ? (
 							<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
 								<Row>
-									<Col className="text-center">
+									<Col className="p-0 mx-0 text-center">
 										<h6>Best Hour Today</h6>
 
 										<D3Chart

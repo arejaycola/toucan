@@ -92,7 +92,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	}, [globalUnverifiedHourCount, globalVerifiedHourCount]);
 
 	return (
-		<Row>
+		<Row className="mx-0">
 			<Col>
 				<Row>
 					<Col>
@@ -119,7 +119,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 						{showChart ? (
 							<ModalXLarge title={'Best Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
 								<Row>
-									<Col className="text-center">
+									<Col className="text-center p-0 mx-0 ">
 										<h6>Best Hour</h6>
 										<D3Chart
 											id="d3-hour-chart"

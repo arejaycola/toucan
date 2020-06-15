@@ -15,8 +15,8 @@ const UserStatsPanel = (props) => {
 	}, []);
 
 	return (
-		<Container fluid="lg" className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
-			<Row className="mx-auto">
+		<Container className=" mt-0 mt-md-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
+			<Row className="mx-0">
 				<Col className="mx-auto text-center" md="4">
 					{props.user.profile_image_url_https ? (
 						<Image fluid className=" circle-picture" width="200px" src={`${props.user.profile_image_url_https.replace('_normal', '')}`} />
