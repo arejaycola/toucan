@@ -58,12 +58,9 @@ app.post('/api/twitter/users', async (req, res) => {
 		console.log(e);
 	}
 });
-// if (process.env.NODE_ENV === 'production') {
 
-console.log(path.join(__dirname, 'client/build', 'index.html'));
 app.get('*', function (req, res) {
 	res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
-// }
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
