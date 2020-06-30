@@ -3,7 +3,7 @@ import TotalChart from './charts/TotalChart';
 import TweetChart from './charts/TweetChart';
 import RetweetChart from './charts/RetweetChart';
 import QuotedTweetChart from './charts//QuotedTweetChart';
-import Recommendations from './recommendations/Recommendations';
+import Recommendations from './Recommendations/Recommendations';
 import Legend from './Legend';
 import { Container, Col, Row } from 'react-bootstrap';
 import { TweetContext } from '../contexts/TweetContext';
