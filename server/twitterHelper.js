@@ -7,13 +7,6 @@ var client = new Twitter({
 	access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-var params = { screen_name: 'nodejs' };
-client.get('statuses/user_timeline', params, function (error, tweets, response) {
-	if (!error) {
-		// console.log(tweets);
-	}
-});
-
 const getUser = async (id) => {
 	try {
 		const response = await client.get(`https://api.twitter.com/1.1/users/show.json`, {

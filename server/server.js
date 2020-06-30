@@ -1,5 +1,5 @@
-require('dotenv').config();
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
 const bodyParser = require('body-parser');
 const Twitter = require('./twitterHelper');
@@ -10,13 +10,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, '../client/build')));
 // app.use('/', express.static(path.join(__dirname, '../client/build')));
 
 app.get('/api/twitter/search/:text', async (req, res) => {
-	console.log('here');
 	let searchString = req.params.text;
 	let results = await Twitter.searchForVerifiedUser(searchString);
-	console.log(results);
 	res.send(results);
 });
 
@@ -59,13 +58,12 @@ app.post('/api/twitter/users', async (req, res) => {
 		console.log(e);
 	}
 });
-console.log(path.join(__dirname, '../client/build'));
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, '../client/build')));
-	
-	app.get('*', function (req, res) {
-		res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-	});
-}
+// if (process.env.NODE_ENV === 'production') {
+
+console.log(path.join(__dirname, 'client/build', 'index.html'));
+app.get('*', function (req, res) {
+	res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
+// }
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
