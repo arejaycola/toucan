@@ -5,12 +5,10 @@ import Time from './Time';
 import TimeToday from './TimeToday';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { ChartContext } from '../../contexts/ChartContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { TweetContext } from '../../contexts/TweetContext';
 
 const Recommendations = () => {
-	// const { showTimeTodayChart, setShowTimeTodayChart } = useContext(ChartContext);
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 	const { statuses } = useContext(TweetContext);
 

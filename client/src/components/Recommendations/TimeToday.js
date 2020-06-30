@@ -33,7 +33,6 @@ const TimeToday = ({ viewDisabled }) => {
 			return '12am';
 		}
 
-		console.log(d);
 		return moment().hour(d).format('h');
 	};
 

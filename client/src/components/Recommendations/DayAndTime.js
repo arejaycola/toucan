@@ -70,7 +70,8 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			const tempHours = Array(24).fill(0);
 
 			/* Keep track of statuses by day. */
-			let tempStatuses = statuses.map((status) => {
+			// let tempStatuses =
+			 statuses.map((status) => {
 				tempDays[moment(status.created_at).weekday()]++;
 				tempHours[moment(status.created_at).hour()]++;
 				return status.created_at;
@@ -88,11 +89,11 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			}, []);
 
 			/* Return the statuses from any day with the max (in case the max happened on more than one day.) This currently only handles one max day */
-			let tweetsFromBestDay = tempBestDays.map((day) => {
-				return tempStatuses.filter((status) => {
-					return moment(status).weekday() === day;
-				});
-			})[0];
+			// let tweetsFromBestDay = tempBestDays.map((day) => {
+			// 	return tempStatuses.filter((status) => {
+			// 		return moment(status).weekday() === day;
+			// 	});
+			// })[0];
 
 			setBestDays(tempBestDays);
 			setAllStatusesDay(tempDays);

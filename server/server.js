@@ -10,11 +10,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/', express.static(path.join(__dirname, '../client/build')));
+// app.use('/', express.static(path.join(__dirname, '../client/build')));
 
 app.get('/api/twitter/search/:text', async (req, res) => {
+	console.log('here');
 	let searchString = req.params.text;
 	let results = await Twitter.searchForVerifiedUser(searchString);
+	console.log(results);
 	res.send(results);
 });
 
@@ -57,5 +59,13 @@ app.post('/api/twitter/users', async (req, res) => {
 		console.log(e);
 	}
 });
+console.log(path.join(__dirname, '../client/build'));
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static(path.join(__dirname, '../client/build')));
+	
+	app.get('*', function (req, res) {
+		res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+	});
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
