@@ -82,7 +82,7 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 						<h4>Quoted Tweets</h4>
 					</Col>
 				</Row>
-				<Row>
+				{/* <Row>
 					<Col>
 						<h6>By Day</h6>
 						{isQuotedTweetsLoading ? (
@@ -115,7 +115,7 @@ const QuotedTweetChart = ({ addToGlobalCount }) => {
 							/>
 						)}
 					</Col>
-				</Row>
+				</Row> */}
 			</Col>
 		</Row>
 	);

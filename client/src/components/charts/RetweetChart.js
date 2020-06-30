@@ -78,7 +78,7 @@ const RetweetChart = ({ addToGlobalCount }) => {
 						<h4>Retweets</h4>
 					</Col>
 				</Row>
-				<Row>
+				{/* <Row>
 					<Col>
 						<h6>By Day</h6>
 						{isRetweetsLoading ? (
@@ -111,7 +111,7 @@ const RetweetChart = ({ addToGlobalCount }) => {
 							/>
 						)}
 					</Col>
-				</Row>
+				</Row> */}
 			</Col>
 		</Row>
 	);

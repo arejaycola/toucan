@@ -29,7 +29,7 @@ const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }
 						<h4>Total Statuses</h4>
 					</Col>
 				</Row>
-				<Row>
+				{/* <Row>
 					<Col>
 						<h6>By Day</h6>
 						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
@@ -58,7 +58,7 @@ const TotalChart = ({ verifiedDay, verifiedHour, unverifiedDay, unverifiedHour }
 							/>
 						)}
 					</Col>
-				</Row>
+				</Row> */}
 			</Col>
 		</Row>
 	);

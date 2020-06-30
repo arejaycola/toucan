@@ -25,8 +25,11 @@ const TweetContextProvider = (props) => {
 	const [verifiedRetweetsTime, setVerifiedRetweetsTime] = useState(Array(24).fill(0));
 	const [unverifiedRetweetsTime, setUnverifiedRetweetsTime] = useState(Array(24).fill(0));
 
-	const [unverifiedTweetsTime, setUnverifiedTweetsTime] = useState(Array(24).fill(0));
+	const [unverifiedTweetsDay, setUnverifiedTweetsDay] = useState(Array(24).fill(0));
+	const [verifiedTweetsDay, setVerifiedTweetsDay] = useState(Array(24).fill(0));
+	
 	const [verifiedTweetsTime, setVerifiedTweetsTime] = useState(Array(24).fill(0));
+	const [unverifiedTweetsTime, setUnverifiedTweetsTime] = useState(Array(24).fill(0));
 
 	const [unverifiedQuotedTime, setUnverifiedQuotedTime] = useState(Array(24).fill(0));
 	const [verifiedQuotedTime, setVerifiedQuotedTime] = useState(Array(24).fill(0));
@@ -58,6 +61,11 @@ const TweetContextProvider = (props) => {
 				setVerifiedTweetsTime,
 				unverifiedTweetsTime,
 				setUnverifiedTweetsTime,
+
+				verifiedTweetsDay,
+				setVerifiedTweetsDay,
+				unverifiedTweetsDay,
+				setUnverifiedTweetsDay,
 
 				verifiedQuotedTime,
 				setVerifiedQuotedTime,
