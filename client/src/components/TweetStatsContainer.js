@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import numeral from 'numeral';
-import { Row, Image, Col, Container } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import { TweetContext } from '../contexts/TweetContext';
 
 const TweetStatsContainer = (props) => {
 	const {
-		tweets,
-		quotedTweets,
-		retweets,
 		tweetsCount,
 		tweetsToUnverifiedCount,
 		retweetsCount,

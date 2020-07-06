@@ -4,7 +4,7 @@ import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
-import D3Chart from '../charts/D3Chart';
+import D3Chart from '../helpers/D3Chart';
 import Filters from './Filters';
 import ModalXLarge from '../ModalXLarge';
 
@@ -34,10 +34,9 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 	const [showTweets, setShowTweets] = useState(false);
 
-		const [showBothUserTypes, setShowBothUserTypes] = useState(true);
-		const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
-		const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
-
+	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
+	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
+	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
 
 	const onToggleViewClick = () => {
 		setShowChart(!showChart);
@@ -151,6 +150,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 		setQuotedTweetsDay(tempDay);
 		setQuotedTweetsHour(tempHour);
+		console.log(quotedTweets);
 	}, [quotedTweets]);
 
 	useEffect(() => {

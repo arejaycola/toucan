@@ -4,7 +4,7 @@ import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import Loader from 'react-loader-spinner';
-import D3Chart from '../charts/D3Chart';
+import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 import Filters from './Filters';
 
@@ -93,7 +93,7 @@ const TimeToday = ({ viewDisabled }) => {
 
 			setHoursForGraphing(temp);
 		}
-	}, [statuses]);
+	}, [statuses, showVerifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);

@@ -1,13 +1,10 @@
-import React, { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
-import { Row, Col } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
-import D3Chart from './D3Chart';
-import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
-const TweetChart = ({ addToGlobalCount }) => {
+const TweetHelper = ({ addToGlobalCount }) => {
 	const {
 		tweets,
 		setTweetsCount,
@@ -34,6 +31,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 		const filteredTweets = tweets.filter((tweet) => {
 			return tweet.entities.user_mentions.length > 0;
 		});
+
 		setTweetsCount(tweets.length);
 
 		const userIds = filteredTweets
@@ -79,7 +77,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 
 				filteredTweets.map((filteredTweet) => {
 					let tempMoment = moment(new Date(filteredTweet.created_at));
-					return filteredTweet.entities.user_mentions.map((userMentions) => {
+					filteredTweet.entities.user_mentions.map((userMentions) => {
 						if (userMentions.verified) {
 							tempVerifiedDay[tempMoment.weekday()]++;
 							tempVerifiedHour[tempMoment.hour()]++;
@@ -115,64 +113,7 @@ const TweetChart = ({ addToGlobalCount }) => {
 		sendUsersRequest();
 	}, [tweets]);
 
-	const dayTickFormat = (d) => {
-		return moment().weekday(d).format('dddd');
-	};
-	const hourTickFormat = (d) => {
-		if (d == 12) {
-			return '12 pm';
-		} else if (d == 0) {
-			return '12am';
-		}
-
-		return moment().hour(d).format('hh');
-	};
-
-	return (
-		<Row className="mt-3 text-center justify-content-center">
-			<Col>
-				<Row>
-					<Col>
-						<h4>Tweets</h4>
-					</Col>
-				</Row>
-				{/* <Row>
-					<Col>
-						<h6>By Day</h6>
-						{isTweetsLoading ? (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
-						) : (
-							<D3Chart
-								id="d3-tweet-chart-day"
-								label="# of Tweets"
-								tickFormat={dayTickFormat}
-								data={[
-									{ type: 'verified', datum: verifiedDay },
-									{ type: 'unverified', datum: unverifiedDay },
-								]}
-							/>
-						)}
-					</Col>
-					<Col>
-						<h6>By Hour</h6>
-						{isTweetsLoading ? (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
-						) : (
-							<D3Chart
-								id="d3-tweet-chart-hour"
-								label="# of Tweets"
-								tickFormat={hourTickFormat}
-								data={[
-									{ type: 'verified', datum: verifiedHour },
-									{ type: 'unverified', datum: unverifiedHour },
-								]}
-							/>
-						)}
-					</Col>
-				</Row> */}
-			</Col>
-		</Row>
-	);
+	return null;
 };
 
-export default TweetChart;
+export default TweetHelper;

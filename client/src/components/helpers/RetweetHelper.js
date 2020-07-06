@@ -1,13 +1,12 @@
 import React, { useEffect, useContext, useState } from 'react';
 import moment from 'moment';
 import { TweetContext } from '../../contexts/TweetContext';
-import D3Chart from './D3Chart';
-import { Row, Col } from 'react-bootstrap';
-import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
-const RetweetChart = ({ addToGlobalCount }) => {
-	const { retweets, setRetweetsCount, setRetweetsToUnverifiedCount, setVerifiedRetweetsTime, setUnverifiedRetweetsTime } = useContext(TweetContext);
+const RetweetHelper = ({ addToGlobalCount }) => {
+	const { retweets, setRetweets, setRetweetsCount, setRetweetsToUnverifiedCount, setVerifiedRetweetsTime, setUnverifiedRetweetsTime } = useContext(
+		TweetContext
+	);
 	const { isRetweetsLoading, setIsRetweetsLoading } = useContext(LoadingContext);
 
 	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
@@ -29,10 +28,12 @@ const RetweetChart = ({ addToGlobalCount }) => {
 			if (retweet.retweeted_status.user.verified) {
 				tempVerifiedDay[tempMoment.weekday()]++;
 				tempVerifiedHour[tempMoment.hour()]++;
+				retweet.userType = 'verified';
 			} else {
 				tempUnverifiedDay[tempMoment.weekday()]++;
 				tempUnverifiedHour[tempMoment.hour()]++;
 				unverifiedMentionCount++;
+				retweet.userType = 'unverified';
 			}
 		});
 
@@ -43,6 +44,8 @@ const RetweetChart = ({ addToGlobalCount }) => {
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
+
+		setRetweets(retweets);
 
 		if (retweets.length > 0) {
 			/* Add a small delay for effect. */
@@ -57,64 +60,7 @@ const RetweetChart = ({ addToGlobalCount }) => {
 		});
 	}, [retweets]);
 
-	const dayTickFormat = (d) => {
-		return moment().weekday(d).format('dddd');
-	};
-	const hourTickFormat = (d) => {
-		if (d === 12) {
-			return '12 pm';
-		} else if (d === 0) {
-			return '12am';
-		}
-
-		return moment().hour(d).format('h');
-	};
-
-	return (
-		<Row className="mt-3 text-center justify-content-center">
-			<Col>
-				<Row>
-					<Col>
-						<h4>Retweets</h4>
-					</Col>
-				</Row>
-				{/* <Row>
-					<Col>
-						<h6>By Day</h6>
-						{isRetweetsLoading ? (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
-						) : (
-							<D3Chart
-								id="d3-retweet-chart-day"
-								label="# of Retweets"
-								tickFormat={dayTickFormat}
-								data={[
-									{ type: 'verified', datum: verifiedDay },
-									{ type: 'unverified', datum: unverifiedDay },
-								]}
-							/>
-						)}
-					</Col>
-					<Col>
-						<h6>By Hour</h6>
-						{isRetweetsLoading ? (
-							<Loader type="Audio" color="#00BFFF" height={50} width={50} timeout={10000} />
-						) : (
-							<D3Chart
-								id="d3-retweet-chart-hour"
-								label="# of Retweets"
-								tickFormat={hourTickFormat}
-								data={[
-									{ type: 'verified', datum: verifiedHour },
-									{ type: 'unverified', datum: unverifiedHour },
-								]}
-							/>
-						)}
-					</Col>
-				</Row> */}
-			</Col>
-		</Row>
-	);
+	return null;
 };
 
-export default RetweetChart;
+export default RetweetHelper;

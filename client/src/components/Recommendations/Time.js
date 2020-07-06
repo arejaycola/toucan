@@ -4,7 +4,7 @@ import { Col, Row, Button, Modal } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
-import D3Chart from '../charts/D3Chart';
+import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 import Filters from './Filters';
 
@@ -31,7 +31,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	const [showTweets, setShowTweets] = useState(false);
 	const [showRetweets, setShowRetweets] = useState(false);
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
-	
+
 	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
 	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
 	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);

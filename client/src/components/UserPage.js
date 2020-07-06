@@ -1,12 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TweetContext } from '../contexts/TweetContext';
-import BannerImage from '../components/BannerImage';
 import UserStatsPanel from '../components/UserStatsPanel';
-import ProfileImage from '../components/ProfileImage';
 import UserChartsPanel from '../components/UserChartsPanel';
 import Axios from 'axios';
-import { Container } from 'react-bootstrap';
 
 const UserPage = (props) => {
 	const history = useHistory();
