@@ -24,7 +24,7 @@ const TweetStatsContainer = (props) => {
 				<Col xs={12}>
 					<h3 className="pb-0 mb-0">Tweet Trends</h3>
 					<h6 className="pt-0 mt-0 text-muted">
-						<small>(Last ~1k Tweets)</small>
+						<small>(Last ~1k Statuses)</small>
 					</h6>
 				</Col>
 			</Row>
