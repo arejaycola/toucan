@@ -31,6 +31,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	const [showTweets, setShowTweets] = useState(false);
 	const [showRetweets, setShowRetweets] = useState(false);
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+	
 	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
 	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
 	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
@@ -60,6 +61,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 			setShowQuotedTweets(!showQuotedTweets);
 		}
 	};
+
 	const toggleUserType = (e) => {
 		if (e.target.id === 'show-both-users') {
 			setShowBothUserTypes(!showBothUserTypes);

@@ -1,7 +1,17 @@
 import React from 'react';
 import { Col, Row, Button, Modal, Form, FormCheck } from 'react-bootstrap';
 
-const Filters = ({ toggleStatus, toggleUserType, showAllStatuses, showTweets, showRetweets, showQuotedTweets }) => {
+const Filters = ({
+	toggleStatus,
+	toggleUserType,
+	showAllStatuses,
+	showTweets,
+	showRetweets,
+	showQuotedTweets,
+	showBothUserTypes,
+	showVerifiedUsers,
+	showUnverifiedUsers,
+}) => {
 	return (
 		<>
 			<Row className="text-center">
@@ -40,9 +50,15 @@ const Filters = ({ toggleStatus, toggleUserType, showAllStatuses, showTweets, sh
 				</Col>
 				<Col xs={'auto'} className="text-left">
 					<h5>User Type</h5>
-					{/* <Form.Check checked={showBothUserTypes} type="switch" id="show-both-user" label="Both" onChange={(e) => toggleUserType(e)} /> */}
-					{/* <Form.Check checked={showVerifiedUsers} type="switch" id="show-verified" label="Verified" onChange={(e) => toggleUserType(e)} /> */}
-					{/* <Form.Check checked={showUnverifiedUsers} type="switch" id="show-unverified" label="Unverified" onChange={(e) => toggleUserType(e)} /> */}
+					<Form.Check checked={showBothUserTypes} type="switch" id="show-both-users" label="Both" onChange={(e) => toggleUserType(e)} />
+					<Form.Check checked={showVerifiedUsers} type="switch" id="show-verified" label="Verified" onChange={(e) => toggleUserType(e)} />
+					<Form.Check
+						checked={showUnverifiedUsers}
+						type="switch"
+						id="show-unverified"
+						label="Unverified"
+						onChange={(e) => toggleUserType(e)}
+					/>
 				</Col>
 			</Row>
 		</>

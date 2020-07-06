@@ -34,6 +34,11 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 	const [showTweets, setShowTweets] = useState(false);
 
+		const [showBothUserTypes, setShowBothUserTypes] = useState(true);
+		const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
+		const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
+
+
 	const onToggleViewClick = () => {
 		setShowChart(!showChart);
 	};
@@ -64,6 +69,15 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		}
 	};
 
+	const toggleUserType = (e) => {
+		if (e.target.id === 'show-both-users') {
+			setShowBothUserTypes(!showBothUserTypes);
+		} else if (e.target.id === 'show-verified') {
+			setShowVerifiedUsers(!showVerifiedUsers);
+		} else if (e.target.id === 'show-unverified') {
+			setShowUnverifiedUsers(!showUnverifiedUsers);
+		}
+	};
 	useEffect(() => {
 		if (statuses.length > 0) {
 			const tempDays = Array(7).fill(0);
@@ -71,7 +85,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 			/* Keep track of statuses by day. */
 			// let tempStatuses =
-			 statuses.map((status) => {
+			statuses.map((status) => {
 				tempDays[moment(status.created_at).weekday()]++;
 				tempHours[moment(status.created_at).hour()]++;
 				return status.created_at;
@@ -222,6 +236,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 									showTweets={showTweets}
 									showQuotedTweets={showQuotedTweets}
 									toggleStatus={toggleStatus}
+									toggleUserType={toggleUserType}
 								/>
 							</ModalXLarge>
 						) : null}

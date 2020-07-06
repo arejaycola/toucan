@@ -26,6 +26,10 @@ const TimeToday = ({ viewDisabled }) => {
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 	const [showTweets, setShowTweets] = useState(false);
 
+	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
+	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
+	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
+
 	const hourTickFormat = (d) => {
 		if (d === 12) {
 			return '12 pm';
@@ -49,6 +53,16 @@ const TimeToday = ({ viewDisabled }) => {
 			setShowRetweets(!showRetweets);
 		} else if (e.target.id === 'show-quoted-tweets') {
 			setShowQuotedTweets(!showQuotedTweets);
+		}
+	};
+
+	const toggleUserType = (e) => {
+		if (e.target.id === 'show-both-users') {
+			setShowBothUserTypes(!showBothUserTypes);
+		} else if (e.target.id === 'show-verified') {
+			setShowVerifiedUsers(!showVerifiedUsers);
+		} else if (e.target.id === 'show-unverified') {
+			setShowUnverifiedUsers(!showUnverifiedUsers);
 		}
 	};
 
@@ -173,6 +187,10 @@ const TimeToday = ({ viewDisabled }) => {
 									showTweets={showTweets}
 									showQuotedTweets={showQuotedTweets}
 									toggleStatus={toggleStatus}
+									showBothUserTypes={showBothUserTypes}
+									showVerifiedUsers={showVerifiedUsers}
+									showUnverifiedUsers={showUnverifiedUsers}
+									toggleUserType={toggleUserType}
 								/>
 							</ModalXLarge>
 						) : null}
