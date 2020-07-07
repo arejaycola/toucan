@@ -4,6 +4,7 @@ import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import { UserTypeContext } from '../../contexts/UserTypeContext';
+import { StatusContext } from '../../contexts/StatusContext';
 import Loader from 'react-loader-spinner';
 import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
@@ -11,6 +12,7 @@ import Filters from './Filters';
 
 import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
 import useToggleUserType from '../../hooks/useToggleUserType';
+import useToggleStatus from '../../hooks/useToggleStatus';
 
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -25,16 +27,13 @@ const TimeToday = ({ viewDisabled }) => {
 	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
 	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
 
-	const [showAllStatuses, setShowAllStatuses] = useState(true);
-	const [showRetweets, setShowRetweets] = useState(false);
-	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
-	const [showTweets, setShowTweets] = useState(false);
-
 	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
+	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
 	const { toggleUserType } = useToggleUserType();
-	useUserTypeToggleHelper();
+	const { toggleStatus } = useToggleStatus();
 
+	useUserTypeToggleHelper();
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -48,18 +47,6 @@ const TimeToday = ({ viewDisabled }) => {
 
 	const onToggleViewClick = () => {
 		setShowChart(!showChart);
-	};
-
-	const toggleStatus = (e) => {
-		if (e.target.id === 'show-all-status') {
-			setShowAllStatuses(!showAllStatuses);
-		} else if (e.target.id === 'show-tweets') {
-			setShowTweets(!showTweets);
-		} else if (e.target.id === 'show-retweets') {
-			setShowRetweets(!showRetweets);
-		} else if (e.target.id === 'show-quoted-tweets') {
-			setShowQuotedTweets(!showQuotedTweets);
-		}
 	};
 
 	useEffect(() => {
