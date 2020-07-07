@@ -3,10 +3,14 @@ import moment from 'moment';
 import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
+import { UserTypeContext } from '../../contexts/UserTypeContext';
 import Loader from 'react-loader-spinner';
 import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 import Filters from './Filters';
+
+import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
+import useToggleUserType from '../../hooks/useToggleUserType';
 
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -26,9 +30,11 @@ const TimeToday = ({ viewDisabled }) => {
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 	const [showTweets, setShowTweets] = useState(false);
 
-	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
-	const [showVerifiedUsers, setShowVerifiedUsers] = useState(true);
-	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(true);
+	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
+
+	const { toggleUserType } = useToggleUserType();
+	useUserTypeToggleHelper();
+
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -54,19 +60,6 @@ const TimeToday = ({ viewDisabled }) => {
 		} else if (e.target.id === 'show-quoted-tweets') {
 			setShowQuotedTweets(!showQuotedTweets);
 		}
-	};
-
-	const toggleUserType = (e) => {
-		if (e.target.id === 'show-both-users') {
-			setShowBothUserTypes(!showBothUserTypes);
-			setShowVerifiedUsers(!showBothUserTypes);
-			setShowUnverifiedUsers(!showBothUserTypes);
-		} else if (e.target.id === 'show-verified') {
-			setShowVerifiedUsers(!showVerifiedUsers);
-		} else if (e.target.id === 'show-unverified') {
-			setShowUnverifiedUsers(!showUnverifiedUsers);
-		}
-		
 	};
 
 	useEffect(() => {
