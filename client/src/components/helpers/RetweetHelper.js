@@ -44,7 +44,7 @@ const RetweetHelper = ({ addToGlobalCount }) => {
 		setUnverifiedDay(tempUnverifiedDay);
 		setVerifiedHour(tempVerifiedHour);
 		setUnverifiedHour(tempUnverifiedHour);
-
+		
 		setRetweets(retweets);
 
 		if (retweets.length > 0) {

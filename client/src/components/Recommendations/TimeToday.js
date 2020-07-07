@@ -27,8 +27,8 @@ const TimeToday = ({ viewDisabled }) => {
 	const [showTweets, setShowTweets] = useState(false);
 
 	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
-	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
-	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
+	const [showVerifiedUsers, setShowVerifiedUsers] = useState(true);
+	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(true);
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -59,11 +59,14 @@ const TimeToday = ({ viewDisabled }) => {
 	const toggleUserType = (e) => {
 		if (e.target.id === 'show-both-users') {
 			setShowBothUserTypes(!showBothUserTypes);
+			setShowVerifiedUsers(!showBothUserTypes);
+			setShowUnverifiedUsers(!showBothUserTypes);
 		} else if (e.target.id === 'show-verified') {
 			setShowVerifiedUsers(!showVerifiedUsers);
 		} else if (e.target.id === 'show-unverified') {
 			setShowUnverifiedUsers(!showUnverifiedUsers);
 		}
+		
 	};
 
 	useEffect(() => {
@@ -100,6 +103,9 @@ const TimeToday = ({ viewDisabled }) => {
 
 		retweets
 			.filter((retweet) => {
+				return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+			})
+			.filter((retweet) => {
 				return moment(retweet.created_at).weekday() === moment().weekday();
 			})
 			.map((retweet) => {
@@ -107,7 +113,7 @@ const TimeToday = ({ viewDisabled }) => {
 			});
 
 		setRetweetsToday(temp);
-	}, [retweets]);
+	}, [retweets, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);

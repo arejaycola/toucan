@@ -77,6 +77,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			setShowUnverifiedUsers(!showUnverifiedUsers);
 		}
 	};
+
 	useEffect(() => {
 		if (statuses.length > 0) {
 			const tempDays = Array(7).fill(0);
@@ -150,7 +151,6 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 		setQuotedTweetsDay(tempDay);
 		setQuotedTweetsHour(tempHour);
-		console.log(quotedTweets);
 	}, [quotedTweets]);
 
 	useEffect(() => {

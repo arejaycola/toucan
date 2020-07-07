@@ -32,6 +32,7 @@ const UserPage = (props) => {
 			let tempStatuses = [];
 			/* Compartmentalize the different types of tweets (statuses) */
 			response.data.map((status) => {
+				status.userType = null;
 				if (status.retweeted_status) {
 					/* Retweeted status->user->verified */
 					tempRetweets.push(status);
