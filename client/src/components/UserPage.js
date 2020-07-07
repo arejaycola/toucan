@@ -35,10 +35,22 @@ const UserPage = (props) => {
 				status.userType = null;
 				if (status.retweeted_status) {
 					/* Retweeted status->user->verified */
+					if (status.retweeted_status.user.verified) {
+						status.userType = 'verified';
+					} else {
+						status.userType = 'unverified';
+					}
+
 					tempRetweets.push(status);
 					tempStatuses.push(status);
 				} else if (status.quoted_status) {
 					/* Quoted status->user->verified. */
+					if (status.quoted_status.user.verified) {
+						status.userType = 'verified';
+					} else {
+						status.userType = 'unverified';
+					}
+
 					tempQuotedTweets.push(status);
 					tempStatuses.push(status);
 				} else {
