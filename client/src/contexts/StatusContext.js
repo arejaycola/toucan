@@ -3,8 +3,8 @@ import React, { createContext, useState } from 'react';
 export const StatusContext = createContext();
 
 const StatusContextProvider = (props) => {
-	const [showAllStatuses, setShowAllStatuses] = useState(true);
-	const [showRetweets, setShowRetweets] = useState(false);
+	const [showAllStatuses, setShowAllStatuses] = useState(false);
+	const [showRetweets, setShowRetweets] = useState(true);
 	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
 	const [showTweets, setShowTweets] = useState(false);
 

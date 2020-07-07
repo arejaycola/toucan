@@ -18,6 +18,8 @@ const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
+	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
+	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
 	const [bestHours, setBestHours] = useState([]);
 	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
@@ -27,8 +29,6 @@ const TimeToday = ({ viewDisabled }) => {
 	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
 	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
 
-	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
-	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
 	const { toggleUserType } = useToggleUserType();
 	const { toggleStatus } = useToggleStatus();

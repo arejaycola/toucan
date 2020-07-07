@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserTypeContext } from '../contexts/UserTypeContext';
 
 const useToggleUserType = () => {
@@ -10,6 +10,8 @@ const useToggleUserType = () => {
 		showUnverifiedUsers,
 		setShowUnverifiedUsers,
 	} = useContext(UserTypeContext);
+
+	
 
 	const toggleUserType = (e) => {
 		if (e.target.id === 'show-both-users') {
