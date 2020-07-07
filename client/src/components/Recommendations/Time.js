@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import moment from 'moment';
-import { Col, Row, Button, Modal } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
@@ -11,14 +11,10 @@ import Filters from './Filters';
 const Time = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 	const {
-		tweetsToUnverifiedCount,
 		globalUnverifiedHourCount,
 		globalVerifiedHourCount,
 		verifiedRetweetsTime,
-		unverifiedRetweetsTime,
-		unverifiedTweetsTime,
 		verifiedTweetsTime,
-		unverifiedQuotedTime,
 		verifiedQuotedTime,
 	} = useContext(TweetContext);
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/

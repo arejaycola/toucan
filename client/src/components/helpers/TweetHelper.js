@@ -1,25 +1,12 @@
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
 const TweetHelper = ({ addToGlobalCount }) => {
-	const {
-		tweets,
-		setTweetsCount,
-		setTweetsToUnverifiedCount,
-		setVerifiedTweetsTime,
-		setUnverifiedTweetsTime,
-		setVerifiedTweetsDay,
-		setUnverifiedTweetsDay,
-	} = useContext(TweetContext);
-	const { isTweetsLoading, setIsTweetsLoading } = useContext(LoadingContext);
-
-	const [verifiedDay, setVerifiedDay] = useState(Array(7).fill(0));
-	const [unverifiedDay, setUnverifiedDay] = useState(Array(7).fill(0));
-	const [verifiedHour, setVerifiedHour] = useState(Array(24).fill(0));
-	const [unverifiedHour, setUnverifiedHour] = useState(Array(24).fill(0));
+	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
+	const { setIsTweetsLoading } = useContext(LoadingContext);
 
 	let tempVerifiedDay = Array(7).fill(0);
 	let tempUnverifiedDay = Array(7).fill(0);
@@ -32,6 +19,7 @@ const TweetHelper = ({ addToGlobalCount }) => {
 			return tweet.entities.user_mentions.length > 0;
 		});
 
+		/* Should this be filteredTweets.length? */
 		setTweetsCount(tweets.length);
 
 		const userIds = filteredTweets
@@ -68,7 +56,7 @@ const TweetHelper = ({ addToGlobalCount }) => {
 							if (userMentions.id === user.id) {
 								userMentions.verified = user.verified;
 								if (user.verified === false) {
-									unverifiedUserMentions['user-' + user.id] = 'unverified';
+									tweet.userType = unverifiedUserMentions['user-' + user.id] = 'unverified';
 								}
 							}
 						}
@@ -77,6 +65,7 @@ const TweetHelper = ({ addToGlobalCount }) => {
 
 				filteredTweets.map((filteredTweet) => {
 					let tempMoment = moment(new Date(filteredTweet.created_at));
+
 					filteredTweet.entities.user_mentions.map((userMentions) => {
 						if (userMentions.verified) {
 							tempVerifiedDay[tempMoment.weekday()]++;
@@ -85,22 +74,15 @@ const TweetHelper = ({ addToGlobalCount }) => {
 							tempUnverifiedDay[tempMoment.weekday()]++;
 							tempUnverifiedHour[tempMoment.hour()]++;
 						}
+						return userMentions;
 					});
+
+					return filteredTweet;
 				});
 
-				setVerifiedTweetsDay(tempVerifiedDay);
-				setUnverifiedTweetsDay(tempUnverifiedDay);
-				setVerifiedTweetsTime(tempVerifiedHour);
-				setUnverifiedTweetsTime(tempUnverifiedHour);
-
 				setTweetsToUnverifiedCount(Object.keys(unverifiedUserMentions).length);
-				setVerifiedDay(tempVerifiedDay);
-				setUnverifiedDay(tempUnverifiedDay);
-				setVerifiedHour(tempVerifiedHour);
-				setUnverifiedHour(tempUnverifiedHour);
 
 				setIsTweetsLoading(false);
-
 				addToGlobalCount({
 					verifiedDay: tempVerifiedDay,
 					unverifiedDay: tempUnverifiedDay,

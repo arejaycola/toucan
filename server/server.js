@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.get('/api/twitter/search/:text', async (req, res) => {
 	let searchString = req.params.text;
+	
 	let results = await Twitter.searchForVerifiedUser(searchString);
 	res.send(results);
 });
@@ -59,8 +60,8 @@ app.post('/api/twitter/users', async (req, res) => {
 	}
 });
 
-app.get('*', function (req, res) {
-	res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+app.get('*', async function (req, res) {
+	// res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

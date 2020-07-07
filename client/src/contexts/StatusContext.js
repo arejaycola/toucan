@@ -5,8 +5,8 @@ export const StatusContext = createContext();
 const StatusContextProvider = (props) => {
 	const [showAllStatuses, setShowAllStatuses] = useState(false);
 	const [showRetweets, setShowRetweets] = useState(false);
-	const [showQuotedTweets, setShowQuotedTweets] = useState(true);
-	const [showTweets, setShowTweets] = useState(false);
+	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+	const [showTweets, setShowTweets] = useState(true);
 
 	return (
 		<StatusContext.Provider

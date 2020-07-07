@@ -11,10 +11,13 @@ import Loader from 'react-loader-spinner';
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
 	const [hasResults, setHasResults] = useState(false);
+	const { addSearchHistory } = useContext(SearchContext);
 
 	const { setSearchResults } = useContext(SearchContext);
 
 	useEffect(() => {
+		addSearchHistory(searchString);
+
 		const sendRequest = async () => {
 			const response = await Axios.get(`/api/twitter/search/${searchString}`);
 			if (response) {
@@ -23,7 +26,7 @@ const SearchResultsPage = (props) => {
 			}
 		};
 		sendRequest();
-	}, [searchString]);
+	},[searchString]);
 
 	return (
 		<>

@@ -106,10 +106,21 @@ async function getUsersByIds(userIds) {
 	}
 }
 
+const getRateLimitStatus = async () => {
+try {
+		const response = await client.get(`https://api.twitter.com/1.1/application/rate_limit_status.json`);
+
+		return response;
+	} catch (e) {
+		console.log(e);
+		throw new Error(e);
+	}
+}
+
 function getVerifiedUsers(users) {
 	return users.filter((user) => {
 		return user.verified;
 	});
 }
 
-module.exports = { searchForVerifiedUser, getUser, getTweetsByUserId, getUsersByIds };
+module.exports = { getRateLimitStatus, searchForVerifiedUser, getUser, getTweetsByUserId, getUsersByIds };

@@ -24,7 +24,7 @@ const SearchResults = () => {
 								<Card.Title className=" font-weight-bold">{result.name}</Card.Title>
 								<Card.Text className="mb-2">
 									<strong>Handle: </strong>
-									<a target="_blank" href={`https://www.twitter.com/${result.screen_name}`}>
+									<a target="_blank" rel="noopener noreferrer" href={`https://www.twitter.com/${result.screen_name}`}>
 										@{result.screen_name}
 									</a>
 								</Card.Text>

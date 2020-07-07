@@ -37,7 +37,7 @@ const UserStatsPanel = (props) => {
 							</Row>
 							<Row className="mt-2">
 								<Col>
-									<a target="_blank" href={`https://www.twitter.com/${props.user.screen_name}`}>
+									<a target="_blank" rel="noopener noreferrer" href={`https://www.twitter.com/${props.user.screen_name}`}>
 										<FontAwesomeIcon style={{ marginRight: '10px' }} icon={faTwitter} /> @{props.user.screen_name}
 									</a>
 								</Col>
@@ -77,7 +77,7 @@ const UserStatsPanel = (props) => {
 
 							<Row className="mt-2">
 								<Col>
-									<a target="_blank" href={props.user.url}>
+									<a target="_blank" rel="noopener noreferrer" href={props.user.url}>
 										<FontAwesomeIcon style={{ marginRight: '10px' }} icon={faLink} />
 										{props.user.url ? props.user.url : 'No Website Provided'}
 									</a>

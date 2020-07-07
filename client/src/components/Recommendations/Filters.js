@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Button, Modal, Form, FormCheck } from 'react-bootstrap';
+import { Col, Row, Form, FormCheck } from 'react-bootstrap';
 
 const Filters = ({
 	toggleStatus,

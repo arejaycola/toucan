@@ -25,7 +25,6 @@ const UserPage = (props) => {
 			const numberOfTweets = 200;
 
 			const response = await Axios.get(`/api/twitter/user/${userId}/tweets/${numberOfTweets}`);
-			// setTweets(response.data);
 			let tempRetweets = [];
 			let tempTweets = [];
 			let tempQuotedTweets = [];
@@ -58,6 +57,7 @@ const UserPage = (props) => {
 					tempTweets.push(status);
 					tempStatuses.push(status);
 				}
+				return status;
 			});
 
 			setStatuses(tempStatuses);

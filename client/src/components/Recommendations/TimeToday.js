@@ -59,6 +59,7 @@ const TimeToday = ({ viewDisabled }) => {
 				})
 				.map((t) => {
 					temp[moment(t.created_at).hour()]++;
+					return t;
 				});
 
 			const maxHour = Math.max(...temp);
@@ -89,6 +90,7 @@ const TimeToday = ({ viewDisabled }) => {
 			})
 			.map((retweet) => {
 				temp[moment(retweet.created_at).hour()]++;
+				return retweet;
 			});
 
 		setRetweetsToday(temp);
@@ -105,6 +107,7 @@ const TimeToday = ({ viewDisabled }) => {
 			})
 			.map((quotedTweet) => {
 				temp[moment(quotedTweet.created_at).hour()]++;
+				return quotedTweet;
 			});
 
 		setQuotedTweetsToday(temp);
@@ -112,16 +115,21 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
+
 		tweets
+			.filter((tweet) => {
+				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
+			})
 			.filter((tweet) => {
 				return moment(tweet.created_at).weekday() === moment().weekday();
 			})
 			.map((tweet) => {
 				temp[moment(tweet.created_at).hour()]++;
+				return tweet;
 			});
 
 		setTweetsToday(temp);
-	}, [tweets]);
+	}, [tweets, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row>

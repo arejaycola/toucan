@@ -134,6 +134,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		retweets.map((retweet) => {
 			tempDay[moment(retweet.created_at).weekday()]++;
 			tempHour[moment(retweet.created_at).hour()]++;
+			return retweet;
 		});
 
 		setRetweetsDay(tempDay);
@@ -147,6 +148,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		quotedTweets.map((quotedTweet) => {
 			tempDay[moment(quotedTweet.created_at).weekday()]++;
 			tempHour[moment(quotedTweet.created_at).hour()]++;
+			return quotedTweet;
 		});
 
 		setQuotedTweetsDay(tempDay);
@@ -160,6 +162,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		tweets.map((tweet) => {
 			tempDay[moment(tweet.created_at).weekday()]++;
 			tempHour[moment(tweet.created_at).hour()]++;
+			return tweet;
 		});
 
 		setTweetsDay(tempDay);
@@ -176,14 +179,14 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 						) : (
 							<strong>
 								{bestDays.map((day, i) => {
-									return i != bestDays.length - 1 ? (
+									return i !== bestDays.length - 1 ? (
 										<span key={i}>{moment().weekday(day).format('dddd')}, </span>
 									) : (
 										<span key={i}>{moment().weekday(day).format('dddd')} </span>
 									);
 								})}
 								{bestHours.map((hour, i) => {
-									return i != bestHours.length - 1 ? <span key={i}>at {hour}, </span> : <span key={i}>at {hour}</span>;
+									return i !== bestHours.length - 1 ? <span key={i}>at {hour}, </span> : <span key={i}>at {hour}</span>;
 								})}
 							</strong>
 						)}
