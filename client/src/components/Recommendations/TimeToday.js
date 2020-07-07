@@ -29,7 +29,6 @@ const TimeToday = ({ viewDisabled }) => {
 	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
 	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
 
-
 	const { toggleUserType } = useToggleUserType();
 	const { toggleStatus } = useToggleStatus();
 
@@ -99,6 +98,9 @@ const TimeToday = ({ viewDisabled }) => {
 		let temp = Array(24).fill(0);
 		quotedTweets
 			.filter((quotedTweet) => {
+				return (showVerifiedUsers && quotedTweet.userType === 'verified') || (showUnverifiedUsers && quotedTweet.userType === 'unverified');
+			})
+			.filter((quotedTweet) => {
 				return moment(quotedTweet.created_at).weekday() === moment().weekday();
 			})
 			.map((quotedTweet) => {
@@ -106,7 +108,7 @@ const TimeToday = ({ viewDisabled }) => {
 			});
 
 		setQuotedTweetsToday(temp);
-	}, [quotedTweets]);
+	}, [quotedTweets, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
