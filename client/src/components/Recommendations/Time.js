@@ -2,35 +2,45 @@ import React, { useContext, useState, useEffect } from 'react';
 import moment from 'moment';
 import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
+import { StatusContext } from '../../contexts/StatusContext';
+import { UserTypeContext } from '../../contexts/UserTypeContext';
 import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 import Filters from './Filters';
+import useToggleUserType from '../../hooks/useToggleUserType';
+import useToggleStatus from '../../hooks/useToggleStatus';
 
 const Time = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
-	const {
-		globalUnverifiedHourCount,
-		globalVerifiedHourCount,
-		verifiedRetweetsTime,
-		verifiedTweetsTime,
-		verifiedQuotedTime,
-	} = useContext(TweetContext);
+
+	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
+
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
+	const [statusesTime, setStatusesTime] = useState(Array(24).fill(0));
+	const [retweetsTime, setRetweetsTime] = useState(Array(24).fill(0));
+	const [quotedTweetsTime, setQuotedTweetsTime] = useState(Array(24).fill(0));
+	const [tweetsTime, setTweetsTime] = useState(Array(24).fill(0));
+
 	const [bestHours, setBestHours] = useState([]);
-	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
-	/* State related to chart filtering */
-	const [showAllStatuses, setShowAllStatuses] = useState(true);
-	const [showTweets, setShowTweets] = useState(false);
-	const [showRetweets, setShowRetweets] = useState(false);
-	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
+	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
-	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
-	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
-	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
+	// /* State related to chart filtering */
+	// const [showAllStatuses, setShowAllStatuses] = useState(true);
+	// const [showTweets, setShowTweets] = useState(false);
+	// const [showRetweets, setShowRetweets] = useState(false);
+	// const [showQuotedTweets, setShowQuotedTweets] = useState(false);
+
+	// const [showBothUserTypes, setShowBothUserTypes] = useState(true);
+	// const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
+	// const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
+
+	const { toggleUserType } = useToggleUserType();
+	const { toggleStatus } = useToggleStatus();
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -46,48 +56,84 @@ const Time = ({ onViewClick, viewDisabled }) => {
 		setShowChart(!showChart);
 	};
 
-	const toggleStatus = (e) => {
-		if (e.target.id === 'show-all-status') {
-			setShowAllStatuses(!showAllStatuses);
-		} else if (e.target.id === 'show-tweets') {
-			setShowTweets(!showTweets);
-		} else if (e.target.id === 'show-retweets') {
-			setShowRetweets(!showRetweets);
-		} else if (e.target.id === 'show-quoted-tweets') {
-			setShowQuotedTweets(!showQuotedTweets);
-		}
-	};
+	useEffect(() => {
+		if (statuses.length > 0) {
+			const tempHours = Array(24).fill(0);
+			const tempHoursFiltered = Array(24).fill(0);
 
-	const toggleUserType = (e) => {
-		if (e.target.id === 'show-both-users') {
-			setShowBothUserTypes(!showBothUserTypes);
-		} else if (e.target.id === 'show-verified') {
-			setShowVerifiedUsers(!showVerifiedUsers);
-		} else if (e.target.id === 'show-unverified') {
-			setShowUnverifiedUsers(!showUnverifiedUsers);
+			/* TODO (07/08/2020 11:16) Figure out how to show all statuses with verified filter */
+			statuses
+				// .filter((status) => {
+				// 	return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
+				// })
+				.map((status) => {
+					tempHours[moment(status.created_at).hour()]++;
+					return status;
+				});
+
+			/* Count the hour of every status */
+			for (let i = 0; i < statuses.length; i++) {}
+
+			/* Find the maximum in a day */
+			const maxHour = Math.max(...tempHours);
+
+			/* Set the best hours for the label */
+			setBestHours(
+				tempHours.reduce((a, e, i) => {
+					if (e === maxHour) {
+						a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
+					}
+					return a;
+				}, [])
+			);
+
+			setStatusesTime(tempHours);
 		}
-	};
+	}, [statuses, showVerifiedUsers, showUnverifiedUsers]);
+
+	/* TODO (07/08/2020 11:07) Move these to hooks?*/
+	useEffect(() => {
+		const tempHours = Array(24).fill(0);
+
+		retweets
+			.filter((retweet) => {
+				return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+			})
+			.map((retweet) => {
+				tempHours[moment(retweet.created_at).hour()]++;
+				return retweet;
+			});
+
+		setRetweetsTime(tempHours);
+	}, [retweets, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
-		if (!isTweetsLoading && !isRetweetsLoading && !isQuotedTweetsLoading) {
-			const tempArray = Array(24).fill(0);
-			for (let i = 0; i < globalVerifiedHourCount.length; i++) {
-				tempArray[i] = globalVerifiedHourCount[i] + globalUnverifiedHourCount[i];
-			}
+		const tempHours = Array(24).fill(0);
 
-			setHoursForGraphing(tempArray);
-			const maxHour = Math.max(...tempArray);
+		quotedTweets
+			.filter((quotedTweet) => {
+				return (showVerifiedUsers && quotedTweet.userType === 'verified') || (showUnverifiedUsers && quotedTweet.userType === 'unverified');
+			})
+			.map((quotedTweet) => {
+				tempHours[moment(quotedTweet.created_at).hour()]++;
+				return quotedTweet;
+			});
+		setQuotedTweetsTime(tempHours);
+	}, [quotedTweets, showVerifiedUsers, showUnverifiedUsers]);
 
-			const tempBestHours = tempArray.reduce((a, e, i) => {
-				if (e === maxHour) {
-					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
-				}
-				return a;
-			}, []);
+	useEffect(() => {
+		const tempHours = Array(24).fill(0);
 
-			setBestHours(tempBestHours);
-		}
-	}, [globalUnverifiedHourCount, globalVerifiedHourCount]);
+		tweets
+			.filter((tweet) => {
+				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
+			})
+			.map((tweet) => {
+				tempHours[moment(tweet.created_at).hour()]++;
+				return tweet;
+			});
+		setTweetsTime(tempHours);
+	}, [tweets, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row className="mx-0">
@@ -126,10 +172,10 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											showAllStatuses={showAllStatuses}
 											showReweets={showRetweets}
 											data={[
-												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
-												{ show: showRetweets, type: 'retweets', datum: verifiedRetweetsTime },
-												{ show: showTweets, type: 'tweets', datum: verifiedTweetsTime },
-												{ show: showQuotedTweets, type: 'quoted', datum: verifiedQuotedTime },
+												{ show: showAllStatuses, type: 'all', datum: statusesTime },
+												{ show: showRetweets, type: 'retweets', datum: retweetsTime },
+												{ show: showTweets, type: 'tweets', datum: tweetsTime },
+												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsTime },
 											]}
 										/>
 									</Col>

@@ -5,6 +5,8 @@ import UserStatsPanel from '../components/UserStatsPanel';
 import UserChartsPanel from '../components/UserChartsPanel';
 import Axios from 'axios';
 
+import TweetHelper from './helpers/TweetHelper';
+
 const UserPage = (props) => {
 	const history = useHistory();
 	const userId = props.match.params.id;
@@ -52,10 +54,12 @@ const UserPage = (props) => {
 
 					tempQuotedTweets.push(status);
 					tempStatuses.push(status);
-				} else {
+				} else if (status.entities.user_mentions.length > 0) {
 					/* Entities ->user_mentions->go through list get id, perform a search for that id -> verified */
 					tempTweets.push(status);
 					tempStatuses.push(status);
+				} else {
+					console.log('tweets with no mention');
 				}
 				return status;
 			});

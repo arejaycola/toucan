@@ -99,7 +99,14 @@ async function getUsersByIds(userIds) {
 			count: 100,
 		});
 
-		return response;
+		let editedResponse = response.map(status => {
+			return {
+				id: status.id,
+				verified: status.verified,
+			};
+		})
+
+		return editedResponse;
 	} catch (e) {
 		console.log(e);
 		throw new Error(e);

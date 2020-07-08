@@ -76,7 +76,7 @@ const TimeToday = ({ viewDisabled }) => {
 
 			setHoursForGraphing(temp);
 		}
-	}, [statuses, showVerifiedUsers]);
+	}, [statuses, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
@@ -115,9 +115,9 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
-
 		tweets
 			.filter((tweet) => {
+				// console.log(tweet.userType);
 				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
 			})
 			.filter((tweet) => {

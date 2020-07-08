@@ -4,8 +4,8 @@ import Axios from 'axios';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
-const TweetHelper = ({ addToGlobalCount }) => {
-	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
+const TweetHelper = () => {
+	const { tweets, setTweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
 	const { setIsTweetsLoading } = useContext(LoadingContext);
 
 	let tempVerifiedDay = Array(7).fill(0);
@@ -15,47 +15,50 @@ const TweetHelper = ({ addToGlobalCount }) => {
 
 	useEffect(() => {
 		/* Only look at tweets with a user mention */
-		const filteredTweets = tweets.filter((tweet) => {
-			return tweet.entities.user_mentions.length > 0;
-		});
+		// const tweetsWithMention = tweets.filter((tweet) => {
+		// 	return tweet.entities.user_mentions.length > 0;
+		// });
 
-		/* Should this be filteredTweets.length? */
+		/* Should this be tweetsWithMention.length? */
 		setTweetsCount(tweets.length);
 
-		const userIds = filteredTweets
+		/* Extract a list of just userIds to be queried */
+		const userIds = tweets
 			.map((tweet) => {
 				return tweet.entities.user_mentions.map((um) => um.id);
 			})
 			.flat(1);
 
+
 		const sendUsersRequest = async () => {
 			if (userIds.length > 0) {
+				let unverifiedUserMentions = [];
+
+				/* Only returns userId and verified status. */
 				const response = await Axios.post(`/api/twitter/users/`, {
 					user_ids: userIds,
 				});
+				const users = response.data;
 
-				let users = response.data.map((user) => {
-					return {
-						id: user.id,
-						verified: user.verified,
-					};
-				});
-
-				let unverifiedUserMentions = [];
 				/* TODO (04/14/2020 16:31) There has got to be a better way. */
 				/* Map the results to the existing tweets array and add the verified flag to all user mentions */
-				for (let i = 0; i < filteredTweets.length; i++) {
-					const tweet = filteredTweets[i];
+				for (let i = 0; i < tweets.length; i++) {
+					const tweet = tweets[i];
 
 					for (let j = 0; j < tweet.entities.user_mentions.length; j++) {
 						const userMentions = tweet.entities.user_mentions[j];
 
 						for (let k = 0; k < users.length; k++) {
 							const user = users[k];
-
+							/* If the user was mentioned */
 							if (userMentions.id === user.id) {
-								userMentions.verified = user.verified;
-								if (user.verified === false) {
+								if (user.verified) {
+									userMentions.userType = 'verified';
+									userMentions.verified = true;
+									tweet.userType = 'verified';
+								} else {
+									userMentions.userType = 'unverified';
+									userMentions.verified = false;
 									tweet.userType = unverifiedUserMentions['user-' + user.id] = 'unverified';
 								}
 							}
@@ -63,36 +66,33 @@ const TweetHelper = ({ addToGlobalCount }) => {
 					}
 				}
 
-				filteredTweets.map((filteredTweet) => {
-					let tempMoment = moment(new Date(filteredTweet.created_at));
+				tweets.map((tweet) => {
+					let tempMoment = moment(new Date(tweet.created_at));
 
-					filteredTweet.entities.user_mentions.map((userMentions) => {
-						if (userMentions.verified) {
+					tweet.entities.user_mentions.map((userMention) => {
+						if (userMention.verified) {
 							tempVerifiedDay[tempMoment.weekday()]++;
 							tempVerifiedHour[tempMoment.hour()]++;
 						} else {
+							userMention.userType = 'unverified';
+							userMention.verified = false;
 							tempUnverifiedDay[tempMoment.weekday()]++;
 							tempUnverifiedHour[tempMoment.hour()]++;
 						}
-						return userMentions;
+						return userMention;
 					});
 
-					return filteredTweet;
+					return tweet;
 				});
 
 				setTweetsToUnverifiedCount(Object.keys(unverifiedUserMentions).length);
 
 				setIsTweetsLoading(false);
-				addToGlobalCount({
-					verifiedDay: tempVerifiedDay,
-					unverifiedDay: tempUnverifiedDay,
-					verifiedHour: tempVerifiedHour,
-					unverifiedHour: tempUnverifiedHour,
-				});
 			}
 		};
 
 		sendUsersRequest();
+		setTweets(tweets);
 	}, [tweets]);
 
 	return null;

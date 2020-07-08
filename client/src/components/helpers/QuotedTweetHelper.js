@@ -3,7 +3,7 @@ import moment from 'moment';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
-const QuotedTweetHelper = ({ addToGlobalCount }) => {
+const QuotedTweetHelper = () => {
 	const { quotedTweets, setQuotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
 	const { setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
@@ -40,12 +40,6 @@ const QuotedTweetHelper = ({ addToGlobalCount }) => {
 			setIsQuotedTweetsLoading(false);
 		}
 
-		addToGlobalCount({
-			verifiedDay: tempVerifiedDay,
-			unverifiedDay: tempUnverifiedDay,
-			verifiedHour: tempVerifiedHour,
-			unverifiedHour: tempUnverifiedHour,
-		});
 	}, [quotedTweets]);
 
 	return null;

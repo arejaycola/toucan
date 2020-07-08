@@ -3,7 +3,7 @@ import moment from 'moment';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
-const RetweetHelper = ({ addToGlobalCount }) => {
+const RetweetHelper = () => {
 	const { retweets, setRetweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
 	const { setIsRetweetsLoading } = useContext(LoadingContext);
 
@@ -39,13 +39,6 @@ const RetweetHelper = ({ addToGlobalCount }) => {
 			/* Add a small delay for effect. */
 			setIsRetweetsLoading(false);
 		}
-
-		addToGlobalCount({
-			verifiedDay: tempVerifiedDay,
-			unverifiedDay: tempUnverifiedDay,
-			verifiedHour: tempVerifiedHour,
-			unverifiedHour: tempUnverifiedHour,
-		});
 	}, [retweets]);
 
 	return null;
