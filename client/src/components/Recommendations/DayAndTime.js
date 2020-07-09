@@ -114,43 +114,55 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		let tempDay = Array(7).fill(0);
 		let tempHour = Array(24).fill(0);
 
-		retweets.map((retweet) => {
-			tempDay[moment(retweet.created_at).weekday()]++;
-			tempHour[moment(retweet.created_at).hour()]++;
-			return retweet;
-		});
+		retweets
+			.filter((retweet) => {
+				return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+			})
+			.map((retweet) => {
+				tempDay[moment(retweet.created_at).weekday()]++;
+				tempHour[moment(retweet.created_at).hour()]++;
+				return retweet;
+			});
 
 		setRetweetsDay(tempDay);
 		setRetweetsHour(tempHour);
-	}, [retweets]);
+	}, [retweets, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let tempDay = Array(7).fill(0);
 		let tempHour = Array(24).fill(0);
 
-		quotedTweets.map((quotedTweet) => {
-			tempDay[moment(quotedTweet.created_at).weekday()]++;
-			tempHour[moment(quotedTweet.created_at).hour()]++;
-			return quotedTweet;
-		});
+		quotedTweets
+			.filter((retweet) => {
+				return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+			})
+			.map((quotedTweet) => {
+				tempDay[moment(quotedTweet.created_at).weekday()]++;
+				tempHour[moment(quotedTweet.created_at).hour()]++;
+				return quotedTweet;
+			});
 
 		setQuotedTweetsDay(tempDay);
 		setQuotedTweetsHour(tempHour);
-	}, [quotedTweets]);
+	}, [quotedTweets, , showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let tempDay = Array(7).fill(0);
 		let tempHour = Array(24).fill(0);
 
-		tweets.map((tweet) => {
-			tempDay[moment(tweet.created_at).weekday()]++;
-			tempHour[moment(tweet.created_at).hour()]++;
-			return tweet;
-		});
+		tweets
+			.filter((tweet) => {
+				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
+			})
+			.map((tweet) => {
+				tempDay[moment(tweet.created_at).weekday()]++;
+				tempHour[moment(tweet.created_at).hour()]++;
+				return tweet;
+			});
 
 		setTweetsDay(tempDay);
 		setTweetsHour(tempHour);
-	}, [tweets]);
+	}, [tweets, , showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row>
