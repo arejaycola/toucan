@@ -4,48 +4,8 @@ import RetweetHelper from './helpers/RetweetHelper';
 import QuotedTweetHelper from './helpers/QuotedTweetHelper';
 import Recommendations from './Recommendations/Recommendations';
 import { Container, Col, Row } from 'react-bootstrap';
-import { TweetContext } from '../contexts/TweetContext';
-// import useAddToGlobalCount from '../hooks/useAddToGlobalCount';
 
-const UserChartsPanel = (props) => {
-	// const { addToGlobalCount } = useAddToGlobalCount();
-	// const addToGlobalCount = ({ verifiedDay, unverifiedDay, verifiedHour, unverifiedHour }) => {
-	// 	setGlobalVerifiedDayCount((old) => {
-	// 		const tempArray = [];
-
-	// 		for (let i = 0; i < verifiedDay.length; i++) {
-	// 			tempArray[i] = verifiedDay[i] + old[i];
-	// 		}
-	// 		return tempArray;
-	// 	});
-
-	// 	setGlobalUnverifiedDayCount((old) => {
-	// 		const tempArray = [];
-
-	// 		for (let i = 0; i < unverifiedDay.length; i++) {
-	// 			tempArray[i] = unverifiedDay[i] + old[i];
-	// 		}
-	// 		return tempArray;
-	// 	});
-
-	// 	setGlobalVerifiedHourCount((old) => {
-	// 		const tempArray = [];
-
-	// 		for (let i = 0; i < verifiedHour.length; i++) {
-	// 			tempArray[i] = verifiedHour[i] + old[i];
-	// 		}
-	// 		return tempArray;
-	// 	});
-
-	// 	setGlobalUnverifiedHourCount((old) => {
-	// 		const tempArray = [];
-
-	// 		for (let i = 0; i < unverifiedHour.length; i++) {
-	// 			tempArray[i] = unverifiedHour[i] + old[i];
-	// 		}
-	// 		return tempArray;
-	// 	});
-	// };
+const UserChartsPanel = () => {
 
 	TweetHelper();
 	RetweetHelper();

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useLayoutEffect } from 'react';
 import moment from 'moment';
 import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
@@ -115,9 +115,9 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
+
 		tweets
 			.filter((tweet) => {
-				// console.log(tweet.userType);
 				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
 			})
 			.filter((tweet) => {

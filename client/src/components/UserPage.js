@@ -1,15 +1,15 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useLayoutEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TweetContext } from '../contexts/TweetContext';
 import UserStatsPanel from '../components/UserStatsPanel';
 import UserChartsPanel from '../components/UserChartsPanel';
 import Axios from 'axios';
 
-import TweetHelper from './helpers/TweetHelper';
 
 const UserPage = (props) => {
 	const history = useHistory();
 	const userId = props.match.params.id;
+	
 
 	/* Reroute the user to index if there is no ID. */
 	userId || history.push('/');
@@ -17,7 +17,7 @@ const UserPage = (props) => {
 	const [user, setUser] = useState({});
 	const { setTweets, setRetweets, setQuotedTweets, setStatuses } = useContext(TweetContext);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const sendUserRequest = async () => {
 			const response = await Axios.get(`/api/twitter/user/${userId}`);
 			setUser(response.data);

@@ -9,6 +9,7 @@ import { LoadingContext } from '../../contexts/LoadingContext';
 import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
 import Filters from './Filters';
+import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
 import useToggleUserType from '../../hooks/useToggleUserType';
 import useToggleStatus from '../../hooks/useToggleStatus';
 
@@ -29,18 +30,10 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
 	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
-	// /* State related to chart filtering */
-	// const [showAllStatuses, setShowAllStatuses] = useState(true);
-	// const [showTweets, setShowTweets] = useState(false);
-	// const [showRetweets, setShowRetweets] = useState(false);
-	// const [showQuotedTweets, setShowQuotedTweets] = useState(false);
-
-	// const [showBothUserTypes, setShowBothUserTypes] = useState(true);
-	// const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
-	// const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
-
 	const { toggleUserType } = useToggleUserType();
 	const { toggleStatus } = useToggleStatus();
+	useUserTypeToggleHelper();
+
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {

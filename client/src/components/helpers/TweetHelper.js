@@ -1,12 +1,15 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useLayoutEffect, useState } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
 const TweetHelper = () => {
-	const { tweets, setTweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
+	const { tweets, setTweets, tweetsCount, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
 	const { setIsTweetsLoading } = useContext(LoadingContext);
+
+	/* Used to make sure it is updated without infinitely running this function. */
+	const [effectCount, setEffectCount] = useState(0);
 
 	let tempVerifiedDay = Array(7).fill(0);
 	let tempUnverifiedDay = Array(7).fill(0);
@@ -14,21 +17,16 @@ const TweetHelper = () => {
 	let tempUnverifiedHour = Array(24).fill(0);
 
 	useEffect(() => {
-		/* Only look at tweets with a user mention */
-		// const tweetsWithMention = tweets.filter((tweet) => {
-		// 	return tweet.entities.user_mentions.length > 0;
-		// });
-
 		/* Should this be tweetsWithMention.length? */
 		setTweetsCount(tweets.length);
 
+		setEffectCount(effectCount + 1);
 		/* Extract a list of just userIds to be queried */
 		const userIds = tweets
 			.map((tweet) => {
 				return tweet.entities.user_mentions.map((um) => um.id);
 			})
 			.flat(1);
-
 
 		const sendUsersRequest = async () => {
 			if (userIds.length > 0) {
@@ -66,7 +64,7 @@ const TweetHelper = () => {
 					}
 				}
 
-				tweets.map((tweet) => {
+				let temp = tweets.map((tweet) => {
 					let tempMoment = moment(new Date(tweet.created_at));
 
 					tweet.entities.user_mentions.map((userMention) => {
@@ -86,13 +84,19 @@ const TweetHelper = () => {
 				});
 
 				setTweetsToUnverifiedCount(Object.keys(unverifiedUserMentions).length);
+				if (effectCount <= 2) {
+					setTweets(temp);
+				}
 
 				setIsTweetsLoading(false);
 			}
 		};
 
+		if (effectCount > 3) {
+			setTweets(tweets);
+		}
+		
 		sendUsersRequest();
-		setTweets(tweets);
 	}, [tweets]);
 
 	return null;

@@ -3,15 +3,24 @@ import moment from 'moment';
 import { Col, Row, Button } from 'react-bootstrap';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
+import { UserTypeContext } from '../../contexts/UserTypeContext';
+import { StatusContext } from '../../contexts/StatusContext';
+
 import Loader from 'react-loader-spinner';
 import D3Chart from '../helpers/D3Chart';
 import Filters from './Filters';
 import ModalXLarge from '../ModalXLarge';
 
+import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
+import useToggleUserType from '../../hooks/useToggleUserType';
+import useToggleStatus from '../../hooks/useToggleStatus';
+
 const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
+	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
+	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
 	const [bestDays, setBestDays] = useState([]);
 	const [bestHours, setBestHours] = useState([]);
@@ -29,14 +38,10 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 	const [tweetsDay, setTweetsDay] = useState(Array(7).fill(0));
 	const [tweetsHour, setTweetsHour] = useState(Array(24).fill(0));
 
-	const [showAllStatuses, setShowAllStatuses] = useState(true);
-	const [showRetweets, setShowRetweets] = useState(false);
-	const [showQuotedTweets, setShowQuotedTweets] = useState(false);
-	const [showTweets, setShowTweets] = useState(false);
+	const { toggleUserType } = useToggleUserType();
+	const { toggleStatus } = useToggleStatus();
 
-	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
-	const [showVerifiedUsers, setShowVerifiedUsers] = useState(false);
-	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(false);
+	useUserTypeToggleHelper();
 
 	const onToggleViewClick = () => {
 		setShowChart(!showChart);
@@ -54,28 +59,6 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 		}
 
 		return moment().hour(d).format('h');
-	};
-
-	const toggleStatus = (e) => {
-		if (e.target.id === 'show-all-status') {
-			setShowAllStatuses(!showAllStatuses);
-		} else if (e.target.id === 'show-tweets') {
-			setShowTweets(!showTweets);
-		} else if (e.target.id === 'show-retweets') {
-			setShowRetweets(!showRetweets);
-		} else if (e.target.id === 'show-quoted-tweets') {
-			setShowQuotedTweets(!showQuotedTweets);
-		}
-	};
-
-	const toggleUserType = (e) => {
-		if (e.target.id === 'show-both-users') {
-			setShowBothUserTypes(!showBothUserTypes);
-		} else if (e.target.id === 'show-verified') {
-			setShowVerifiedUsers(!showVerifiedUsers);
-		} else if (e.target.id === 'show-unverified') {
-			setShowUnverifiedUsers(!showUnverifiedUsers);
-		}
 	};
 
 	useEffect(() => {
@@ -238,6 +221,9 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 									showRetweets={showRetweets}
 									showTweets={showTweets}
 									showQuotedTweets={showQuotedTweets}
+									showBothUserTypes={showBothUserTypes}
+									showVerifiedUsers={showVerifiedUsers}
+									showUnverifiedUsers={showUnverifiedUsers}
 									toggleStatus={toggleStatus}
 									toggleUserType={toggleUserType}
 								/>
