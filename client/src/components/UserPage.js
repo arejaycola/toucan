@@ -5,11 +5,9 @@ import UserStatsPanel from '../components/UserStatsPanel';
 import UserChartsPanel from '../components/UserChartsPanel';
 import Axios from 'axios';
 
-
 const UserPage = (props) => {
 	const history = useHistory();
 	const userId = props.match.params.id;
-	
 
 	/* Reroute the user to index if there is no ID. */
 	userId || history.push('/');
@@ -58,8 +56,6 @@ const UserPage = (props) => {
 					/* Entities ->user_mentions->go through list get id, perform a search for that id -> verified */
 					tempTweets.push(status);
 					tempStatuses.push(status);
-				} else {
-					console.log('tweets with no mention');
 				}
 				return status;
 			});

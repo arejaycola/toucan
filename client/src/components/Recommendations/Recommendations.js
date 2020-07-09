@@ -20,15 +20,10 @@ const Recommendations = () => {
 		/* Once everything is done loading, enable the view button. */
 		if (!isTweetsLoading && !isRetweetsLoading && !isQuotedTweetsLoading) {
 			setTimeDisabled(false);
-		}
-	}, [isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading]);
-
-	useEffect(() => {
-		if (statuses.length > 0) {
 			setTimeTodayDisabled(false);
 			setDayTimeDisabled(false);
 		}
-	}, [statuses]);
+	}, [isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading]);
 
 	const onSettingsClick = () => {
 		console.log('tehe');

@@ -16,7 +16,7 @@ const TweetHelper = () => {
 	let tempVerifiedHour = Array(24).fill(0);
 	let tempUnverifiedHour = Array(24).fill(0);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		/* Should this be tweetsWithMention.length? */
 		setTweetsCount(tweets.length);
 
@@ -64,7 +64,7 @@ const TweetHelper = () => {
 					}
 				}
 
-				let temp = tweets.map((tweet) => {
+				tweets.map((tweet) => {
 					let tempMoment = moment(new Date(tweet.created_at));
 
 					tweet.entities.user_mentions.map((userMention) => {
@@ -84,18 +84,14 @@ const TweetHelper = () => {
 				});
 
 				setTweetsToUnverifiedCount(Object.keys(unverifiedUserMentions).length);
-				if (effectCount <= 2) {
-					setTweets(temp);
+				
+				if (tweets.length > 0) {
+					/* Add a small delay for effect. */
+					setIsTweetsLoading(false);
 				}
-
-				setIsTweetsLoading(false);
 			}
 		};
 
-		if (effectCount > 3) {
-			setTweets(tweets);
-		}
-		
 		sendUsersRequest();
 	}, [tweets]);
 

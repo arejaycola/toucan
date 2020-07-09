@@ -13,6 +13,7 @@ import Filters from './Filters';
 import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
 import useToggleUserType from '../../hooks/useToggleUserType';
 import useToggleStatus from '../../hooks/useToggleStatus';
+import { curveCardinal } from 'd3';
 
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -22,9 +23,9 @@ const TimeToday = ({ viewDisabled }) => {
 	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
 
 	const [bestHours, setBestHours] = useState([]);
-	const [hoursForGraphing, setHoursForGraphing] = useState(Array(24).fill(0));
 	const [showChart, setShowChart] = useState(false);
 
+	const [statusesToday, setStatusesToday] = useState(Array(24).fill(0));
 	const [retweetsToday, setRetweetsToday] = useState(Array(24).fill(0));
 	const [quotedTweetsToday, setQuotedTweetsToday] = useState(Array(24).fill(0));
 	const [tweetsToday, setTweetsToday] = useState(Array(24).fill(0));
@@ -50,22 +51,35 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useEffect(() => {
 		if (statuses.length > 0) {
-			let temp = Array(24).fill(0);
+			let tempForStats = Array(24).fill(0);
+			let tempForGraphing = Array(24).fill(0);
 
 			/* Only return statuses from today*/
 			statuses
 				.filter((status) => {
 					return moment(status.created_at).weekday() === moment().weekday();
 				})
-				.map((t) => {
-					temp[moment(t.created_at).hour()]++;
-					return t;
+				.map((status) => {
+					tempForStats[moment(status.created_at).hour()]++;
+					return status;
 				});
 
-			const maxHour = Math.max(...temp);
+			statuses
+				.filter((status) => {
+					return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
+				})
+				.filter((status) => {
+					return moment(status.created_at).weekday() === moment().weekday();
+				})
+				.map((status) => {
+					tempForGraphing[moment(status.created_at).hour()]++;
+					return status;
+				});
+
+			const maxHour = Math.max(...tempForStats);
 
 			/* Find all occurances of max. */
-			const tempBestHours = temp.reduce((a, e, i) => {
+			const tempBestHours = tempForStats.reduce((a, e, i) => {
 				if (e === maxHour) {
 					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
 				}
@@ -74,9 +88,9 @@ const TimeToday = ({ viewDisabled }) => {
 
 			setBestHours(tempBestHours);
 
-			setHoursForGraphing(temp);
+			setStatusesToday(tempForGraphing);
 		}
-	}, [statuses, showVerifiedUsers, showUnverifiedUsers]);
+	}, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
@@ -94,7 +108,7 @@ const TimeToday = ({ viewDisabled }) => {
 			});
 
 		setRetweetsToday(temp);
-	}, [retweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [retweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
@@ -111,11 +125,10 @@ const TimeToday = ({ viewDisabled }) => {
 			});
 
 		setQuotedTweetsToday(temp);
-	}, [quotedTweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [quotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
-
 		tweets
 			.filter((tweet) => {
 				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
@@ -128,16 +141,17 @@ const TimeToday = ({ viewDisabled }) => {
 				return tweet;
 			});
 
+		// console.log(temp);
 		setTweetsToday(temp);
-	}, [tweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [tweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row>
 			<Col>
 				<Row>
 					<Col>
-						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
-							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={3000} />
+						{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
 						) : (
 							<>
 								<strong>
@@ -169,7 +183,7 @@ const TimeToday = ({ viewDisabled }) => {
 											label="# of Statuses w/ User Mention"
 											tickFormat={hourTickFormat}
 											data={[
-												{ show: showAllStatuses, type: 'all', datum: hoursForGraphing },
+												{ show: showAllStatuses, type: 'all', datum: statusesToday },
 												{ show: showRetweets, type: 'retweets', datum: retweetsToday },
 												{ show: showTweets, type: 'tweets', datum: tweetsToday },
 												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsToday },

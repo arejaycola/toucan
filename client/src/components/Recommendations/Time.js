@@ -13,10 +13,10 @@ import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
 import useToggleUserType from '../../hooks/useToggleUserType';
 import useToggleStatus from '../../hooks/useToggleStatus';
 
-const Time = ({ onViewClick, viewDisabled }) => {
+const Time = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
+	const { statuses, retweets, quotedTweets, tweets, setTweets } = useContext(TweetContext);
 
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/
 	const [statusesTime, setStatusesTime] = useState(Array(24).fill(0));
@@ -50,39 +50,39 @@ const Time = ({ onViewClick, viewDisabled }) => {
 	};
 
 	useEffect(() => {
-		if (statuses.length > 0) {
-			const tempHours = Array(24).fill(0);
-			const tempHoursFiltered = Array(24).fill(0);
+		// if (statuses.length > 0) {
+		const tempHours = Array(24).fill(0);
+		const tempHoursFiltered = Array(24).fill(0);
 
-			/* TODO (07/08/2020 11:16) Figure out how to show all statuses with verified filter */
-			statuses
-				// .filter((status) => {
-				// 	return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
-				// })
-				.map((status) => {
-					tempHours[moment(status.created_at).hour()]++;
-					return status;
-				});
+		/* TODO (07/08/2020 11:16) Figure out how to show all statuses with verified filter */
+		statuses
+			// .filter((status) => {
+			// 	return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
+			// })
+			.map((status) => {
+				tempHours[moment(status.created_at).hour()]++;
+				return status;
+			});
 
-			/* Count the hour of every status */
-			for (let i = 0; i < statuses.length; i++) {}
+		/* Count the hour of every status */
+		for (let i = 0; i < statuses.length; i++) {}
 
-			/* Find the maximum in a day */
-			const maxHour = Math.max(...tempHours);
+		/* Find the maximum in a day */
+		const maxHour = Math.max(...tempHours);
 
-			/* Set the best hours for the label */
-			setBestHours(
-				tempHours.reduce((a, e, i) => {
-					if (e === maxHour) {
-						a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
-					}
-					return a;
-				}, [])
-			);
+		/* Set the best hours for the label */
+		setBestHours(
+			tempHours.reduce((a, e, i) => {
+				if (e === maxHour) {
+					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
+				}
+				return a;
+			}, [])
+		);
 
-			setStatusesTime(tempHours);
-		}
-	}, [statuses, showVerifiedUsers, showUnverifiedUsers]);
+		setStatusesTime(tempHours);
+		// }
+	}, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	/* TODO (07/08/2020 11:07) Move these to hooks?*/
 	useEffect(() => {
@@ -98,7 +98,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 			});
 
 		setRetweetsTime(tempHours);
-	}, [retweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [retweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		const tempHours = Array(24).fill(0);
@@ -112,7 +112,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 				return quotedTweet;
 			});
 		setQuotedTweetsTime(tempHours);
-	}, [quotedTweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [quotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		const tempHours = Array(24).fill(0);
@@ -125,16 +125,17 @@ const Time = ({ onViewClick, viewDisabled }) => {
 				tempHours[moment(tweet.created_at).hour()]++;
 				return tweet;
 			});
+
 		setTweetsTime(tempHours);
-	}, [tweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [tweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row className="mx-0">
 			<Col>
 				<Row>
 					<Col>
-						{bestHours.length === 0 ? (
-							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={15000} />
+						{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
 						) : (
 							<strong>
 								{bestHours.map((hour, i) => {
@@ -145,7 +146,7 @@ const Time = ({ onViewClick, viewDisabled }) => {
 					</Col>
 				</Row>
 				<Row>
-					<Col>Best hour to tweet (on average)</Col>
+					<Col>Best hour(s) to tweet (on average)</Col>
 				</Row>
 				<Row className="mt-1">
 					<Col>
@@ -162,8 +163,6 @@ const Time = ({ onViewClick, viewDisabled }) => {
 											id="d3-hour-chart"
 											label="# of Statuses"
 											tickFormat={hourTickFormat}
-											showAllStatuses={showAllStatuses}
-											showReweets={showRetweets}
 											data={[
 												{ show: showAllStatuses, type: 'all', datum: statusesTime },
 												{ show: showRetweets, type: 'retweets', datum: retweetsTime },

@@ -15,7 +15,7 @@ import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
 import useToggleUserType from '../../hooks/useToggleUserType';
 import useToggleStatus from '../../hooks/useToggleStatus';
 
-const TimeToday = ({ onViewClick, viewDisabled }) => {
+const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
@@ -108,7 +108,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 			setBestHours(tempBestHours);
 			setAllStatusesHour(tempHours);
 		}
-	}, [statuses]);
+	}, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let tempDay = Array(7).fill(0);
@@ -126,7 +126,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 		setRetweetsDay(tempDay);
 		setRetweetsHour(tempHour);
-	}, [retweets, showVerifiedUsers, showUnverifiedUsers]);
+	}, [retweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let tempDay = Array(7).fill(0);
@@ -144,7 +144,7 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 		setQuotedTweetsDay(tempDay);
 		setQuotedTweetsHour(tempHour);
-	}, [quotedTweets, , showVerifiedUsers, showUnverifiedUsers]);
+	}, [quotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let tempDay = Array(7).fill(0);
@@ -162,15 +162,15 @@ const TimeToday = ({ onViewClick, viewDisabled }) => {
 
 		setTweetsDay(tempDay);
 		setTweetsHour(tempHour);
-	}, [tweets, , showVerifiedUsers, showUnverifiedUsers]);
+	}, [tweets, tweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row>
 			<Col>
 				<Row>
 					<Col>
-						{isTweetsLoading && isRetweetsLoading && isQuotedTweetsLoading ? (
-							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={3000} />
+						{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+							<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
 						) : (
 							<strong>
 								{bestDays.map((day, i) => {
