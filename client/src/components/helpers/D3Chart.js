@@ -2,8 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
 export default (props) => {
-	console.log(props);
-
 	const svgHeight = props.height;
 	const svgWidth = props.width;
 
@@ -50,6 +48,10 @@ export default (props) => {
 					yScaleMax = localMax;
 				}
 			});
+
+			if(yScaleMax === 0){
+				yScaleMax = 1;
+			}
 
 			const yScale = d3.scaleLinear().domain([0, yScaleMax]).nice().range([height, 0]);
 
