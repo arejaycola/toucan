@@ -65,42 +65,48 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useEffect(() => {
 		if (statuses.length > 0) {
-			const tempDays = Array(7).fill(0);
-			const tempHours = Array(24).fill(0);
+			const tempDaysForStats = Array(7).fill(0);
+			const tempDaysForGraphing = Array(7).fill(0);
+
+			const tempHoursForStats = Array(24).fill(0);
+			const tempHoursForGraphing = Array(24).fill(0);
 
 			/* Keep track of statuses by day. */
 			// let tempStatuses =
 			statuses.map((status) => {
-				tempDays[moment(status.created_at).weekday()]++;
-				tempHours[moment(status.created_at).hour()]++;
+				tempDaysForStats[moment(status.created_at).weekday()]++;
+				tempHoursForStats[moment(status.created_at).hour()]++;
 				return status.created_at;
 			});
 
+			statuses
+				.filter((retweet) => {
+					return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+				})
+				.map((status) => {
+					tempDaysForGraphing[moment(status.created_at).weekday()]++;
+					tempHoursForGraphing[moment(status.created_at).hour()]++;
+					return status.created_at;
+				});
+
 			/* Find the maxium number of tweets in any day. */
-			const maxDay = Math.max(...tempDays);
+			const maxDay = Math.max(...tempDaysForStats);
 
 			/* Find all occurances of max. */
-			const tempBestDays = tempDays.reduce((a, e, i) => {
+			const tempBestDays = tempDaysForStats.reduce((a, e, i) => {
 				if (e === maxDay) {
 					a.push(moment().set('day', i).weekday());
 				}
 				return a;
 			}, []);
 
-			/* Return the statuses from any day with the max (in case the max happened on more than one day.) This currently only handles one max day */
-			// let tweetsFromBestDay = tempBestDays.map((day) => {
-			// 	return tempStatuses.filter((status) => {
-			// 		return moment(status).weekday() === day;
-			// 	});
-			// })[0];
-
 			setBestDays(tempBestDays);
-			setAllStatusesDay(tempDays);
+			setAllStatusesDay(tempDaysForGraphing);
 
-			const maxHour = Math.max(...tempHours);
+			const maxHour = Math.max(...tempHoursForStats);
 
 			/* Find all occurances of max. */
-			const tempBestHours = tempHours.reduce((a, e, i) => {
+			const tempBestHours = tempHoursForStats.reduce((a, e, i) => {
 				if (e === maxHour) {
 					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
 				}
@@ -108,7 +114,7 @@ const TimeToday = ({ viewDisabled }) => {
 			}, []);
 
 			setBestHours(tempBestHours);
-			setAllStatusesHour(tempHours);
+			setAllStatusesHour(tempHoursForGraphing);
 		}
 	}, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
@@ -202,9 +208,9 @@ const TimeToday = ({ viewDisabled }) => {
 							<ModalXLarge title={'Best Day and Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
 								<ContainerDimensions>
 									{({ width, height }) => {
-										height = width * 0.20;
+										height = width * 0.2;
 										if (width < 600) {
-											height = width -100;
+											height = width - 100;
 										}
 
 										return (
