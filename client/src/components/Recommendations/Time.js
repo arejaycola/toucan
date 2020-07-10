@@ -51,17 +51,21 @@ const Time = ({ viewDisabled }) => {
 	};
 
 	useEffect(() => {
-		// if (statuses.length > 0) {
-		const tempHours = Array(24).fill(0);
-		const tempHoursFiltered = Array(24).fill(0);
+		const tempHoursForStats = Array(24).fill(0);
+		const tempHoursForGraphing = Array(24).fill(0);
 
 		/* TODO (07/08/2020 11:16) Figure out how to show all statuses with verified filter */
+		statuses.map((status) => {
+			tempHoursForStats[moment(status.created_at).hour()]++;
+			return status;
+		});
+
 		statuses
-			// .filter((status) => {
-			// 	return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
-			// })
+			.filter((status) => {
+				return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
+			})
 			.map((status) => {
-				tempHours[moment(status.created_at).hour()]++;
+				tempHoursForGraphing[moment(status.created_at).hour()]++;
 				return status;
 			});
 
@@ -69,20 +73,18 @@ const Time = ({ viewDisabled }) => {
 		for (let i = 0; i < statuses.length; i++) {}
 
 		/* Find the maximum in a day */
-		const maxHour = Math.max(...tempHours);
+		const maxHour = Math.max(...tempHoursForStats);
 
 		/* Set the best hours for the label */
-		setBestHours(
-			tempHours.reduce((a, e, i) => {
-				if (e === maxHour) {
-					a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
-				}
-				return a;
-			}, [])
-		);
+		const tempBestHours = tempHoursForStats.reduce((a, e, i) => {
+			if (e === maxHour) {
+				a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
+			}
+			return a;
+		}, []);
 
-		setStatusesTime(tempHours);
-		// }
+		setBestHours(tempBestHours);
+		setStatusesTime(tempHoursForGraphing);
 	}, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	/* TODO (07/08/2020 11:07) Move these to hooks?*/

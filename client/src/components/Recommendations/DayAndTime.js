@@ -80,8 +80,8 @@ const TimeToday = ({ viewDisabled }) => {
 			});
 
 			statuses
-				.filter((retweet) => {
-					return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+				.filter((status) => {
+					return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
 				})
 				.map((status) => {
 					tempDaysForGraphing[moment(status.created_at).weekday()]++;
