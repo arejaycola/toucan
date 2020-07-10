@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import moment from 'moment';
 import { Col, Row, Button } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
+import ContainerDimensions from 'react-container-dimensions';
+
 import { TweetContext } from '../../contexts/TweetContext';
 import { StatusContext } from '../../contexts/StatusContext';
 import { UserTypeContext } from '../../contexts/UserTypeContext';
-import Loader from 'react-loader-spinner';
 import { LoadingContext } from '../../contexts/LoadingContext';
 import D3Chart from '../helpers/D3Chart';
 import ModalXLarge from '../ModalXLarge';
@@ -33,7 +35,6 @@ const Time = ({ viewDisabled }) => {
 	const { toggleUserType } = useToggleUserType();
 	const { toggleStatus } = useToggleStatus();
 	useUserTypeToggleHelper();
-
 
 	const hourTickFormat = (d) => {
 		if (d === 12) {
@@ -156,33 +157,41 @@ const Time = ({ viewDisabled }) => {
 
 						{showChart ? (
 							<ModalXLarge title={'Best Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
-								<Row>
-									<Col className="text-center p-0 mx-0 ">
-										<h6>Best Hour</h6>
-										<D3Chart
-											id="d3-hour-chart"
-											label="# of Statuses"
-											tickFormat={hourTickFormat}
-											data={[
-												{ show: showAllStatuses, type: 'all', datum: statusesTime },
-												{ show: showRetweets, type: 'retweets', datum: retweetsTime },
-												{ show: showTweets, type: 'tweets', datum: tweetsTime },
-												{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsTime },
-											]}
-										/>
-									</Col>
-								</Row>
-								<Filters
-									showAllStatuses={showAllStatuses}
-									showTweets={showTweets}
-									showRetweets={showRetweets}
-									showQuotedTweets={showQuotedTweets}
-									showBothUserTypes={showBothUserTypes}
-									showVerifiedUsers={showVerifiedUsers}
-									showUnverifiedUsers={showUnverifiedUsers}
-									toggleStatus={toggleStatus}
-									toggleUserType={toggleUserType}
-								/>
+								<ContainerDimensions>
+									{({ width, height }) => (
+										<>
+											<Row>
+												<Col className="text-center p-0 mx-0 ">
+													<h6>Best Hour</h6>
+													<D3Chart
+														id="d3-hour-chart"
+														label="# of Statuses"
+														tickFormat={hourTickFormat}
+														height={width * 0.5}
+														width={width}
+														data={[
+															{ show: showAllStatuses, type: 'all', datum: statusesTime },
+															{ show: showRetweets, type: 'retweets', datum: retweetsTime },
+															{ show: showTweets, type: 'tweets', datum: tweetsTime },
+															{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsTime },
+														]}
+													/>
+												</Col>
+											</Row>
+											<Filters
+												showAllStatuses={showAllStatuses}
+												showTweets={showTweets}
+												showRetweets={showRetweets}
+												showQuotedTweets={showQuotedTweets}
+												showBothUserTypes={showBothUserTypes}
+												showVerifiedUsers={showVerifiedUsers}
+												showUnverifiedUsers={showUnverifiedUsers}
+												toggleStatus={toggleStatus}
+												toggleUserType={toggleUserType}
+											/>
+										</>
+									)}
+								</ContainerDimensions>
 							</ModalXLarge>
 						) : null}
 					</Col>

@@ -21,6 +21,7 @@
 		"moment": "^2.24.0",
 		"nodemon": "2.0.2",
 		"react-bootstrap": "^1.0.0",
+		"react-container-dimensions": "^1.4.1",
 		"react-pose": "^4.0.10",
 		"react-router-dom": "^5.1.2",
 		"react-spring": "^8.0.27",

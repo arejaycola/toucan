@@ -35,12 +35,18 @@ body {
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
 	.xl-modal {
-		margin: auto;
+		// margin: auto;
+		max-width: 100% !important;
 	}
 }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
+	.xl-modal {
+		// width: 100% !important;
+		// max-width: 100% !important;
+		max-width: 85% !important;
+	}
 }
 
 // Large devices (desktops, 992px and up)

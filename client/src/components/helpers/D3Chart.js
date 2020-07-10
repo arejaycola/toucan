@@ -2,8 +2,10 @@ import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 
 export default (props) => {
-	const svgHeight = 275;
-	const svgWidth = 350;
+	console.log(props);
+
+	const svgHeight = props.height;
+	const svgWidth = props.width;
 
 	const d3Chart = useRef(null);
 	useEffect(() => {
