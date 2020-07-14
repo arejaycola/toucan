@@ -46,9 +46,9 @@ const Time = ({ viewDisabled }) => {
 		return moment().hour(d).format('h');
 	};
 
-	const onToggleViewClick = () => {
-		setShowChart(!showChart);
-	};
+	// const onToggleViewClick = () => {
+	// 	setShowChart(!showChart);
+	// };
 
 	useEffect(() => {
 		const tempHoursForStats = Array(24).fill(0);
@@ -153,49 +153,46 @@ const Time = ({ viewDisabled }) => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button id="time-today" onClick={onToggleViewClick} disabled={viewDisabled}>
+						<Button id="time-today" onClick={() => setShowChart(!showChart)} disabled={viewDisabled}>
 							{showChart ? 'Hide' : 'View'}
 						</Button>
-
-						{showChart ? (
-							<ModalXLarge title={'Best Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
-								<ContainerDimensions>
-									{({ width, height }) => (
-										<>
-											<Row>
-												<Col className="text-center p-0 mx-0 ">
-													<h6>Best Hour</h6>
-													<D3Chart
-														id="d3-hour-chart"
-														label="# of Statuses"
-														tickFormat={hourTickFormat}
-														height={width * 0.5}
-														width={width}
-														data={[
-															{ show: showAllStatuses, type: 'all', datum: statusesTime },
-															{ show: showRetweets, type: 'retweets', datum: retweetsTime },
-															{ show: showTweets, type: 'tweets', datum: tweetsTime },
-															{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsTime },
-														]}
-													/>
-												</Col>
-											</Row>
-											<Filters
-												showAllStatuses={showAllStatuses}
-												showTweets={showTweets}
-												showRetweets={showRetweets}
-												showQuotedTweets={showQuotedTweets}
-												showBothUserTypes={showBothUserTypes}
-												showVerifiedUsers={showVerifiedUsers}
-												showUnverifiedUsers={showUnverifiedUsers}
-												toggleStatus={toggleStatus}
-												toggleUserType={toggleUserType}
-											/>
-										</>
-									)}
-								</ContainerDimensions>
-							</ModalXLarge>
-						) : null}
+						<ModalXLarge title={'Best Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
+							<ContainerDimensions>
+								{({ width, height }) => (
+									<>
+										<Row>
+											<Col className="text-center p-0 mx-0 ">
+												<h6>Best Hour</h6>
+												<D3Chart
+													id="d3-hour-chart"
+													label="# of Statuses"
+													tickFormat={hourTickFormat}
+													height={width * 0.5}
+													width={width}
+													data={[
+														{ show: showAllStatuses, type: 'all', datum: statusesTime },
+														{ show: showRetweets, type: 'retweets', datum: retweetsTime },
+														{ show: showTweets, type: 'tweets', datum: tweetsTime },
+														{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsTime },
+													]}
+												/>
+											</Col>
+										</Row>
+										<Filters
+											showAllStatuses={showAllStatuses}
+											showTweets={showTweets}
+											showRetweets={showRetweets}
+											showQuotedTweets={showQuotedTweets}
+											showBothUserTypes={showBothUserTypes}
+											showVerifiedUsers={showVerifiedUsers}
+											showUnverifiedUsers={showUnverifiedUsers}
+											toggleStatus={toggleStatus}
+											toggleUserType={toggleUserType}
+										/>
+									</>
+								)}
+							</ContainerDimensions>
+						</ModalXLarge>
 					</Col>
 				</Row>
 			</Col>

@@ -45,10 +45,6 @@ const TimeToday = ({ viewDisabled }) => {
 
 	useUserTypeToggleHelper();
 
-	const onToggleViewClick = () => {
-		setShowChart(!showChart);
-	};
-
 	const dayTickFormat = (d) => {
 		return moment().weekday(d).format('dddd');
 	};
@@ -200,72 +196,70 @@ const TimeToday = ({ viewDisabled }) => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button id="day-time" onClick={onToggleViewClick} disabled={viewDisabled}>
+						<Button id="day-time" onClick={() => setShowChart(!showChart)} disabled={viewDisabled}>
 							{showChart ? 'Hide' : 'View'}
 						</Button>
 
-						{showChart ? (
-							<ModalXLarge title={'Best Day and Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
-								<ContainerDimensions>
-									{({ width, height }) => {
-										height = width * 0.2;
-										if (width < 600) {
-											height = width - 100;
-										}
+						<ModalXLarge title={'Best Day and Hour Details'} showChart={showChart} onHide={() => setShowChart(false)}>
+							<ContainerDimensions>
+								{({ width, height }) => {
+									height = width * 0.2;
+									if (width < 600) {
+										height = width - 100;
+									}
 
-										return (
-											<>
-												<Row>
-													<Col className="text-center p-0 mx-0 ">
-														<h6>Best Day</h6>
-														<D3Chart
-															id="d3-day-time-day-chart"
-															label="# of Statuses"
-															tickFormat={dayTickFormat}
-															width={width}
-															height={height}
-															data={[
-																{ show: showAllStatuses, type: 'all', datum: allStatusesDay },
-																{ show: showRetweets, type: 'retweets', datum: retweetsDay },
-																{ show: showTweets, type: 'tweets', datum: tweetsDay },
-																{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsDay },
-															]}
-														/>
-													</Col>
-													<Col className="text-center p-0 mx-0 ">
-														<h6>Best Hour</h6>
-														<D3Chart
-															id="d3-day-time-hours-chart"
-															label="# of Statuses"
-															tickFormat={hourTickFormat}
-															width={width}
-															height={height}
-															data={[
-																{ show: showAllStatuses, type: 'all', datum: allStatusesHour },
-																{ show: showRetweets, type: 'retweets', datum: retweetsHour },
-																{ show: showTweets, type: 'tweets', datum: tweetsHour },
-																{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsHour },
-															]}
-														/>
-													</Col>
-												</Row>
-												<Filters
-													showAllStatuses={showAllStatuses}
-													showRetweets={showRetweets}
-													showTweets={showTweets}
-													showQuotedTweets={showQuotedTweets}
-													showBothUserTypes={showBothUserTypes}
-													showVerifiedUsers={showVerifiedUsers}
-													showUnverifiedUsers={showUnverifiedUsers}
-													toggleStatus={toggleStatus}
-													toggleUserType={toggleUserType}
-												/>
-											</>
-										);
-									}}
-								</ContainerDimensions>
-							</ModalXLarge>
-						) : null}
+									return (
+										<>
+											<Row>
+												<Col className="text-center p-0 mx-0 ">
+													<h6>Best Day</h6>
+													<D3Chart
+														id="d3-day-time-day-chart"
+														label="# of Statuses"
+														tickFormat={dayTickFormat}
+														width={width}
+														height={height}
+														data={[
+															{ show: showAllStatuses, type: 'all', datum: allStatusesDay },
+															{ show: showRetweets, type: 'retweets', datum: retweetsDay },
+															{ show: showTweets, type: 'tweets', datum: tweetsDay },
+															{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsDay },
+														]}
+													/>
+												</Col>
+												<Col className="text-center p-0 mx-0 ">
+													<h6>Best Hour</h6>
+													<D3Chart
+														id="d3-day-time-hours-chart"
+														label="# of Statuses"
+														tickFormat={hourTickFormat}
+														width={width}
+														height={height}
+														data={[
+															{ show: showAllStatuses, type: 'all', datum: allStatusesHour },
+															{ show: showRetweets, type: 'retweets', datum: retweetsHour },
+															{ show: showTweets, type: 'tweets', datum: tweetsHour },
+															{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsHour },
+														]}
+													/>
+												</Col>
+											</Row>
+											<Filters
+												showAllStatuses={showAllStatuses}
+												showRetweets={showRetweets}
+												showTweets={showTweets}
+												showQuotedTweets={showQuotedTweets}
+												showBothUserTypes={showBothUserTypes}
+												showVerifiedUsers={showVerifiedUsers}
+												showUnverifiedUsers={showUnverifiedUsers}
+												toggleStatus={toggleStatus}
+												toggleUserType={toggleUserType}
+											/>
+										</>
+									);
+								}}
+							</ContainerDimensions>
+						</ModalXLarge>
 					</Col>
 				</Row>
 			</Col>

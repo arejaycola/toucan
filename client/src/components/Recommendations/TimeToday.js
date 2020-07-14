@@ -168,49 +168,47 @@ const TimeToday = ({ viewDisabled }) => {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<Button id="time-today" onClick={onToggleViewClick} disabled={viewDisabled}>
+						<Button id="time-today" onClick={() => setShowChart(!showChart)} disabled={viewDisabled}>
 							{showChart ? 'Hide' : 'View'}
 						</Button>
 
-						{showChart ? (
-							<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
-								<ContainerDimensions>
-									{({ width, height }) => (
-										<>
-											<Row>
-												<Col className="p-0 mx-0 text-center">
-													<h6>Best Hour Today</h6>
-													<D3Chart
-														id="d3-time-today-chart"
-														label="# of Statuses w/ User Mention"
-														tickFormat={hourTickFormat}
-														width={width}
-														height={width * 0.5}
-														data={[
-															{ show: showAllStatuses, type: 'all', datum: statusesToday },
-															{ show: showRetweets, type: 'retweets', datum: retweetsToday },
-															{ show: showTweets, type: 'tweets', datum: tweetsToday },
-															{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsToday },
-														]}
-													/>
-												</Col>
-											</Row>
-											<Filters
-												showAllStatuses={showAllStatuses}
-												showRetweets={showRetweets}
-												showTweets={showTweets}
-												showQuotedTweets={showQuotedTweets}
-												toggleStatus={toggleStatus}
-												showBothUserTypes={showBothUserTypes}
-												showVerifiedUsers={showVerifiedUsers}
-												showUnverifiedUsers={showUnverifiedUsers}
-												toggleUserType={toggleUserType}
-											/>
-										</>
-									)}
-								</ContainerDimensions>
-							</ModalXLarge>
-						) : null}
+						<ModalXLarge title={'Best Time Today Details'} showChart={showChart} onHide={() => setShowChart(false)}>
+							<ContainerDimensions>
+								{({ width, height }) => (
+									<>
+										<Row>
+											<Col className="p-0 mx-0 text-center">
+												<h6>Best Hour Today</h6>
+												<D3Chart
+													id="d3-time-today-chart"
+													label="# of Statuses w/ User Mention"
+													tickFormat={hourTickFormat}
+													width={width}
+													height={width * 0.5}
+													data={[
+														{ show: showAllStatuses, type: 'all', datum: statusesToday },
+														{ show: showRetweets, type: 'retweets', datum: retweetsToday },
+														{ show: showTweets, type: 'tweets', datum: tweetsToday },
+														{ show: showQuotedTweets, type: 'quoted', datum: quotedTweetsToday },
+													]}
+												/>
+											</Col>
+										</Row>
+										<Filters
+											showAllStatuses={showAllStatuses}
+											showRetweets={showRetweets}
+											showTweets={showTweets}
+											showQuotedTweets={showQuotedTweets}
+											toggleStatus={toggleStatus}
+											showBothUserTypes={showBothUserTypes}
+											showVerifiedUsers={showVerifiedUsers}
+											showUnverifiedUsers={showUnverifiedUsers}
+											toggleUserType={toggleUserType}
+										/>
+									</>
+								)}
+							</ContainerDimensions>
+						</ModalXLarge>
 					</Col>
 				</Row>
 			</Col>
