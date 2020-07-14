@@ -6,15 +6,16 @@ import TimeToday from './TimeToday';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { LoadingContext } from '../../contexts/LoadingContext';
-import { TweetContext } from '../../contexts/TweetContext';
+import Settings from './Settings';
 
 const Recommendations = () => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
-	const { statuses } = useContext(TweetContext);
 
 	const [timeDisabled, setTimeDisabled] = useState(true);
 	const [timeTodayDisabled, setTimeTodayDisabled] = useState(true);
 	const [dayTimeDisabled, setDayTimeDisabled] = useState(true);
+
+	const [showSettings, setShowSettings] = useState(false);
 
 	useEffect(() => {
 		/* Once everything is done loading, enable the view button. */
@@ -25,17 +26,19 @@ const Recommendations = () => {
 		}
 	}, [isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading]);
 
-	const onSettingsClick = () => {
-		console.log('tehe');
-	};
-
 	return (
 		<>
 			<Row className="mb-4">
 				<Col className="text-center">
 					<h3>
 						Recommendations
-						<Button onClick={onSettingsClick} className="m-1 p-0" size="lg" variant="link" title="Adjust recommendation engine">
+						<Button
+							onClick={() => setShowSettings(true)}
+							className="ml-1 mb-1 p-0"
+							size="lg"
+							variant="link"
+							title="Adjust recommendation engine"
+						>
 							<FontAwesomeIcon icon={faCog} />
 						</Button>
 					</h3>
@@ -52,6 +55,7 @@ const Recommendations = () => {
 					<Time viewDisabled={timeDisabled} />
 				</Col>
 			</Row>
+			<Settings showSettings={showSettings} setShowSettings={setShowSettings} />
 		</>
 	);
 };
