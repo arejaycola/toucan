@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import numeral from 'numeral';
 import { Row, Col } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
 
 import { TweetContext } from '../contexts/TweetContext';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const TweetStatsContainer = (props) => {
 	const {
@@ -13,6 +15,9 @@ const TweetStatsContainer = (props) => {
 		quotedTweetsCount,
 		quotedTweetsToUnverifiedCount,
 	} = useContext(TweetContext);
+
+	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
+
 
 	const totalTweets = numeral(
 		(tweetsToUnverifiedCount + retweetsToUnverifiedCount + quotedTweetsToUnverifiedCount) / (tweetsCount + retweetsCount + quotedTweetsCount)
@@ -32,7 +37,11 @@ const TweetStatsContainer = (props) => {
 				<Col sm="6">
 					<Row>
 						<Col>
-							<strong>{numeral(tweetsToUnverifiedCount / tweetsCount).format('0.00%')}</strong>
+							{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+								<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
+							) : (
+								<strong>{numeral(tweetsToUnverifiedCount / tweetsCount).format('0.00%')}</strong>
+							)}
 						</Col>
 					</Row>
 					<Row>
@@ -42,7 +51,11 @@ const TweetStatsContainer = (props) => {
 				<Col sm="6" className="mt-4 mt-sm-0">
 					<Row>
 						<Col>
-							<strong>{numeral(retweetsToUnverifiedCount / retweetsCount).format('0.00%')}</strong>
+							{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+								<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
+							) : (
+								<strong>{numeral(retweetsToUnverifiedCount / retweetsCount).format('0.00%')}</strong>
+							)}
 						</Col>
 					</Row>
 					<Row>
@@ -54,7 +67,11 @@ const TweetStatsContainer = (props) => {
 				<Col sm="6">
 					<Row>
 						<Col>
-							<strong>{numeral(quotedTweetsToUnverifiedCount / quotedTweetsCount).format('0.00%')}</strong>
+							{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+								<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
+							) : (
+								<strong>{numeral(quotedTweetsToUnverifiedCount / quotedTweetsCount).format('0.00%')}</strong>
+							)}
 						</Col>
 					</Row>
 					<Row>
@@ -64,7 +81,11 @@ const TweetStatsContainer = (props) => {
 				<Col sm="6" className="mt-4 mt-sm-0">
 					<Row>
 						<Col>
-							<strong>{totalTweets}</strong>
+							{isTweetsLoading || isRetweetsLoading || isQuotedTweetsLoading ? (
+								<Loader className="d-inline" type="ThreeDots" color="#555555" height={25} width={15} timeout={30000} />
+							) : (
+								<strong>{totalTweets}</strong>
+							)}
 						</Col>
 					</Row>
 					<Row>
