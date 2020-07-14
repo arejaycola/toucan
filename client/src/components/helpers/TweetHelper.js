@@ -5,7 +5,7 @@ import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
 const TweetHelper = () => {
-	const { tweets, setTweets, tweetsCount, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
+	const { tweets, setTweetsCount, setTweetsToUnverifiedCount } = useContext(TweetContext);
 	const { setIsTweetsLoading } = useContext(LoadingContext);
 
 	/* Used to make sure it is updated without infinitely running this function. */
@@ -84,7 +84,6 @@ const TweetHelper = () => {
 				});
 
 				setTweetsToUnverifiedCount(Object.keys(unverifiedUserMentions).length);
-				
 				if (tweets.length > 0) {
 					/* Add a small delay for effect. */
 					setIsTweetsLoading(false);
