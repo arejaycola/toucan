@@ -5,15 +5,33 @@ import SearchBox from './SearchBox';
 import SearchHistory from './SearchHistory';
 import SearchResultsList from './SearchResultList';
 import { SearchContext } from '../contexts/SearchContext';
+import { TweetContext } from '../contexts/TweetContext';
+import { LoadingContext } from '../contexts/LoadingContext';
+
 import { Col, Row, Container } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
 	const [hasResults, setHasResults] = useState(false);
-	const { addSearchHistory } = useContext(SearchContext);
+	const { addSearchHistory, setSearchResults } = useContext(SearchContext);
+	const { setStatuses, setTweets, setTweetsCount, setRetweets, setRetweetsCount, setQuotedTweets, setQuotedTweetsCount } = useContext(TweetContext);
+	const { setIsTweetsLoading, setIsRetweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { setSearchResults } = useContext(SearchContext);
+	/* Reset any old data. */
+	useEffect(() => {
+		setStatuses([]);
+		setTweets([]);
+		setTweetsCount(0);
+		setRetweets([]);
+		setRetweetsCount(0);
+		setQuotedTweets([]);
+		setQuotedTweetsCount(0);
+
+		setIsTweetsLoading(true);
+		setIsRetweetsLoading(true);
+		setIsQuotedTweetsLoading(true);
+	}, []);
 
 	useEffect(() => {
 		addSearchHistory(searchString);
@@ -26,7 +44,7 @@ const SearchResultsPage = (props) => {
 			}
 		};
 		sendRequest();
-	},[searchString]);
+	}, [searchString]);
 
 	return (
 		<>

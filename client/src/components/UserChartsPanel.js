@@ -4,8 +4,17 @@ import RetweetHelper from './helpers/RetweetHelper';
 import QuotedTweetHelper from './helpers/QuotedTweetHelper';
 import Recommendations from './Recommendations/Recommendations';
 import { Container, Col, Row } from 'react-bootstrap';
+import { LoadingContext } from '../contexts/LoadingContext';
 
 const UserChartsPanel = () => {
+	const { setIsTweetsLoading, setIsRetweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
+
+	/* Set a max load time for users that only tweet certain types. */
+	setTimeout(() => {
+		setIsTweetsLoading(false);
+		setIsRetweetsLoading(false);
+		setIsQuotedTweetsLoading(false);
+	}, 30000);
 
 	TweetHelper();
 	RetweetHelper();

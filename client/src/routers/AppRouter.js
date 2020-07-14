@@ -21,10 +21,10 @@ const AppRouter = () => {
 			<Switch>
 				<SearchContextProvider>
 					<PublicRoute path="/" component={HomePage} exact={true} />
-					<PublicRoute path="/search/:text" component={SearchResultsPage} exact={true} />
 					<TweetContextProvider>
-						<PublicRoute path="/user/" component={UserPage} exact={true} />
 						<LoadingContextProvider>
+							<PublicRoute path="/search/:text" component={SearchResultsPage} exact={true} />
+							<PublicRoute path="/user/" component={UserPage} exact={true} />
 							<ChartContextProvider>
 								<UserTypeContextProvider>
 									<StatusContextProvider>
