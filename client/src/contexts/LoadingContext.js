@@ -7,6 +7,7 @@ const LoadingContextProvider = (props) => {
 	const [isTweetsLoading, setIsTweetsLoading] = useState(true);
 	const [isRetweetsLoading, setIsRetweetsLoading] = useState(true);
 	const [isQuotedTweetsLoading, setIsQuotedTweetsLoading] = useState(true);
+	const [timeoutLength, setTimeoutLength] = useState(30000);
 
 	return (
 		<LoadingContext.Provider
@@ -15,10 +16,12 @@ const LoadingContextProvider = (props) => {
 				isTweetsLoading,
 				isRetweetsLoading,
 				isQuotedTweetsLoading,
+				timeoutLength,
 				setIsStatusLoading,
 				setIsTweetsLoading,
 				setIsRetweetsLoading,
 				setIsQuotedTweetsLoading,
+				setTimeoutLength,
 			}}
 		>
 			{props.children}
