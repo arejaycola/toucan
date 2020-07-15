@@ -6,8 +6,8 @@ const Twitter = require('./twitterHelper');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../client/build')));
@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.get('/api/twitter/search/:text', async (req, res) => {
 	let searchString = req.params.text;
-	
+
 	let results = await Twitter.searchForVerifiedUser(searchString);
 	res.send(results);
 });
@@ -40,9 +40,7 @@ app.post('/api/twitter/users', async (req, res) => {
 		let chunks = [];
 		let index = 0;
 		let results = [];
-		// console.log(userIds.length);
 		while (index < userIds.length) {
-			// console.log("Index ", index);
 			chunks.push(userIds.slice(index, index + 100));
 			index += 100;
 		}

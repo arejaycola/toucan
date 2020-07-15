@@ -14,23 +14,24 @@ const UserPage = (props) => {
 
 	const [user, setUser] = useState({});
 	const { setTweets, setRetweets, setQuotedTweets, setStatuses } = useContext(TweetContext);
-	const { setMaxStatusCount} = useContext(MaxStatusesContext);
+	const { setMaxStatusCount } = useContext(MaxStatusesContext);
 
 	useLayoutEffect(() => {
 		const sendUserRequest = async () => {
 			const response = await Axios.get(`/api/twitter/user/${userId}`);
 			setUser(response.data);
-			setMaxStatusCount(response.data.statuses_count)
+			setMaxStatusCount(response.data.statuses_count);
 		};
 
 		const sendUserStatusRequest = async () => {
-			const numberOfTweets = 200;
+			const numberOfTweets = 500;
 
 			const response = await Axios.get(`/api/twitter/user/${userId}/tweets/${numberOfTweets}`);
 			let tempRetweets = [];
 			let tempTweets = [];
 			let tempQuotedTweets = [];
 			let tempStatuses = [];
+
 			/* Compartmentalize the different types of tweets (statuses) */
 			response.data.map((status) => {
 				status.userType = null;
@@ -66,6 +67,8 @@ const UserPage = (props) => {
 			setTweets(tempTweets);
 			setRetweets(tempRetweets);
 			setQuotedTweets(tempQuotedTweets);
+			console.log(tempStatuses.length);
+		
 		};
 
 		sendUserRequest();

@@ -55,7 +55,7 @@ const StatusCountSettings = () => {
 					<h6>
 						Approximate Load Time:
 						<strong>
-							<strong> {numeral(maxStatusCount).format('0,0')}</strong>
+							<strong> {maxStatusCount}</strong>
 						</strong>
 					</h6>
 				</Col>
