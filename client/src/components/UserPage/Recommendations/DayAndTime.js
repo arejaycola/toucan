@@ -204,7 +204,7 @@ const TimeToday = ({ viewDisabled }) => {
 							<ContainerDimensions>
 								{({ width, height }) => {
 									height = width * 0.2;
-									if (width < 600) {
+									if (width < 600 && width !== 0) {
 										height = width - 100;
 									}
 
