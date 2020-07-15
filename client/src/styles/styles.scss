@@ -1,17 +1,9 @@
 @import './base/vars';
 @import './base/base';
-@import './component/input-group';
-@import './component/button';
-@import './component/inputs';
-@import './component/container';
-@import './component/search-box';
 @import './component/d3-line-chart';
 @import './component/custom-checkbox';
-// @import './App.scss';
 @import './HomePage.scss';
-@import './SearchHistory.scss';
 @import './SearchResultsPage.scss';
 @import './UserStatsPanel.scss';
-@import './UserChartsPanel.scss';
 @import './UserPage.scss';
-@import './content.scss';
+@import './TableItem.scss';

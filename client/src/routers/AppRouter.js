@@ -12,6 +12,7 @@ import LoadingContextProvider from '../contexts/LoadingContext';
 import ChartContextProvider from '../contexts/ChartContext';
 import UserTypeContextProvider from '../contexts/UserTypeContext';
 import StatusContextProvider from '../contexts/StatusContext';
+import RecommendationSettingsContextProvider from '../contexts/RecommendationSettingsContext';
 
 export const history = createBrowserHistory();
 
@@ -28,7 +29,9 @@ const AppRouter = () => {
 							<ChartContextProvider>
 								<UserTypeContextProvider>
 									<StatusContextProvider>
-										<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+										<RecommendationSettingsContextProvider>
+											<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+										</RecommendationSettingsContextProvider>
 									</StatusContextProvider>
 								</UserTypeContextProvider>
 							</ChartContextProvider>

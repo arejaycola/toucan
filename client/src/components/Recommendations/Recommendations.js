@@ -6,7 +6,7 @@ import TimeToday from './TimeToday';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { LoadingContext } from '../../contexts/LoadingContext';
-import Settings from './Settings';
+import Settings from './Settings/Settings';
 
 const Recommendations = () => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
@@ -15,7 +15,7 @@ const Recommendations = () => {
 	const [timeTodayDisabled, setTimeTodayDisabled] = useState(true);
 	const [dayTimeDisabled, setDayTimeDisabled] = useState(true);
 
-	const [showSettings, setShowSettings] = useState(false);
+	const [showSettings, setShowSettings] = useState(true);
 
 	useEffect(() => {
 		/* Once everything is done loading, enable the view button. */
