@@ -6,6 +6,7 @@ import UserDetailsPanel from './UserDetailsPanel';
 import ProfileImage from './ProfileImage';
 
 const UserStatsPanel = (props) => {
+
 	useEffect(() => {
 		/* Move the window to the top so scroll position isn't preserved */
 		window.scrollTo(0, 0);

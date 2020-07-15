@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TweetContext } from '../../contexts/TweetContext';
+import { MaxStatusesContext } from '../../contexts/MaxStatusesContext';
 import UserStatsPanel from './UserStatsPanel';
 import UserChartsPanel from './UserChartsPanel';
 import Axios from 'axios';
@@ -8,17 +9,18 @@ import Axios from 'axios';
 const UserPage = (props) => {
 	const history = useHistory();
 	const userId = props.match.params.id;
-
 	/* Reroute the user to index if there is no ID. */
 	userId || history.push('/');
 
 	const [user, setUser] = useState({});
 	const { setTweets, setRetweets, setQuotedTweets, setStatuses } = useContext(TweetContext);
+	const { setMaxStatusCount} = useContext(MaxStatusesContext);
 
 	useLayoutEffect(() => {
 		const sendUserRequest = async () => {
 			const response = await Axios.get(`/api/twitter/user/${userId}`);
 			setUser(response.data);
+			setMaxStatusCount(response.data.statuses_count)
 		};
 
 		const sendUserStatusRequest = async () => {

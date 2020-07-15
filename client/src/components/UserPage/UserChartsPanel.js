@@ -6,7 +6,7 @@ import Recommendations from './Recommendations/Recommendations';
 import { Container, Col, Row } from 'react-bootstrap';
 import { LoadingContext } from '../../contexts/LoadingContext';
 
-const UserChartsPanel = () => {
+const UserChartsPanel = ({user}) => {
 	const { setIsTweetsLoading, setIsRetweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
 	/* TODO (07/15/2020 10:53) Set a max load time for users that only tweet certain types. */
@@ -24,7 +24,7 @@ const UserChartsPanel = () => {
 		<Container className="mt-5 px-0 py-5 p-lg-5 rounded bg-light semi-transparent">
 			<Row className="mx-0">
 				<Col>
-					<Recommendations />
+					<Recommendations/>
 				</Col>
 			</Row>
 		</Container>

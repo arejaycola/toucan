@@ -8,7 +8,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import Settings from './Settings/Settings';
 
-const Recommendations = () => {
+const Recommendations = ({ maxStatusCount }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const [timeDisabled, setTimeDisabled] = useState(true);
@@ -55,7 +55,7 @@ const Recommendations = () => {
 					<Time viewDisabled={timeDisabled} />
 				</Col>
 			</Row>
-			<Settings showSettings={showSettings} setShowSettings={setShowSettings} />
+			<Settings showSettings={showSettings} setShowSettings={setShowSettings} maxStatusCount={maxStatusCount} />
 		</>
 	);
 };

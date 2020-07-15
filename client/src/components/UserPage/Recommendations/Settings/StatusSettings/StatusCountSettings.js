@@ -1,19 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
+import numeral from 'numeral';
 import { Col, Row, FormCheck, Form } from 'react-bootstrap';
-import { TweetContext } from '../../../../../contexts/TweetContext';
+import { MaxStatusesContext } from '../../../../../contexts/MaxStatusesContext';
 
 const StatusCountSettings = () => {
-	const { statuses } = useContext(TweetContext);
+	const { maxStatusCount } = useContext(MaxStatusesContext);
+
 	const [min, setMin] = useState(1);
-	const [max, setMax] = useState(statuses.length);
-	const [sliderCount, setSliderCount] = useState(Math.floor((min + max) / 2));
+	const [sliderCount, setSliderCount] = useState(Math.floor((min + maxStatusCount) / 2));
 
-
-	
 	useEffect(() => {
-		setMax(statuses.length);
-		setSliderCount(Math.floor((min + statuses.length) / 2));
-	}, [statuses.length]);
+		setSliderCount(Math.floor((min + maxStatusCount) / 2));
+	}, [maxStatusCount]);
 
 	return (
 		<>
@@ -36,7 +34,7 @@ const StatusCountSettings = () => {
 						<Form.Label></Form.Label>
 						<Form.Control
 							min={min}
-							max={max}
+							max={maxStatusCount}
 							step={1}
 							type="range"
 							value={sliderCount}
@@ -45,14 +43,20 @@ const StatusCountSettings = () => {
 					</Form.Group>
 					<Row className="text-center mx-5 mt-0 pt-0">
 						<Col className="d-flex px-0 mx-0 justify-content-start">{min}</Col>
-						<Col className="d-flex px-0 mx-0 justify-content-end">{max}</Col>
+						<Col className="d-flex px-0 mx-0 justify-content-end">{numeral(maxStatusCount).format('0,0')}</Col>
 					</Row>
 				</Col>
 			</Row>
 			<Row className="text-center">
 				<Col>
 					<h6>
-						Current Value: <strong>{sliderCount}</strong>
+						Current Value: <strong>{numeral(sliderCount).format('0,0')}</strong>
+					</h6>
+					<h6>
+						Approximate Load Time:
+						<strong>
+							<strong> {numeral(maxStatusCount).format('0,0')}</strong>
+						</strong>
 					</h6>
 				</Col>
 			</Row>

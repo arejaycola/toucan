@@ -13,6 +13,7 @@ import ChartContextProvider from '../contexts/ChartContext';
 import UserTypeContextProvider from '../contexts/UserTypeContext';
 import StatusContextProvider from '../contexts/StatusContext';
 import RecommendationSettingsContextProvider from '../contexts/RecommendationSettingsContext';
+import MaxStatusesContextProvider from '../contexts/MaxStatusesContext';
 
 export const history = createBrowserHistory();
 
@@ -30,7 +31,9 @@ const AppRouter = () => {
 								<UserTypeContextProvider>
 									<StatusContextProvider>
 										<RecommendationSettingsContextProvider>
-											<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+											<MaxStatusesContextProvider>
+												<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+											</MaxStatusesContextProvider>
 										</RecommendationSettingsContextProvider>
 									</StatusContextProvider>
 								</UserTypeContextProvider>
