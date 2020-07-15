@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SearchContext } from '../contexts/SearchContext';
+import { SearchContext } from '../../../contexts/SearchContext';
 import { Row, Col, ListGroup, Button } from 'react-bootstrap';
 import SearchHistoryItem from './SearchHistoryItem';
 

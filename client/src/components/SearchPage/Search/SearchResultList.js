@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { SearchContext } from '../contexts/SearchContext';
+import { SearchContext } from '../../../contexts/SearchContext';
 import { useHistory } from 'react-router-dom';
 import { Card, CardDeck, Button } from 'react-bootstrap';
-import NoResultsFound from './NoResultsFound';
+import NoResultsFound from '../../NoResultsFound';
 
 const SearchResults = () => {
 	const { searchResults } = useContext(SearchContext);

@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import TweetHelper from './helpers/TweetHelper';
-import RetweetHelper from './helpers/RetweetHelper';
-import QuotedTweetHelper from './helpers/QuotedTweetHelper';
-import Recommendations from './Recommendations/Recommendations';
+import TweetHelper from '../helpers/TweetHelper';
+import RetweetHelper from '../helpers/RetweetHelper';
+import QuotedTweetHelper from '../helpers/QuotedTweetHelper';
+import Recommendations from '../Recommendations/Recommendations';
 import { Container, Col, Row } from 'react-bootstrap';
-import { LoadingContext } from '../contexts/LoadingContext';
+import { LoadingContext } from '../../contexts/LoadingContext';
 
 const UserChartsPanel = () => {
 	const { setIsTweetsLoading, setIsRetweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
-	/* Set a max load time for users that only tweet certain types. */
+	/* TODO (07/15/2020 10:53) Set a max load time for users that only tweet certain types. */
 	setTimeout(() => {
 		setIsTweetsLoading(false);
 		setIsRetweetsLoading(false);

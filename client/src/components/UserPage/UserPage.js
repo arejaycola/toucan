@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { TweetContext } from '../contexts/TweetContext';
-import UserStatsPanel from '../components/UserStatsPanel';
-import UserChartsPanel from '../components/UserChartsPanel';
+import { TweetContext } from '../../contexts/TweetContext';
+import UserStatsPanel from './UserStatsPanel';
+import UserChartsPanel from './UserChartsPanel';
 import Axios from 'axios';
 
 const UserPage = (props) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 
-import SearchBox from './SearchBox';
+import SearchBox from './SearchPage/Search/SearchBox';
 
 const HomePage = () => {
 

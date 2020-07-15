@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Col, Row } from 'react-bootstrap';
-import { SearchContext } from '../contexts/SearchContext';
+import { SearchContext } from '../../../contexts/SearchContext';
 
 const SearchBox = ({ defaultValue }) => {
 	const [searchText, setSearchText] = useState(defaultValue ? defaultValue : '');

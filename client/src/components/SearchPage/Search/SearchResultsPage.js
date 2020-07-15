@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 
 import SearchBox from './SearchBox';
-import SearchHistory from './SearchHistory';
+import SearchHistory from '../SearchHistory/SearchHistory';
 import SearchResultsList from './SearchResultList';
-import { SearchContext } from '../contexts/SearchContext';
-import { TweetContext } from '../contexts/TweetContext';
-import { LoadingContext } from '../contexts/LoadingContext';
+import { SearchContext } from '../../../contexts/SearchContext';
+import { TweetContext } from '../../../contexts/TweetContext';
+import { LoadingContext } from '../../../contexts/LoadingContext';
 
 import { Col, Row, Container } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';

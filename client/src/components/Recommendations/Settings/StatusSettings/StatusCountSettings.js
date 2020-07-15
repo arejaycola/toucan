@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Col, Row, FormCheck, Form } from 'react-bootstrap';
+import { TweetContext } from '../../../../contexts/TweetContext';
 
 const StatusCountSettings = () => {
+	const { statuses } = useContext(TweetContext);
 	const [min, setMin] = useState(1);
-	const [max, setMax] = useState(500);
-	const [statusCount, setStatusCount] = useState(Math.floor((min + max) / 2));
+	const [max, setMax] = useState(statuses.length);
+	const [sliderCount, setSliderCount] = useState(Math.floor((min + max) / 2));
+
+
+	
+	useEffect(() => {
+		setMax(statuses.length);
+		setSliderCount(Math.floor((min + statuses.length) / 2));
+	}, [statuses.length]);
 
 	return (
 		<>
@@ -28,10 +37,10 @@ const StatusCountSettings = () => {
 						<Form.Control
 							min={min}
 							max={max}
-							step={10}
+							step={1}
 							type="range"
-							value={statusCount}
-							onChange={(e) => setStatusCount(e.target.value)}
+							value={sliderCount}
+							onChange={(e) => setSliderCount(e.target.value)}
 						/>
 					</Form.Group>
 					<Row className="text-center mx-5 mt-0 pt-0">
@@ -43,7 +52,7 @@ const StatusCountSettings = () => {
 			<Row className="text-center">
 				<Col>
 					<h6>
-						Current Value: <strong>{statusCount}</strong>
+						Current Value: <strong>{sliderCount}</strong>
 					</h6>
 				</Col>
 			</Row>
