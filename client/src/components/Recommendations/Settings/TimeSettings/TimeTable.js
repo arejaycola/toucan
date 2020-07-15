@@ -1,9 +1,8 @@
 import React from 'react';
-import { Col, Row, Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import TableItem from './TableItem';
 
 const TimeTable = () => {
-
 	return (
 		<Table bordered>
 			<tbody>
