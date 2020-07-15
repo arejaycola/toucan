@@ -4,16 +4,16 @@ import { Col, Row, Button } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 import ContainerDimensions from 'react-container-dimensions';
 
-import { TweetContext } from '../../contexts/TweetContext';
-import { StatusContext } from '../../contexts/StatusContext';
-import { UserTypeContext } from '../../contexts/UserTypeContext';
-import { LoadingContext } from '../../contexts/LoadingContext';
-import D3Chart from '../helpers/D3Chart';
-import ModalXLarge from '../ModalXLarge';
+import { TweetContext } from '../../../contexts/TweetContext';
+import { StatusContext } from '../../../contexts/StatusContext';
+import { UserTypeContext } from '../../../contexts/UserTypeContext';
+import { LoadingContext } from '../../../contexts/LoadingContext';
+import D3Chart from '../../helpers/D3Chart';
+import ModalXLarge from '../../ModalXLarge';
 import Filters from './Filters';
-import useUserTypeToggleHelper from '../../hooks/useUserTypeToggleHelper';
-import useToggleUserType from '../../hooks/useToggleUserType';
-import useToggleStatus from '../../hooks/useToggleStatus';
+import useUserTypeToggleHelper from '../../../hooks/useUserTypeToggleHelper';
+import useToggleUserType from '../../../hooks/useToggleUserType';
+import useToggleStatus from '../../../hooks/useToggleStatus';
 
 const Time = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);

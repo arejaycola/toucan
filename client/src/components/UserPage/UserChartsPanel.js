@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import TweetHelper from '../helpers/TweetHelper';
 import RetweetHelper from '../helpers/RetweetHelper';
 import QuotedTweetHelper from '../helpers/QuotedTweetHelper';
-import Recommendations from '../Recommendations/Recommendations';
+import Recommendations from './Recommendations/Recommendations';
 import { Container, Col, Row } from 'react-bootstrap';
 import { LoadingContext } from '../../contexts/LoadingContext';
 

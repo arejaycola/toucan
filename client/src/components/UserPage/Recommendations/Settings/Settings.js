@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalXLarge from '../../ModalXLarge';
+import ModalXLarge from '../../../ModalXLarge';
 import TimeSettings from './TimeSettings/TimeSettings';
 import StatusCountSettings from './StatusSettings/StatusCountSettings';
 

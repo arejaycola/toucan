@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Col, Row, FormCheck, Form } from 'react-bootstrap';
-import { TweetContext } from '../../../../contexts/TweetContext';
+import { TweetContext } from '../../../../../contexts/TweetContext';
 
 const StatusCountSettings = () => {
 	const { statuses } = useContext(TweetContext);

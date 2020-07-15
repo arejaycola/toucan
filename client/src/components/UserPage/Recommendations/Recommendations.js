@@ -5,7 +5,7 @@ import Time from './Time';
 import TimeToday from './TimeToday';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { LoadingContext } from '../../contexts/LoadingContext';
+import { LoadingContext } from '../../../contexts/LoadingContext';
 import Settings from './Settings/Settings';
 
 const Recommendations = () => {
