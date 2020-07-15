@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { RecommendationSettingsContext } from '../../../contexts/RecommendationSettingsContext';
+import { RecommendationSettingsContext } from '../../../../contexts/RecommendationSettingsContext';
 
 const TableItem = ({ id, text }) => {
 	const [isSelected, setIsSelected] = useState(false);
