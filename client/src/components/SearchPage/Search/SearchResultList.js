@@ -6,10 +6,11 @@ import NoResultsFound from '../../NoResultsFound';
 
 const SearchResults = () => {
 	const { searchResults } = useContext(SearchContext);
+
 	const history = useHistory();
 
-	const onCardClick = (id) => {
-		history.push(`/user/${id}`);
+	const onCardClick = (id, statusCount) => {
+		history.push({ pathname: `/user/${id}`, state: { maxStatusCount: statusCount } });
 	};
 
 	return (
@@ -44,7 +45,7 @@ const SearchResults = () => {
 								<Button
 									block
 									onClick={() => {
-										onCardClick(result.id);
+										onCardClick(result.id, result.statuses_count);
 									}}
 								>
 									View

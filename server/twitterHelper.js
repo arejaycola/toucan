@@ -51,41 +51,60 @@ async function getTweets(params) {
 	}
 }
 
-async function getTweetsByUserId(userId, numberOfTweets) {
+async function getInitialTweetsByUserId(userId, numberOfTweets) {
+	/* TODO (07/17/2020 10:42) this is deprecated now. everything is sent through WS now*/
 	let number = 200;
 	let results = [];
-	let maxId = -1;
 
-	let params = {};
+	const params = {
+		user_id: userId,
+		count: 200,
+		include_rts: true,
+	};
 	try {
-		if (maxId == -1) {
-			params = {
-				user_id: userId,
-				count: 200,
-				include_rts: true,
-			};
-		} else {
-			params = {
-				user_id: userId,
-				count: 200,
-				include_rts: true,
-				max_id: maxId,
-			};
-		}
-
-		while (number == 200 && results.length <= numberOfTweets) {
+		while (results.length <= numberOfTweets) {
 			let response = await getTweets(params);
-			maxId =
-				Math.max.apply(
-					Math,
-					response.map(function (o) {
-						return o.id;
-					})
-				) - 1;
+			params.max_id = response[response.length - 1].id_str;
+
 			results = [...results, ...response];
 			number = response.length;
+
+			console.log(params.max_id);
 		}
 		return results;
+	} catch (e) {
+		console.log(e);
+		throw new Error('Error fetching user.');
+	}
+}
+
+async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
+	let number = 200;
+	let count = 0;
+
+	const params = {
+		user_id: userId,
+		count: 200,
+		include_rts: true,
+	};
+	try {
+		while (count <= numberOfTweets) {
+			let response = await getTweets(params);
+			params.max_id = response[response.length - 1].id_str;
+
+			const responseObject = {
+				percentDone: parseFloat(count / numberOfTweets),
+				response,
+			};
+
+			socket.send(JSON.stringify(responseObject));
+			// console.log(number, count <= numberOfTweets, numberOfTweets);
+			count += response.length;
+			// results = [...results, ...response];
+			number = response.length;
+		}
+
+		return 'done';
 	} catch (e) {
 		console.log(e);
 		throw new Error('Error fetching user.');
@@ -99,12 +118,12 @@ async function getUsersByIds(userIds) {
 			count: 100,
 		});
 
-		let editedResponse = response.map(status => {
+		let editedResponse = response.map((status) => {
 			return {
 				id: status.id,
 				verified: status.verified,
 			};
-		})
+		});
 
 		return editedResponse;
 	} catch (e) {
@@ -114,7 +133,7 @@ async function getUsersByIds(userIds) {
 }
 
 const getRateLimitStatus = async () => {
-try {
+	try {
 		const response = await client.get(`https://api.twitter.com/1.1/application/rate_limit_status.json`);
 
 		return response;
@@ -122,7 +141,7 @@ try {
 		console.log(e);
 		throw new Error(e);
 	}
-}
+};
 
 function getVerifiedUsers(users) {
 	return users.filter((user) => {
@@ -130,4 +149,4 @@ function getVerifiedUsers(users) {
 	});
 }
 
-module.exports = { getRateLimitStatus, searchForVerifiedUser, getUser, getTweetsByUserId, getUsersByIds };
+module.exports = { getRateLimitStatus, searchForVerifiedUser, getUser, getInitialTweetsByUserId, getAutoFetchTweetsByUserId, getUsersByIds };
