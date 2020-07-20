@@ -5,7 +5,7 @@ import TimeTable from './TimeTable';
 const TimeSettings = () => {
 	return (
 		<>
-			<Row className="justify-content-center">
+			<Row className="mt-5 justify-content-center">
 				<Col xs={'auto'} className="text-right px-0 mx-0">
 					<h5>Time</h5>
 				</Col>

@@ -40,7 +40,7 @@ const StatusCountSettings = () => {
 					</Row>
 				</Col>
 			</Row>
-			<Row className="text-center">
+			<Row className="text-center mb-3 pb-0">
 				<Col>
 					<h6>
 						Current Value: <strong>{numeral(sliderCount).format('0,0')}</strong>
