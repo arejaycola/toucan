@@ -15,7 +15,7 @@ const AutoFetch = () => {
 			<Col xs={'auto'} className="ml-0">
 				<FormCheck onChange={() => setAutoFetch(!autoFetch)} id="auto-fetch-check" type="switch" custom>
 					<FormCheck.Input readOnly id="auto-fetch-check" checked={autoFetch} />
-					<FormCheck.Label id="auto-fetch-check" onClick={() => setAutoFetch(!autoFetch)}>
+					<FormCheck.Label className="default-checkbox" id="auto-fetch-check" onClick={() => setAutoFetch(!autoFetch)}>
 						<FontAwesomeIcon title="tehe" icon={faInfoCircle} />
 					</FormCheck.Label>
 				</FormCheck>

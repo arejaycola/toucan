@@ -29,6 +29,13 @@
 					background-color: $all-statuses !important;
 				}
 			}
+            &.default-checkbox {
+			    &:before {
+					border-color: $dark-grey !important;
+					color: $dark-grey !important;
+					background-color: $dark-grey !important;
+				}
+			}
 		}
 	}
 }
