@@ -51,32 +51,32 @@ async function getTweets(params) {
 	}
 }
 
-async function getInitialTweetsByUserId(userId, numberOfTweets) {
-	/* TODO (07/17/2020 10:42) this is deprecated now. everything is sent through WS now*/
-	let number = 200;
-	let results = [];
+// async function getInitialTweetsByUserId(userId, numberOfTweets) {
+// 	/* TODO (07/17/2020 10:42) this is deprecated now. everything is sent through WS now*/
+// 	let number = 200;
+// 	let results = [];
 
-	const params = {
-		user_id: userId,
-		count: 200,
-		include_rts: true,
-	};
-	try {
-		while (results.length <= numberOfTweets) {
-			let response = await getTweets(params);
-			params.max_id = response[response.length - 1].id_str;
+// 	const params = {
+// 		user_id: userId,
+// 		count: 200,
+// 		include_rts: true,
+// 	};
+// 	try {
+// 		while (results.length <= numberOfTweets) {
+// 			let response = await getTweets(params);
+// 			params.max_id = response[response.length - 1].id_str;
 
-			results = [...results, ...response];
-			number = response.length;
+// 			results = [...results, ...response];
+// 			number = response.length;
 
-			console.log(params.max_id);
-		}
-		return results;
-	} catch (e) {
-		console.log(e);
-		throw new Error('Error fetching user.');
-	}
-}
+// 			console.log(params.max_id);
+// 		}
+// 		return results;
+// 	} catch (e) {
+// 		console.log(e);
+// 		throw new Error('Error fetching user.');
+// 	}
+// }
 
 async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 	let number = 200;
@@ -94,13 +94,16 @@ async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 
 			const responseObject = {
 				percentDone: parseFloat(count / numberOfTweets),
+				initialFetch: true,
 				response,
 			};
 
-			socket.send(JSON.stringify(responseObject));
-			// console.log(number, count <= numberOfTweets, numberOfTweets);
 			count += response.length;
-			// results = [...results, ...response];
+			/* If this is the initial fetch send a special flag to the client. */
+			if (count > 200) {
+				responseObject.initialFetch = false;
+			}
+			socket.send(JSON.stringify(responseObject));
 			number = response.length;
 		}
 
@@ -149,4 +152,4 @@ function getVerifiedUsers(users) {
 	});
 }
 
-module.exports = { getRateLimitStatus, searchForVerifiedUser, getUser, getInitialTweetsByUserId, getAutoFetchTweetsByUserId, getUsersByIds };
+module.exports = { getRateLimitStatus, searchForVerifiedUser, getUser, getAutoFetchTweetsByUserId, getUsersByIds };

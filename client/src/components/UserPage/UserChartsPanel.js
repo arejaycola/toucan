@@ -10,11 +10,11 @@ const UserChartsPanel = ({user}) => {
 	const { setIsTweetsLoading, setIsRetweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
 	/* TODO (07/15/2020 10:53) Set a max load time for users that only tweet certain types. */
-	setTimeout(() => {
-		setIsTweetsLoading(false);
-		setIsRetweetsLoading(false);
-		setIsQuotedTweetsLoading(false);
-	}, 30000);
+	// setTimeout(() => {
+	// 	setIsTweetsLoading(false);
+	// 	setIsRetweetsLoading(false);
+	// 	setIsQuotedTweetsLoading(false);
+	// }, 30000);
 
 	TweetHelper();
 	RetweetHelper();

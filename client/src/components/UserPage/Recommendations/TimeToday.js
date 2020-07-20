@@ -5,8 +5,8 @@ import ContainerDimensions from 'react-container-dimensions';
 import moment from 'moment';
 import { TweetContext } from '../../../contexts/TweetContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
-import { UserTypeContext } from '../../../contexts/UserTypeContext';
-import { StatusContext } from '../../../contexts/StatusContext';
+import { UserTypeFilterContext } from '../../../contexts/UserTypeFilterContext';
+import { StatusFilterContext } from '../../../contexts/StatusFilterContext';
 import D3Chart from '../../helpers/D3Chart';
 import ModalXLarge from '../../ModalXLarge';
 import Filters from './Filters';
@@ -14,13 +14,15 @@ import Filters from './Filters';
 import useUserTypeToggleHelper from '../../../hooks/useUserTypeToggleHelper';
 import useToggleUserType from '../../../hooks/useToggleUserType';
 import useToggleStatus from '../../../hooks/useToggleStatus';
+import { InitialStatusContext } from '../../../contexts/InitialStatusContext';
 
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
 	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
-	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
-	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusContext);
+	const { initialStatuses, initialRetweets, initialQuotedTweets, initialTweets } = useContext(InitialStatusContext);
+	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeFilterContext);
+	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusFilterContext);
 
 	const [bestHours, setBestHours] = useState([]);
 	const [showChart, setShowChart] = useState(false);
@@ -50,12 +52,12 @@ const TimeToday = ({ viewDisabled }) => {
 	};
 
 	useEffect(() => {
-		if (statuses.length > 0) {
+		if (initialStatuses.length > 0) {
 			let tempForStats = Array(24).fill(0);
 			let tempForGraphing = Array(24).fill(0);
 
 			/* Only return statuses from today*/
-			statuses
+			initialStatuses
 				.filter((status) => {
 					return moment(status.created_at).weekday() === moment().weekday();
 				})
@@ -64,7 +66,7 @@ const TimeToday = ({ viewDisabled }) => {
 					return status;
 				});
 
-			statuses
+			initialStatuses
 				.filter((status) => {
 					return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
 				})
@@ -90,12 +92,12 @@ const TimeToday = ({ viewDisabled }) => {
 
 			setStatusesToday(tempForGraphing);
 		}
-	}, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+	}, [initialStatuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
 
-		retweets
+		initialRetweets
 			.filter((retweet) => {
 				return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
 			})
@@ -108,11 +110,11 @@ const TimeToday = ({ viewDisabled }) => {
 			});
 
 		setRetweetsToday(temp);
-	}, [retweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+	}, [initialRetweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
-		quotedTweets
+		initialQuotedTweets
 			.filter((quotedTweet) => {
 				return (showVerifiedUsers && quotedTweet.userType === 'verified') || (showUnverifiedUsers && quotedTweet.userType === 'unverified');
 			})
@@ -123,13 +125,12 @@ const TimeToday = ({ viewDisabled }) => {
 				temp[moment(quotedTweet.created_at).hour()]++;
 				return quotedTweet;
 			});
-
 		setQuotedTweetsToday(temp);
-	}, [quotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+	}, [initialQuotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	useEffect(() => {
 		let temp = Array(24).fill(0);
-		tweets
+		initialTweets
 			.filter((tweet) => {
 				return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
 			})
@@ -143,7 +144,103 @@ const TimeToday = ({ viewDisabled }) => {
 
 		// console.log(temp);
 		setTweetsToday(temp);
-	}, [tweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+	}, [initialTweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+	
+	// useEffect(() => {
+	// 	if (statuses.length > 0) {
+	// 		let tempForStats = Array(24).fill(0);
+	// 		let tempForGraphing = Array(24).fill(0);
+
+	// 		/* Only return statuses from today*/
+	// 		statuses
+	// 			.filter((status) => {
+	// 				return moment(status.created_at).weekday() === moment().weekday();
+	// 			})
+	// 			.map((status) => {
+	// 				tempForStats[moment(status.created_at).hour()]++;
+	// 				return status;
+	// 			});
+
+	// 		statuses
+	// 			.filter((status) => {
+	// 				return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
+	// 			})
+	// 			.filter((status) => {
+	// 				return moment(status.created_at).weekday() === moment().weekday();
+	// 			})
+	// 			.map((status) => {
+	// 				tempForGraphing[moment(status.created_at).hour()]++;
+	// 				return status;
+	// 			});
+
+	// 		const maxHour = Math.max(...tempForStats);
+
+	// 		/* Find all occurances of max. */
+	// 		const tempBestHours = tempForStats.reduce((a, e, i) => {
+	// 			if (e === maxHour) {
+	// 				a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
+	// 			}
+	// 			return a;
+	// 		}, []);
+
+	// 		setBestHours(tempBestHours);
+
+	// 		setStatusesToday(tempForGraphing);
+	// 	}
+	// }, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+
+	// useEffect(() => {
+	// 	let temp = Array(24).fill(0);
+
+	// 	retweets
+	// 		.filter((retweet) => {
+	// 			return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
+	// 		})
+	// 		.filter((retweet) => {
+	// 			return moment(retweet.created_at).weekday() === moment().weekday();
+	// 		})
+	// 		.map((retweet) => {
+	// 			temp[moment(retweet.created_at).hour()]++;
+	// 			return retweet;
+	// 		});
+
+	// 	setRetweetsToday(temp);
+	// }, [retweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+
+	// useEffect(() => {
+	// 	let temp = Array(24).fill(0);
+	// 	quotedTweets
+	// 		.filter((quotedTweet) => {
+	// 			return (showVerifiedUsers && quotedTweet.userType === 'verified') || (showUnverifiedUsers && quotedTweet.userType === 'unverified');
+	// 		})
+	// 		.filter((quotedTweet) => {
+	// 			return moment(quotedTweet.created_at).weekday() === moment().weekday();
+	// 		})
+	// 		.map((quotedTweet) => {
+	// 			temp[moment(quotedTweet.created_at).hour()]++;
+	// 			return quotedTweet;
+	// 		});
+
+	// 	setQuotedTweetsToday(temp);
+	// }, [quotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
+
+	// useEffect(() => {
+	// 	let temp = Array(24).fill(0);
+	// 	tweets
+	// 		.filter((tweet) => {
+	// 			return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
+	// 		})
+	// 		.filter((tweet) => {
+	// 			return moment(tweet.created_at).weekday() === moment().weekday();
+	// 		})
+	// 		.map((tweet) => {
+	// 			temp[moment(tweet.created_at).hour()]++;
+	// 			return tweet;
+	// 		});
+
+	// 	// console.log(temp);
+	// 	setTweetsToday(temp);
+	// }, [tweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row>

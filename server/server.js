@@ -49,7 +49,7 @@ app.get('/api/twitter/user/:userid/tweets/:numberOfTweets', async (req, res) => 
 	let id = req.params.userid;
 	const numberOfTweets = req.params.numberOfTweets;
 
-	let results = await Twitter.getInitialTweetsByUserId(id, numberOfTweets);
+	let results = await Twitter.getAutoFetchTweetsByUserId(id, numberOfTweets);
 	res.send(results);
 });
 

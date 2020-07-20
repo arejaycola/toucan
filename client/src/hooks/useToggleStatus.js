@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { StatusContext } from '../contexts/StatusContext';
+import { StatusFilterContext } from '../contexts/StatusFilterContext';
 
 const useToggleStatus = () => {
 	const {
@@ -11,7 +11,7 @@ const useToggleStatus = () => {
 		setShowQuotedTweets,
 		showTweets,
 		setShowTweets,
-	} = useContext(StatusContext);
+	} = useContext(StatusFilterContext);
 
 	const toggleStatus = (e) => {
 		if (e.target.id === 'show-all-status') {

@@ -10,9 +10,11 @@ import SearchContextProvider from '../contexts/SearchContext';
 import TweetContextProvider from '../contexts/TweetContext';
 import LoadingContextProvider from '../contexts/LoadingContext';
 import ChartContextProvider from '../contexts/ChartContext';
-import UserTypeContextProvider from '../contexts/UserTypeContext';
-import StatusContextProvider from '../contexts/StatusContext';
+import UserTypeFilterContextProvider from '../contexts/UserTypeFilterContext';
+import StatusFilterContextProvider from '../contexts/StatusFilterContext';
 import RecommendationSettingsContextProvider from '../contexts/RecommendationSettingsContext';
+import InitialStatusContextProvider from '../contexts/InitialStatusContext';
+import StatusContextProvider from '../contexts/StatusContext';
 
 export const history = createBrowserHistory();
 
@@ -25,16 +27,20 @@ const AppRouter = () => {
 					<TweetContextProvider>
 						<LoadingContextProvider>
 							<PublicRoute path="/search/:text" component={SearchResultsPage} exact={true} />
-							<PublicRoute path="/user/" component={UserPage} exact={true} />
-							<ChartContextProvider>
-								<UserTypeContextProvider>
-									<StatusContextProvider>
-										<RecommendationSettingsContextProvider>
-											<PublicRoute path="/user/:id" component={UserPage} exact={true} />
-										</RecommendationSettingsContextProvider>
-									</StatusContextProvider>
-								</UserTypeContextProvider>
-							</ChartContextProvider>
+							<StatusContextProvider>
+								<InitialStatusContextProvider>
+									<PublicRoute path="/user/" component={UserPage} exact={true} />
+									<ChartContextProvider>
+										<UserTypeFilterContextProvider>
+											<StatusFilterContextProvider>
+												<RecommendationSettingsContextProvider>
+													<PublicRoute path="/user/:id" component={UserPage} exact={true} />
+												</RecommendationSettingsContextProvider>
+											</StatusFilterContextProvider>
+										</UserTypeFilterContextProvider>
+									</ChartContextProvider>
+								</InitialStatusContextProvider>
+							</StatusContextProvider>
 						</LoadingContextProvider>
 					</TweetContextProvider>
 				</SearchContextProvider>

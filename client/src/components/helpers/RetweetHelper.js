@@ -2,9 +2,11 @@ import { useEffect, useContext } from 'react';
 import moment from 'moment';
 import { TweetContext } from '../../contexts/TweetContext';
 import { LoadingContext } from '../../contexts/LoadingContext';
+import { InitialStatusContext } from '../../contexts/InitialStatusContext';
 
 const RetweetHelper = () => {
 	const { retweets, setRetweets, setRetweetsCount, setRetweetsToUnverifiedCount } = useContext(TweetContext);
+	const { initialRetweets, setInitialRetweets } = useContext(InitialStatusContext);
 	const { setIsRetweetsLoading } = useContext(LoadingContext);
 
 	let unverifiedMentionCount = 0;
@@ -14,9 +16,9 @@ const RetweetHelper = () => {
 		let tempVerifiedHour = Array(24).fill(0);
 		let tempUnverifiedHour = Array(24).fill(0);
 
-		setRetweetsCount(retweets.length);
+		setRetweetsCount(initialRetweets.length);
 
-		retweets.map((retweet) => {
+		initialRetweets.map((retweet) => {
 			let tempMoment = moment(new Date(retweet.created_at));
 			if (retweet.retweeted_status.user.verified) {
 				tempVerifiedDay[tempMoment.weekday()]++;
@@ -33,13 +35,46 @@ const RetweetHelper = () => {
 		});
 
 		setRetweetsToUnverifiedCount(unverifiedMentionCount);
-		setRetweets(retweets);
+		setRetweets(initialRetweets);
 
-		if (retweets.length > 0) {
+		if (initialRetweets.length > 0) {
 			/* Add a small delay for effect. */
 			setIsRetweetsLoading(false);
 		}
-	}, [retweets]);
+	}, [initialRetweets]);
+
+	// useEffect(() => {
+	// 	let tempVerifiedDay = Array(7).fill(0);
+	// 	let tempUnverifiedDay = Array(7).fill(0);
+	// 	let tempVerifiedHour = Array(24).fill(0);
+	// 	let tempUnverifiedHour = Array(24).fill(0);
+
+	// 	setRetweetsCount(retweets.length);
+
+	// 	retweets.map((retweet) => {
+	// 		let tempMoment = moment(new Date(retweet.created_at));
+	// 		if (retweet.retweeted_status.user.verified) {
+	// 			tempVerifiedDay[tempMoment.weekday()]++;
+	// 			tempVerifiedHour[tempMoment.hour()]++;
+	// 			retweet.userType = 'verified';
+	// 		} else {
+	// 			tempUnverifiedDay[tempMoment.weekday()]++;
+	// 			tempUnverifiedHour[tempMoment.hour()]++;
+	// 			unverifiedMentionCount++;
+	// 			retweet.userType = 'unverified';
+	// 		}
+
+	// 		return retweet;
+	// 	});
+
+	// 	setRetweetsToUnverifiedCount(unverifiedMentionCount);
+	// 	setRetweets(retweets);
+
+	// 	if (retweets.length > 0) {
+	// 		/* Add a small delay for effect. */
+	// 		setIsRetweetsLoading(false);
+	// 	}
+	// }, [retweets]);
 
 	return null;
 };

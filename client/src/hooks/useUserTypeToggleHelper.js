@@ -1,8 +1,8 @@
 import { useEffect, useContext } from 'react';
-import { UserTypeContext } from '../contexts/UserTypeContext';
+import { UserTypeFilterContext } from '../contexts/UserTypeFilterContext';
 
 const useUserTypeToggleHelper = () => {
-	const { showBothUserTypes, setShowBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeContext);
+	const { showBothUserTypes, setShowBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeFilterContext);
 
 	useEffect(() => {
 		if (showUnverifiedUsers && showVerifiedUsers) {

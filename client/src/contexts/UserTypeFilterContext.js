@@ -1,20 +1,19 @@
 import React, { createContext, useState } from 'react';
 
-export const UserTypeContext = createContext();
+export const UserTypeFilterContext = createContext();
 
-const UserTypeContextProvider = (props) => {
+const UserTypeFilterContextProvider = (props) => {
 	const [showBothUserTypes, setShowBothUserTypes] = useState(true);
 	const [showVerifiedUsers, setShowVerifiedUsers] = useState(true);
-    const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(true);
-    
+	const [showUnverifiedUsers, setShowUnverifiedUsers] = useState(true);
 
 	return (
-		<UserTypeContext.Provider
+		<UserTypeFilterContext.Provider
 			value={{ showBothUserTypes, setShowBothUserTypes, showVerifiedUsers, setShowVerifiedUsers, showUnverifiedUsers, setShowUnverifiedUsers }}
 		>
 			{props.children}
-		</UserTypeContext.Provider>
+		</UserTypeFilterContext.Provider>
 	);
 };
 
-export default UserTypeContextProvider;
+export default UserTypeFilterContextProvider;
