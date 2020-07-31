@@ -3,7 +3,6 @@ import React, { createContext, useState } from 'react';
 export const SearchContext = createContext();
 
 const SearchContextProvider = (props) => {
-	const [searchResults, setSearchResults] = useState('');
 	const [searchHistory, setSearchHistory] = useState(
 		localStorage.getItem('searchHistory') !== 'null' ? JSON.parse(localStorage.getItem('searchHistory')) : []
 	);
@@ -25,9 +24,7 @@ const SearchContextProvider = (props) => {
 	};
 
 	return (
-		<SearchContext.Provider
-			value={{ searchResults, setSearchResults, searchHistory, addSearchHistory, setSearchHistory, selectedUser, setSelectedUser }}
-		>
+		<SearchContext.Provider value={{ searchHistory, addSearchHistory, setSearchHistory, selectedUser, setSelectedUser }}>
 			{props.children}
 		</SearchContext.Provider>
 	);

@@ -6,7 +6,7 @@ import SearchHistoryItem from './SearchHistoryItem';
 const SearchHistory = () => {
 	const { setSearchHistory, searchHistory } = useContext(SearchContext);
 
-	const clearSearchResultsClick = () => {
+	const clearSearchHistory = () => {
 		localStorage.removeItem('searchHistory');
 		setSearchHistory(null);
 	};
@@ -26,7 +26,7 @@ const SearchHistory = () => {
 			)}
 			<Row className="mt-3">
 				<Col>
-					<Button variant="link" onClick={clearSearchResultsClick}>
+					<Button variant="link" onClick={clearSearchHistory}>
 						<h6>
 							<small className="text-primary">Clear Search History</small>
 						</h6>

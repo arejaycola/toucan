@@ -1,12 +1,9 @@
-import React, { useContext } from 'react';
-import { SearchContext } from '../../../contexts/SearchContext';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Card, CardDeck, Button } from 'react-bootstrap';
 import NoResultsFound from '../../NoResultsFound';
 
-const SearchResults = () => {
-	const { searchResults } = useContext(SearchContext);
-
+const SearchResults = ({ searchResults }) => {
 	const history = useHistory();
 
 	const onCardClick = (id, statusCount) => {

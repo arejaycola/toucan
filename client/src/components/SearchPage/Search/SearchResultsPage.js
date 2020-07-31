@@ -14,7 +14,9 @@ import Loader from 'react-loader-spinner';
 const SearchResultsPage = (props) => {
 	const searchString = props.match.params.text;
 	const [hasResults, setHasResults] = useState(false);
-	const { addSearchHistory, setSearchResults } = useContext(SearchContext);
+	const [searchResults, setSearchResults] = useState([]);
+
+	const { addSearchHistory } = useContext(SearchContext);
 	const { setStatuses, setTweets, setTweetsCount, setRetweets, setRetweetsCount, setQuotedTweets, setQuotedTweetsCount } = useContext(TweetContext);
 	const { setIsTweetsLoading, setIsRetweetsLoading, setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
@@ -60,7 +62,7 @@ const SearchResultsPage = (props) => {
 					</Col>
 					<Col m="10">
 						{hasResults ? (
-							<SearchResultsList />
+							<SearchResultsList searchResults={searchResults} />
 						) : (
 							<Col className="mt-5 text-center">
 								<Loader type="MutatingDots" color="#00BFFF" secondaryColor="#00BFFF" height={100} width={100} timeout={3000} />
