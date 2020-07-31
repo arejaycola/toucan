@@ -39,6 +39,7 @@ const SearchResultsPage = (props) => {
 		const sendRequest = async () => {
 			const response = await Axios.get(`/api/twitter/search/${searchString}`);
 			if (response) {
+				/* TODO (07/31/2020 12:12) Why put this in context and not just pass it down as prop?*/
 				setSearchResults(response.data.sort((a, b) => b.followers_count - a.followers_count));
 				setHasResults(true);
 			}

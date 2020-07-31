@@ -6,8 +6,11 @@ import UserChartsPanel from './UserChartsPanel';
 import Axios from 'axios';
 import useStatusParser from '../../hooks/useStatusParser';
 import { StatusContext } from '../../contexts/StatusContext';
+import { RecommendationSettingsContext } from '../../contexts/RecommendationSettingsContext';
 
 const UserPage = (props) => {
+	const { autoFetch } = useContext(RecommendationSettingsContext);
+
 	const history = useHistory();
 	const userId = props.match.params.id;
 	/* Reroute the user to index if there is no ID. */

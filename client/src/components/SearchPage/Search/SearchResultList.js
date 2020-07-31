@@ -18,7 +18,7 @@ const SearchResults = () => {
 			{searchResults.length !== 0 ? (
 				searchResults.map((result) => {
 					return (
-						<Card className="custom-card mb-3 mx-auto semi-transparent mt-5" key={result.id}>
+						<Card className="custom-card mb-3 mx-auto semi-transparent mt-5" key={result.id_str}>
 							<Card.Img className="mx-auto" variant="top" src={`${result.profile_image_url_https.replace('_normal', '')}`} />
 							<Card.Body>
 								<Card.Title className=" font-weight-bold">{result.name}</Card.Title>
@@ -45,7 +45,7 @@ const SearchResults = () => {
 								<Button
 									block
 									onClick={() => {
-										onCardClick(result.id, result.statuses_count);
+										onCardClick(result.id_str, result.statuses_count);
 									}}
 								>
 									View
