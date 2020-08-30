@@ -6,16 +6,29 @@ import TimeToday from './TimeToday';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { LoadingContext } from '../../../contexts/LoadingContext';
+import { TweetContext } from '../../../contexts/TweetContext';
+import { InitialStatusContext } from '../../../contexts/InitialStatusContext';
 import Settings from './Settings/Settings';
 
 const Recommendations = ({ maxStatusCount }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
+	const { setInitialRetweets, setInitialQuotedTweets, setInitialTweets, setInitialStatuses } = useContext(InitialStatusContext);
+
+	const { tweets, retweets, quotedTweets, statuses } = useContext(TweetContext);
 
 	const [timeDisabled, setTimeDisabled] = useState(true);
 	const [timeTodayDisabled, setTimeTodayDisabled] = useState(true);
 	const [dayTimeDisabled, setDayTimeDisabled] = useState(true);
 
-	const [showSettings, setShowSettings] = useState(true);
+	const [showSettings, setShowSettings] = useState(false);
+	const [updateData, setUpdateData] = useState(false);
+
+	useEffect(() => {
+		setInitialStatuses((oldStatuses) => [...oldStatuses, ...statuses]);
+		setInitialTweets((oldTweets) => [...oldTweets, ...tweets]);
+		setInitialRetweets((oldRetweets) => [...oldRetweets, ...retweets]);
+		setInitialQuotedTweets((oldQuotedTweets) => [...oldQuotedTweets, ...quotedTweets]);
+	}, [updateData]);
 
 	useEffect(() => {
 		/* Once everything is done loading, enable the view button. */
@@ -41,6 +54,7 @@ const Recommendations = ({ maxStatusCount }) => {
 						>
 							<FontAwesomeIcon icon={faCog} />
 						</Button>
+						<Button onClick={() => setUpdateData(true)}>Refresh Data</Button>
 					</h3>
 				</Col>
 			</Row>

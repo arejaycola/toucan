@@ -43,7 +43,7 @@ const UserPage = (props) => {
 			// console.log(status, initialFetch, response);
 			if (status !== 'done') {
 				if (initialFetch) {
-					console.log(response.length);
+					// console.log(response.length);
 					parseInitialStatuses(response);
 				} else {
 					console.log(response.length);
@@ -61,6 +61,7 @@ const UserPage = (props) => {
 		<>
 			<UserStatsPanel user={user} />
 			<UserChartsPanel user={user} />
+			
 		</>
 	);
 };

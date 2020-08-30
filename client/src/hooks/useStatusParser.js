@@ -18,7 +18,6 @@ const useStatusParser = (userId) => {
 		/* Compartmentalize the different types of tweets (statuses) */
 		response.map((status) => {
 			status.userType = null;
-			// console.log(status);
 			if (status.retweeted_status) {
 				/* Retweeted status->user->verified */
 				if (status.retweeted_status.user.verified) {
