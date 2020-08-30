@@ -33,21 +33,29 @@ const UserPage = (props) => {
 		const ws = new WebSocket(`ws://localhost:5000/echo`);
 
 		ws.onopen = async () => {
+			/* TODO (07/31/2020 12:54) numberOfTweets will eventually be the max statuses count */
 			ws.send(JSON.stringify({ autoFetch: true, userId: userId, numberOfTweets: 300 }));
 		};
 
 		ws.onmessage = (event) => {
 			const { percentDone, response, status, initialFetch } = JSON.parse(event.data);
-
+			
+			// console.log(status, initialFetch, response);
 			if (status !== 'done') {
 				if (initialFetch) {
+					console.log(response.length);
 					parseInitialStatuses(response);
 				} else {
+					console.log(response.length);
 					parseStatuses(response);
 				}
 			}
 		};
 	}, []);
+
+	// useEffect(() => {
+	// 	console.log('AF', autoFetch);
+	// }, [autoFetch]);
 
 	return (
 		<>

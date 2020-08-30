@@ -43,7 +43,12 @@ async function searchForVerifiedUser(name) {
 
 async function getTweets(params) {
 	try {
+		if (params.count === 0) {
+			return;
+		}
+
 		const response = await client.get(`https://api.twitter.com/1.1/statuses/user_timeline.json`, params);
+
 		return response;
 	} catch (e) {
 		console.log(e);
@@ -79,7 +84,6 @@ async function getTweets(params) {
 // }
 
 async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
-	let number = 200;
 	let count = 0;
 
 	const params = {
@@ -89,7 +93,14 @@ async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 	};
 	try {
 		while (count <= numberOfTweets) {
+			numberOfTweets - count < 200 ? (params.count = numberOfTweets - count) : numberOfTweets;
+			if (params.count === 0) {
+				break;
+			}
+
 			let response = await getTweets(params);
+
+			console.log(response.length);
 			params.max_id = response[response.length - 1].id_str;
 
 			const responseObject = {
@@ -104,7 +115,6 @@ async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 				responseObject.initialFetch = false;
 			}
 			socket.send(JSON.stringify(responseObject));
-			number = response.length;
 		}
 
 		return 'done';

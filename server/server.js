@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 app.ws('/echo', (ws, req) => {
 	ws.on('message', async (message) => {
 		const { autoFetch, userId, numberOfTweets } = JSON.parse(message);
+		
 		if (autoFetch) {
 			const done = await Twitter.getAutoFetchTweetsByUserId(ws, userId, numberOfTweets);
 			ws.send(JSON.stringify({ status: done }));
