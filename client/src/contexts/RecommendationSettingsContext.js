@@ -5,6 +5,7 @@ export const RecommendationSettingsContext = createContext();
 const RecommendationSettingsContextProvider = (props) => {
 	const [selectedElement, setSelectedElement] = useState(null);
 	const [autoFetch, setAutoFetch] = useState(false);
+	const [sliderCount, setSliderCount] = useState(1000);
 
 	return (
 		<RecommendationSettingsContext.Provider
@@ -13,6 +14,8 @@ const RecommendationSettingsContextProvider = (props) => {
 				setSelectedElement,
 				autoFetch,
 				setAutoFetch,
+				sliderCount,
+				setSliderCount,
 			}}
 		>
 			{props.children}

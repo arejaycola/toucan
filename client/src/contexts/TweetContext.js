@@ -8,6 +8,9 @@ const TweetContextProvider = (props) => {
 	const [retweets, setRetweets] = useState([]);
 	const [quotedTweets, setQuotedTweets] = useState([]);
 
+	const [masterStatuses, setMasterStatuses] = useState([]);
+	const [percentLoaded, setPercentLoaded] = useState([]);
+
 	const [tweetsCount, setTweetsCount] = useState(0);
 	const [tweetsToUnverifiedCount, setTweetsToUnverifiedCount] = useState(0);
 
@@ -40,6 +43,10 @@ const TweetContextProvider = (props) => {
 				setQuotedTweetsCount,
 				quotedTweetsToUnverifiedCount,
 				setQuotedTweetsToUnverifiedCount,
+				masterStatuses,
+				setMasterStatuses,
+				percentLoaded,
+				setPercentLoaded,
 			}}
 		>
 			{props.children}

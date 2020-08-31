@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, FormCheck, Form } from 'react-bootstrap';
+import { Col, Row, FormCheck } from 'react-bootstrap';
 import TimeTable from './TimeTable';
 
 const TimeSettings = () => {

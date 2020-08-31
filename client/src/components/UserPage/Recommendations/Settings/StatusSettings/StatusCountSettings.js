@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import numeral from 'numeral';
 import { Col, Row, FormCheck, Form } from 'react-bootstrap';
+import { RecommendationSettingsContext } from '../../../../../contexts/RecommendationSettingsContext';
 
 const StatusCountSettings = () => {
-	const [min, setMin] = useState(1);
-	const [sliderCount, setSliderCount] = useState(Math.floor((min + 3200) / 2));
-
+	let { sliderCount, setSliderCount } = useContext(RecommendationSettingsContext);
 	return (
 		<>
 			<Row className="mt-5 justify-content-center">
@@ -25,17 +24,10 @@ const StatusCountSettings = () => {
 				<Col>
 					<Form.Group className="mx-5 my-0 py-0">
 						<Form.Label></Form.Label>
-						<Form.Control
-							min={min}
-							max={3200}
-							step={1}
-							type="range"
-							value={sliderCount}
-							onChange={(e) => setSliderCount(e.target.value)}
-						/>
+						<Form.Control min={1} max={3200} step={1} type="range" value={sliderCount} onChange={(e) => setSliderCount(e.target.value)} />
 					</Form.Group>
 					<Row className="text-center mx-5 mt-0 pt-0">
-						<Col className="d-flex px-0 mx-0 justify-content-start">{min}</Col>
+						<Col className="d-flex px-0 mx-0 justify-content-start">{1}</Col>
 						<Col className="d-flex px-0 mx-0 justify-content-end">{numeral(3200).format('0,0')}</Col>
 					</Row>
 				</Col>

@@ -91,6 +91,7 @@ async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 		count: 200,
 		include_rts: true,
 	};
+	// console.log('Number of Tweets: ' + numberOfTweets);
 	try {
 		while (count <= numberOfTweets) {
 			numberOfTweets - count < 200 ? (params.count = numberOfTweets - count) : numberOfTweets;
@@ -100,13 +101,13 @@ async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 
 			let response = await getTweets(params);
 
-			console.log(response.length);
 			params.max_id = response[response.length - 1].id_str;
 
 			const responseObject = {
 				percentDone: parseFloat(count / numberOfTweets),
 				initialFetch: true,
 				response,
+				status: 'pending',
 			};
 
 			count += response.length;
@@ -114,9 +115,12 @@ async function getAutoFetchTweetsByUserId(socket, userId, numberOfTweets) {
 			if (count > 200) {
 				responseObject.initialFetch = false;
 			}
+
+			// console.log('Count: ' + count);
 			socket.send(JSON.stringify(responseObject));
 		}
 
+		socket.send(JSON.stringify({ status: 'done' }));
 		return 'done';
 	} catch (e) {
 		console.log(e);
@@ -140,8 +144,8 @@ async function getUsersByIds(userIds) {
 
 		return editedResponse;
 	} catch (e) {
-		console.log(e);
-		throw new Error(e);
+		console.log(e[0].message);
+		throw new Error(e.message);
 	}
 }
 

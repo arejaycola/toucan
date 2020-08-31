@@ -97,8 +97,6 @@ const TweetHelper = () => {
 	}, [initialTweets]);
 
 	useLayoutEffect(() => {
-
-		console.log(tweets.length);
 		/* Should this be tweetsWithMention.length? */
 		setTweetsCount(tweets.length);
 
