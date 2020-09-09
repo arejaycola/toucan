@@ -8,15 +8,13 @@ import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { TweetContext } from '../../../contexts/TweetContext';
 import { InitialStatusContext } from '../../../contexts/InitialStatusContext';
-import { RecommendationSettingsContext } from '../../../contexts/RecommendationSettingsContext';
 import Settings from './Settings/Settings';
 
 const Recommendations = ({ maxStatusCount }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
-	const { setInitialRetweets, initialStatuses, setInitialQuotedTweets, setInitialTweets, setInitialStatuses } = useContext(InitialStatusContext);
-	const { sliderCount } = useContext(RecommendationSettingsContext);
+	const { setInitialRetweets, setInitialQuotedTweets, setInitialTweets, setInitialStatuses } = useContext(InitialStatusContext);
 
-	const { tweets, retweets, quotedTweets, statuses, masterStatuses, percentLoaded } = useContext(TweetContext);
+	const { tweets, retweets, quotedTweets, statuses, percentLoaded } = useContext(TweetContext);
 
 	const [timeDisabled, setTimeDisabled] = useState(true);
 	const [timeTodayDisabled, setTimeTodayDisabled] = useState(true);

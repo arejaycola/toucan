@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import numeral from 'numeral';
 import { Col, Row, FormCheck, Form } from 'react-bootstrap';
 import { RecommendationSettingsContext } from '../../../../../contexts/RecommendationSettingsContext';

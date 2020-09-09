@@ -3,7 +3,6 @@ import moment from 'moment';
 import ContainerDimensions from 'react-container-dimensions';
 import { Col, Row, Button } from 'react-bootstrap';
 
-import { TweetContext } from '../../../contexts/TweetContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { UserTypeFilterContext } from '../../../contexts/UserTypeFilterContext';
 import { StatusFilterContext } from '../../../contexts/StatusFilterContext';
@@ -21,7 +20,6 @@ import useToggleStatus from '../../../hooks/useToggleStatus';
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
 	const { initialStatuses, initialRetweets, initialQuotedTweets, initialTweets } = useContext(InitialStatusContext);
 	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeFilterContext);
 	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusFilterContext);
@@ -70,7 +68,6 @@ const TimeToday = ({ viewDisabled }) => {
 			const tempHoursForGraphing = Array(24).fill(0);
 
 			/* Keep track of statuses by day. */
-			// let tempStatuses =
 			initialStatuses.map((status) => {
 				tempDaysForStats[moment(status.created_at).weekday()]++;
 				tempHoursForStats[moment(status.created_at).hour()]++;
@@ -169,115 +166,6 @@ const TimeToday = ({ viewDisabled }) => {
 		setTweetsDay(tempDay);
 		setTweetsHour(tempHour);
 	}, [initialTweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
-	
-	// useEffect(() => {
-	// 	if (statuses.length > 0) {
-	// 		const tempDaysForStats = Array(7).fill(0);
-	// 		const tempDaysForGraphing = Array(7).fill(0);
-
-	// 		const tempHoursForStats = Array(24).fill(0);
-	// 		const tempHoursForGraphing = Array(24).fill(0);
-
-	// 		/* Keep track of statuses by day. */
-	// 		// let tempStatuses =
-	// 		statuses.map((status) => {
-	// 			tempDaysForStats[moment(status.created_at).weekday()]++;
-	// 			tempHoursForStats[moment(status.created_at).hour()]++;
-	// 			return status.created_at;
-	// 		});
-
-	// 		statuses
-	// 			.filter((status) => {
-	// 				return (showVerifiedUsers && status.userType === 'verified') || (showUnverifiedUsers && status.userType === 'unverified');
-	// 			})
-	// 			.map((status) => {
-	// 				tempDaysForGraphing[moment(status.created_at).weekday()]++;
-	// 				tempHoursForGraphing[moment(status.created_at).hour()]++;
-	// 				return status.created_at;
-	// 			});
-
-	// 		/* Find the maxium number of tweets in any day. */
-	// 		const maxDay = Math.max(...tempDaysForStats);
-
-	// 		/* Find all occurances of max. */
-	// 		const tempBestDays = tempDaysForStats.reduce((a, e, i) => {
-	// 			if (e === maxDay) {
-	// 				a.push(moment().set('day', i).weekday());
-	// 			}
-	// 			return a;
-	// 		}, []);
-
-	// 		setBestDays(tempBestDays);
-	// 		setAllStatusesDay(tempDaysForGraphing);
-
-	// 		const maxHour = Math.max(...tempHoursForStats);
-
-	// 		/* Find all occurances of max. */
-	// 		const tempBestHours = tempHoursForStats.reduce((a, e, i) => {
-	// 			if (e === maxHour) {
-	// 				a.push(moment().set('hour', i).set('minute', 0).format('h:mm A'));
-	// 			}
-	// 			return a;
-	// 		}, []);
-
-	// 		setBestHours(tempBestHours);
-	// 		setAllStatusesHour(tempHoursForGraphing);
-	// 	}
-	// }, [statuses, isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
-
-	// useEffect(() => {
-	// 	let tempDay = Array(7).fill(0);
-	// 	let tempHour = Array(24).fill(0);
-
-	// 	retweets
-	// 		.filter((retweet) => {
-	// 			return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
-	// 		})
-	// 		.map((retweet) => {
-	// 			tempDay[moment(retweet.created_at).weekday()]++;
-	// 			tempHour[moment(retweet.created_at).hour()]++;
-	// 			return retweet;
-	// 		});
-
-	// 	setRetweetsDay(tempDay);
-	// 	setRetweetsHour(tempHour);
-	// }, [retweets, isRetweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
-
-	// useEffect(() => {
-	// 	let tempDay = Array(7).fill(0);
-	// 	let tempHour = Array(24).fill(0);
-
-	// 	quotedTweets
-	// 		.filter((retweet) => {
-	// 			return (showVerifiedUsers && retweet.userType === 'verified') || (showUnverifiedUsers && retweet.userType === 'unverified');
-	// 		})
-	// 		.map((quotedTweet) => {
-	// 			tempDay[moment(quotedTweet.created_at).weekday()]++;
-	// 			tempHour[moment(quotedTweet.created_at).hour()]++;
-	// 			return quotedTweet;
-	// 		});
-
-	// 	setQuotedTweetsDay(tempDay);
-	// 	setQuotedTweetsHour(tempHour);
-	// }, [quotedTweets, isQuotedTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
-
-	// useEffect(() => {
-	// 	let tempDay = Array(7).fill(0);
-	// 	let tempHour = Array(24).fill(0);
-
-	// 	tweets
-	// 		.filter((tweet) => {
-	// 			return (showVerifiedUsers && tweet.userType === 'verified') || (showUnverifiedUsers && tweet.userType === 'unverified');
-	// 		})
-	// 		.map((tweet) => {
-	// 			tempDay[moment(tweet.created_at).weekday()]++;
-	// 			tempHour[moment(tweet.created_at).hour()]++;
-	// 			return tweet;
-	// 		});
-
-	// 	setTweetsDay(tempDay);
-	// 	setTweetsHour(tempHour);
-	// }, [tweets, tweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
 
 	return (
 		<Row>

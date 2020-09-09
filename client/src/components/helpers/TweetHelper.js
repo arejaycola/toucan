@@ -1,4 +1,4 @@
-import { useEffect, useContext, useLayoutEffect, useState } from 'react';
+import {  useContext, useLayoutEffect, useState } from 'react';
 import moment from 'moment';
 import Axios from 'axios';
 import { TweetContext } from '../../contexts/TweetContext';

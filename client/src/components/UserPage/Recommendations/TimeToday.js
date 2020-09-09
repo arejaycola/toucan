@@ -3,7 +3,6 @@ import { Col, Row, Button } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 import ContainerDimensions from 'react-container-dimensions';
 import moment from 'moment';
-import { TweetContext } from '../../../contexts/TweetContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
 import { UserTypeFilterContext } from '../../../contexts/UserTypeFilterContext';
 import { StatusFilterContext } from '../../../contexts/StatusFilterContext';
@@ -19,7 +18,6 @@ import { InitialStatusContext } from '../../../contexts/InitialStatusContext';
 const TimeToday = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
 	const { initialStatuses, initialRetweets, initialQuotedTweets, initialTweets } = useContext(InitialStatusContext);
 	const { showBothUserTypes, showVerifiedUsers, showUnverifiedUsers } = useContext(UserTypeFilterContext);
 	const { showAllStatuses, showRetweets, showQuotedTweets, showTweets } = useContext(StatusFilterContext);
@@ -45,10 +43,6 @@ const TimeToday = ({ viewDisabled }) => {
 		}
 
 		return moment().hour(d).format('h');
-	};
-
-	const onToggleViewClick = () => {
-		setShowChart(!showChart);
 	};
 
 	useEffect(() => {
@@ -145,7 +139,7 @@ const TimeToday = ({ viewDisabled }) => {
 		// console.log(temp);
 		setTweetsToday(temp);
 	}, [initialTweets, isTweetsLoading, showVerifiedUsers, showUnverifiedUsers]);
-	
+
 	// useEffect(() => {
 	// 	if (statuses.length > 0) {
 	// 		let tempForStats = Array(24).fill(0);

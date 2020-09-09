@@ -4,7 +4,6 @@ import { Col, Row, Button } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 import ContainerDimensions from 'react-container-dimensions';
 
-import { TweetContext } from '../../../contexts/TweetContext';
 import { StatusFilterContext } from '../../../contexts/StatusFilterContext';
 import { UserTypeFilterContext } from '../../../contexts/UserTypeFilterContext';
 import { LoadingContext } from '../../../contexts/LoadingContext';
@@ -20,7 +19,6 @@ import useToggleStatus from '../../../hooks/useToggleStatus';
 const Time = ({ viewDisabled }) => {
 	const { isTweetsLoading, isRetweetsLoading, isQuotedTweetsLoading } = useContext(LoadingContext);
 
-	const { statuses, retweets, quotedTweets, tweets } = useContext(TweetContext);
 	const { initialStatuses, initialRetweets, initialQuotedTweets, initialTweets } = useContext(InitialStatusContext);
 
 	/* TODO (04/30/2020 11:54) Somehow factor in response time.*/

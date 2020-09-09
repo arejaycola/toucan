@@ -5,8 +5,8 @@ import { LoadingContext } from '../../contexts/LoadingContext';
 import { InitialStatusContext } from '../../contexts/InitialStatusContext';
 
 const QuotedTweetHelper = () => {
-	const { quotedTweets, setQuotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
-	const { initialQuotedTweets, setInitialQuotedTweets } = useContext(InitialStatusContext);
+	const { setQuotedTweets, setQuotedTweetsCount, setQuotedTweetsToUnverifiedCount } = useContext(TweetContext);
+	const { initialQuotedTweets, } = useContext(InitialStatusContext);
 	const { setIsQuotedTweetsLoading } = useContext(LoadingContext);
 
 	let tempVerifiedDay = Array(7).fill(0);
@@ -42,33 +42,6 @@ const QuotedTweetHelper = () => {
 			setIsQuotedTweetsLoading(false);
 		}
 	}, [initialQuotedTweets]);
-	// useEffect(() => {
-	// 	setQuotedTweetsCount(quotedTweets.length);
-
-	// 	quotedTweets.map((quotedTweet) => {
-	// 		let tempMoment = moment(new Date(quotedTweet.created_at));
-
-	// 		if (quotedTweet.quoted_status.user.verified) {
-	// 			tempVerifiedDay[tempMoment.weekday()]++;
-	// 			tempVerifiedHour[tempMoment.hour()]++;
-	// 			quotedTweet.userType = 'verified';
-	// 		} else {
-	// 			tempUnverifiedDay[tempMoment.weekday()]++;
-	// 			tempUnverifiedHour[tempMoment.hour()]++;
-	// 			unverifiedMentionCount++;
-	// 			quotedTweet.userType = 'unverified';
-	// 		}
-	// 		return quotedTweet;
-	// 	});
-
-	// 	setQuotedTweetsToUnverifiedCount(unverifiedMentionCount);
-	// 	setQuotedTweets(quotedTweets);
-
-	// 	if (quotedTweets.length > 0) {
-	// 		setIsQuotedTweetsLoading(false);
-	// 	}
-
-	// }, [quotedTweets]);
 
 	return null;
 };

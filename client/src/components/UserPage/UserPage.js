@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useContext, useState, useEffect } from 'react';
+import React, { useLayoutEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import UserStatsPanel from './UserStatsPanel';
 import UserChartsPanel from './UserChartsPanel';
@@ -6,12 +6,10 @@ import UserChartsPanel from './UserChartsPanel';
 import Axios from 'axios';
 import useStatusParser from '../../hooks/useStatusParser';
 import { TweetContext } from '../../contexts/TweetContext';
-import { RecommendationSettingsContext } from '../../contexts/RecommendationSettingsContext';
 
 const UserPage = (props) => {
-	const { autoFetch, sliderCount } = useContext(RecommendationSettingsContext);
 	const { setPercentLoaded } = useContext(TweetContext);
-	// const { maxStatusCount, setMaxStatusCount } = useContext(StatusContext);
+
 	const history = useHistory();
 	const userId = props.match.params.id;
 	/* Reroute the user to index if there is no ID. */
@@ -44,7 +42,6 @@ const UserPage = (props) => {
 				const { percentDone, response, status, initialFetch } = JSON.parse(event.data);
 
 				if (response) {
-					console.log(status);
 					if (status !== 'done') {
 						setPercentLoaded(Math.round(percentDone * 100));
 
