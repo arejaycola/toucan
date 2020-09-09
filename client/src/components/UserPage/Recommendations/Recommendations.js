@@ -76,7 +76,7 @@ const Recommendations = ({ maxStatusCount }) => {
 						</Button>
 						<Button onClick={() => setUpdateData(true)}>Refresh Data</Button>
 					</h3>
-					<ProgressBar animated now={percentLoaded} label={`${percentLoaded}%`} />
+					{percentLoaded !== 100 ? <ProgressBar animated now={percentLoaded} label={`${percentLoaded}%`} /> : null}
 				</Col>
 			</Row>
 			<Row className="text-center mx-0">
