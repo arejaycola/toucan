@@ -1,3 +1,4 @@
+* Upgrade to use SSL
 * Rebrand application
 * Monitor Twitter API v2
 * Disable extra calls for to search verified users in a verified user's tweet (this is the only status that requires this extra step and it frequently pushes us over the rate limit)
