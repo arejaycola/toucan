@@ -30,8 +30,9 @@ const UserPage = (props) => {
 
 			/* If the max status count is more than the max twitter will go back set it to the max. Else set it to the max number of statuses.  */
 			statusesCount < 3200 ? (maxStatusCount = statusesCount) : (maxStatusCount = 3200);
-
-			const ws = new WebSocket(`ws://localhost:5000/echo`);
+			const host = document.location.origin.replace(/^http/, 'ws').replace('3000', '5000');
+			console.log(host);
+			const ws = new WebSocket(`${host}/echo`);
 
 			ws.onopen = async () => {
 				/* TODO (08/30/2020 22:26) Make numberOfTweets = maxStatusesCount when done testing*/
